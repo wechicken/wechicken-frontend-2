@@ -1,1 +1,1 @@
-export * from 'library/utils'
+export * from './react-query.util';

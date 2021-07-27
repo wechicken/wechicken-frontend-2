@@ -1,3 +1,5 @@
+import { css } from '@emotion/react';
+
 export const theme = {
   background: '#FFFEFC',
   white: '#FFFFFF',
@@ -15,3 +17,8 @@ export const theme = {
   fontContent: "'Noto Sans KR', sans-serif;",
 };
 
+export const flexCenter = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
