@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
 import axios from 'axios';
+import Contributors from 'components/myGroup/contributors/contributors';
+import { MyGroup } from 'components/myGroup/myGroup.model';
+import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
 import Loading from 'library/components/loading/Loading';
 import { API_URL } from 'library/constants';
 import { fetchApi } from 'library/utils';
 import { isNil } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { HeaderBox } from 'styles/theme';
 
 const innerWidthLimit = 375;
 const tempUser = {
@@ -17,9 +21,9 @@ const tempUser = {
   master: false,
 };
 
-export default function MyGroup() {
+export default function MyGroupPage() {
   const [isGroupTitleVisible, setIsGroupTitleVisible] = useState<boolean>(false);
-  const { data, isLoading } = useQuery('MyGroup', () => {
+  const { data, isLoading } = useQuery<MyGroup>('MyGroup', () => {
     return fetchApi(
       axios.get(`${API_URL}/mygroup`, { headers: { Authorization: tempUser.token } }),
     );
@@ -30,13 +34,29 @@ export default function MyGroup() {
     window.scrollTo(0, 0);
   }, []);
 
-  if (isLoading) {
+  if (isLoading || isNil(data)) {
     return <Loading></Loading>;
   }
 
   return (
     <MyPageContainer>
       <NthTitle>{isGroupTitleVisible ? data.myGroup.title : ''}</NthTitle>
+      <MyGroupBanner ranking={data.Ranks}></MyGroupBanner>
+      <ContentWrap>
+        {data.is_group_joined && (
+          <Contribution>
+            <HeaderBox width={128}>
+              <div className="title">이주의 공헌</div>
+            </HeaderBox>
+            <Contributors
+              myGroup={data.myGroup}
+              postsCounting={data.userPostsCounting}
+              myContribution={data.myProfile}
+              contributor={data.users}
+            />
+          </Contribution>
+        )}
+      </ContentWrap>
     </MyPageContainer>
   );
 }
