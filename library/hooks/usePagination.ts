@@ -1,22 +1,36 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-const usePagination = (target: HTMLElement) => {
+type Props = {
+  root?: React.RefObject<HTMLDivElement>;
+  target: React.RefObject<HTMLDivElement>;
+  threshold?: 1.0;
+  rootMargin?: '0px';
+  enabled: boolean;
+};
+
+export const usePagination = ({ target, threshold = 1.0, enabled }: Props) => {
   const [page, setPage] = useState(0);
+  const observerRef = useRef<IntersectionObserver>();
 
-  const checkIntersect : IntersectionObserverCallback = ([entry]) => {
-    if (entry.isIntersecting) {
-      setPage((prevState) => prevState + 1);
-    }
-  };
   useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(checkIntersect, { threshold: 0.8 });
-      observer.observe(target);
+    if (!enabled || !target.current) {
+      return;
     }
-  }, [target]);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setPage(prev => prev + 1),
+      {
+        threshold,
+      },
+    );
+
+    observer.observe(target.current);
+    observerRef.current = observer;
+
+    return () => {
+      target.current && observer.unobserve(target.current);
+    };
+  }, []);
 
   return [page, setPage];
 };
-
-export default usePagination;
