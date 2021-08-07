@@ -25,7 +25,8 @@ export default function Home() {
   } = useInfiniteQuery(
     'getMainPage',
     async ({ pageParam = 0 }) => {
-      return await getMainPage(pageParam as number);
+      const { status, data } = await getMainPage(pageParam as number);
+      return status === 200 && data;
     },
     {
       getPreviousPageParam: firstPage => (firstPage as any)?.previousId ?? false,

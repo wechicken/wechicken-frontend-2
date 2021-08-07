@@ -13,7 +13,7 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
   response => {
-    return response.data;
+    return response;
   },
   (error: AxiosError) => {
     return handleHTTPError(error as AxiosError);
