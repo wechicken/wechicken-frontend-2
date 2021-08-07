@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import axios from 'axios';
 import Contributors from 'components/myGroup/contributors/contributors';
 import { MyGroup } from 'components/myGroup/myGroup.model';
 import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
+import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
 import { apiClient } from 'library/api/apiClient';
 import Loading from 'library/components/loading/Loading';
 import { API_URL } from 'library/constants';
@@ -56,6 +56,14 @@ export default function MyGroupPage() {
             />
           </Contribution>
         )}
+        <ThisWeek>
+          <HeaderBox width={149}>
+            <div className="title">이주의 포스팅</div>
+            <div className="btnUpdate">
+              <CustomCalendar></CustomCalendar>
+            </div>
+          </HeaderBox>
+        </ThisWeek>
       </ContentWrap>
     </MyPageContainer>
   );
