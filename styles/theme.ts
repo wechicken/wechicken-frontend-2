@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export const theme = {
   background: '#FFFEFC',
@@ -21,4 +22,43 @@ export const flexCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const padding = css`
+  padding: 0 6vw;
+`;
+
+export const HeaderBox = styled.div<{ width: number }>`
+  display: flex;
+  justify-content: space-between;
+  ${padding}
+  margin: 0 auto;
+  position: relative;
+
+  .title {
+    width: ${({ width }) => width}px;
+    height: 40px;
+    margin-right: 20px;
+    padding-bottom: 3px;
+    font-family: ${theme.fontContent};
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 29px;
+    border-bottom: 4px solid ${theme.orange};
+  }
+
+  @media (max-width: 375px) {
+    flex-direction: column;
+    .title {
+      font-size: 20px;
+    }
+  }
+`;
+
+export const MainContentCards = styled.div`
+  margin-top: 40px;
+  padding: 0px !important;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
