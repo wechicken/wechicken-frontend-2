@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { SetStateAction, useEffect } from 'react';
 
 type Props = {
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,6 +8,8 @@ type Props = {
   closeBtn: string;
   excuteFunction: () => void;
   type?: string;
+  setSelectedMenu?: React.Dispatch<SetStateAction<string>>;
+  selectedMenu?: string;
 };
 
 function Alert({ setActiveAlert, alertMessage, submitBtn, closeBtn, excuteFunction, type }: Props) {

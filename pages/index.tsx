@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from 'react-query';
 import { isNil } from 'lodash-es';
+import Nav from 'components/nav/Nav';
 import MainBanner from 'components/mainBanner/MainBanner';
 import Login from 'components/login/Login';
 import Card from 'library/components/card/Card';
@@ -53,6 +54,7 @@ export default function Home() {
 
   return (
     <>
+      <Nav />
       {isLoginActive && <Login setModalOn={setLoginActive} />}
       {isActiveAlert && (
         <Alert
