@@ -21,11 +21,11 @@ export default function Home() {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     'getMainPage',
     async ({ pageParam = 0 }) => {
-      const { status, data } = await getMainPage(pageParam as number);
+      const { status, data } = await getMainPage(pageParam);
       return status === 200 && data;
     },
     {
-      getPreviousPageParam: firstPage => (firstPage as any)?.previousId ?? false,
+      getPreviousPageParam: firstPage => firstPage?.previousId ?? false,
       getNextPageParam: lastPage => {
         if (isNil(lastPage)) {
           return undefined;
@@ -76,7 +76,7 @@ export default function Home() {
           </MainContentTitle>
           <MainContentCards>
             {data?.pages.map(page =>
-              (page as any)?.posts.map((post: Post) => (
+              page?.posts.map((post: Post) => (
                 <Card
                   key={post.id}
                   post={post}

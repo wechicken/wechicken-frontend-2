@@ -48,12 +48,15 @@ const MainBanner = ({ setActiveAlert }: Props) => {
               <TitleText>{content.subtitle}</TitleText>
               <Detail>{content.content}</Detail>
               <MoreBtn
-                onClick={() =>
-                  content.id !== 'siteIn'
-                    ? window.location.assign(`${content.link}`)
-                    : JSON.parse(sessionStorage.getItem('USER') ?? '') !== ''
-                    ? router.push(`${content.link}`)
-                    : setActiveAlert(true)
+                onClick={
+                  () =>
+                    content.id !== 'siteIn' // ? router.push(`${content.link}`)
+                      ? console.log(content.link)
+                      : console.log('yes')
+                  //   : JSON.parse(sessionStorage.getItem('USER') ?? '') !== ''
+                  //   ? // ? router.push(`${content.link}`)
+                  //     console.log(JSON.parse(sessionStorage.getItem('USER') ?? ''))
+                  //   : setActiveAlert(true)
                 }
               >
                 더보기 ▸

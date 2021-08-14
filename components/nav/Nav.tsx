@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import Alert from 'library/components/alert/Alert';
 import Login from 'components/login/Login';
+import Alert from 'library/components/alert/Alert';
+import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import Button from 'library/components/button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,6 +24,9 @@ function Nav() {
       setActiveAlert(true);
     }
   };
+
+  let loginStatus = false;
+  let userProfileImg = '';
 
   useEffect(() => {
     handleSelectedFunctions(selectedMenu);
@@ -46,16 +51,28 @@ function Nav() {
       )}
       <NavBox onMouseLeave={() => setDropDownOpen(false)}>
         {isModalOn && <Login setModalOn={setModalOn} />}
-
         <LogoWrap>
-          <Link href="/">
+          <Link href="/" passHref>
             <Logo onClick={() => setSelectedMenu('')}>
               <img className="logoImage" alt="logo" src="/Images/logo.png" />
               <div className="logoText">&gt;wechicken</div>
             </Logo>
           </Link>
         </LogoWrap>
-        <UserWrap></UserWrap>
+        <UserWrap>
+          {loginStatus ? (
+            <>
+              {JSON.parse(sessionStorage.getItem('USER') ?? '')?.master && (
+                <img className="masterCrown" alt="master" src="/Images/crown.png" />
+              )}
+              <div onMouseOver={() => setDropDownOpen(true)}>
+                <ProfileIcon size={50} img={userProfileImg} />
+              </div>
+            </>
+          ) : (
+            <Button value="로그인" handleFunction={() => setModalOn(true)} />
+          )}
+        </UserWrap>
       </NavBox>
     </>
   );
@@ -69,15 +86,10 @@ const NavBox = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 0 10px;
   height: 111px;
-  padding: 0 8vw;
   background-color: ${({ theme }) => theme.white};
   z-index: 9;
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
 `;
 
 const LogoWrap = styled.div`
@@ -101,6 +113,8 @@ const Logo = styled.a`
   display: flex;
   align-items: center;
   width: 190px;
+  text-decoration: none;
+  color: ${({ theme }) => theme.fontColor};
 
   .logoImage {
     width: 51px;
@@ -115,7 +129,6 @@ const Logo = styled.a`
     font-weight: 500;
     font-size: 20px;
     line-height: 27px;
-    color: #2d2b2b;
   }
 `;
 
