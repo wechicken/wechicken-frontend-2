@@ -1,40 +1,84 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
 import styled from '@emotion/styled';
-import { bannerContents } from './BannerContents';
+import { bannerContents } from 'components/mainBanner/BannerContents';
 
 type Props = {
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MainBanner = ({ setActiveAlert }: Props) => {
+  const router = useRouter();
+  const [count, setCount] = useState(0);
+  const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
+  const isFirstRender = useRef(true);
+  let intervalTime = !isFirstRender.current && count === 0 ? 1 : 4000;
+
+  const start = useCallback(() => {
+    if (intervalRef.current !== null) {
+      return;
+    }
+
+    if (isFirstRender.current) {
+      intervalTime = 4000;
+    }
+
+    intervalRef.current = setInterval(() => {
+      setCount(prev => (prev === bannerContents.length - 1 ? 0 : prev + 1));
+    }, intervalTime);
+  }, [intervalTime]);
+
+  const stop = useCallback(() => {
+    if (intervalRef.current === null) {
+      return;
+    }
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    start();
+    return () => {
+      stop();
+    };
+  }, [intervalTime]);
+
+  useEffect(() => {
+    if (count === 0 || !isFirstRender.current) return;
+    isFirstRender.current = false;
+  }, [count]);
+
   return (
     <MainBannerContainer>
-      {bannerContents.map((content, i) => {
-        return (
-          <div className="bannerWrap" key={i}>
-            <img className="bannerImg" alt="bannerImg" src={content.img} />
+      <CarouselWrapper
+        count={count}
+        bannerLength={bannerContents.length}
+        onMouseEnter={stop}
+        onMouseLeave={start}
+      >
+        {bannerContents.map((content, idx) => (
+          <BannerWrap key={idx}>
+            <img alt={`banner${idx}`} src={content.img} />
             <BannerContent>
-              <h1 className="greeting">{content.title}</h1>
-              <h2 className="title">{content.subtitle}</h2>
-              <div className="text">
-                <p>{content.content}</p>
-              </div>
-              <button
+              <GreetingText>{content.title}</GreetingText>
+              <TitleText>{content.subtitle}</TitleText>
+              <Detail>{content.content}</Detail>
+              <MoreBtn
                 onClick={() =>
-                  // content.id !== 'siteIn'
-                  //   ? window.location.assign(`${content.link}`)
-                  //   : JSON.parse(sessionStorage.getItem('USER'))
-                  //   ? history.push(`${content.link}`)
-                  // :
-                  setActiveAlert(true)
+                  content.id !== 'siteIn'
+                    ? router.push(`${content.link}`)
+                    : JSON.parse(sessionStorage.getItem('USER') ?? '')
+                    ? router.push(`${content.link}`)
+                    : setActiveAlert(true)
                 }
-                className="moreBtn"
               >
                 더보기 ▸
-              </button>
+              </MoreBtn>
             </BannerContent>
-          </div>
-        );
-      })}
+          </BannerWrap>
+        ))}
+      </CarouselWrapper>
     </MainBannerContainer>
   );
 };
@@ -42,19 +86,25 @@ const MainBanner = ({ setActiveAlert }: Props) => {
 export default MainBanner;
 
 const MainBannerContainer = styled.div`
+  width: 100%;
+  max-width: 1600px;
+  overflow-x: hidden;
+`;
+
+const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
+  display: inline flex;
+  width: 100vw;
+  margin: 0 auto;
+  transition: ${({ bannerLength, count }) =>
+    count === bannerLength || count === 0 ? '0s' : '-webkit-transform 900ms ease 0s'};
+  transform: ${({ count, bannerLength }) =>
+    count === bannerLength || count === 0 ? 'none' : `translate3d(${-count * 100}%, 0, 0)`};
+`;
+
+const BannerWrap = styled.div`
   display: flex;
-  width: 1000px;
-  margin: 0 10px;
-  overflow-x: scroll;
-
-  @media (max-width: 800px) {
-    display: none;
-  }
-
-  .bannerWrap {
-    display: flex;
-    min-width: 1000px;
-  }
+  height: 100%;
+  padding: 0 10vw;
 
   img {
     width: 50%;
@@ -62,39 +112,39 @@ const MainBannerContainer = styled.div`
 `;
 
 const BannerContent = styled.div`
-  width: 35%;
-  padding: 10px 0 0 75px;
   display: flex;
   flex-direction: column;
+  padding: 10px 0 0 75px;
   font-family: ${({ theme }) => theme.fontContent};
   font-weight: 600;
+  word-break: keep-all;
+`;
 
-  .greeting {
-    font-size: 39px;
-    color: ${({ theme }) => theme.orange};
-  }
+const GreetingText = styled.h1`
+  font-size: 39px;
+  color: ${({ theme }) => theme.orange};
+`;
 
-  .title {
-    font-size: 35px;
-  }
+const TitleText = styled.h2`
+  font-size: 35px;
+`;
 
-  p {
-    margin-top: 140px;
-    line-height: 30px;
-    font-size: 20px;
-    font-weight: 300;
-    font-family: ${({ theme }) => theme.fontContent};
-  }
+const Detail = styled.p`
+  margin-top: 140px;
+  line-height: 30px;
+  font-size: 20px;
+  font-weight: 300;
+  font-family: ${({ theme }) => theme.fontContent};
+`;
 
-  .moreBtn {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    border: none;
-    outline: none;
-    font-size: 17px;
-    background-color: transparent;
-    color: ${({ theme }) => theme.orange};
-    cursor: pointer;
-  }
+const MoreBtn = styled.button`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  background-color: transparent;
+  color: ${({ theme }) => theme.orange};
+  cursor: pointer;
 `;
