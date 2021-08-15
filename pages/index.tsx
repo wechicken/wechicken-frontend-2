@@ -77,8 +77,8 @@ export default function Home() {
                 <Card
                   key={post.id}
                   post={post}
-                  width={288}
-                  space={20}
+                  width='18rem'
+                  space='1.25rem'
                   setActiveAlert={setActiveAlert}
                 />
               )),
@@ -95,15 +95,23 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 150px;
+  padding-top: 9.375rem;
   color: ${({ theme }) => theme.deepGrey};
+<<<<<<< HEAD
+=======
+  background-color: ${({ theme }) => theme.background};
+
+  ${({theme})=> theme.sm`
+    padding-top: 115px;
+  `}
+>>>>>>> 2f47062... design: mainBanner, main index.tsx 미디어쿼리 적용
 `;
 
 const MainContentCards = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 40px;
+  margin-top: 2.5rem;
   padding: 0px !important;
 `;
 
@@ -111,21 +119,17 @@ const MainContents = styled.div`
   position: relative;
   width: 90%;
   max-width: 1450px;
-  padding: 50px 0;
-  margin-top: 55px;
-  border-radius: 50px;
+  padding: 3.125rem 0;
+  margin-top: 3.4375rem;
+  border-radius: 3.125rem;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.05);
-
-  @media (max-width: 800px) {
-    margin-top: 0px;
-  }
 `;
 
 const MainContentTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 0 3.125rem;
 
   .titleContainer {
     display: flex;

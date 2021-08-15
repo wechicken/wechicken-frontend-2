@@ -55,8 +55,11 @@ const MainBanner = ({ setActiveAlert }: Props) => {
           <BannerWrap key={idx}>
             <img alt={`banner${idx}`} src={content.img} />
             <BannerContent>
-              <GreetingText>{content.title}</GreetingText>
-              <TitleText>{content.subtitle}</TitleText>
+              <BannerTop>
+                <GreetingText>{content.title}</GreetingText>
+                <TitleText>{content.subtitle}</TitleText>
+              </BannerTop>
+              <BannerBottom>
               <Detail>{content.content}</Detail>
               <MoreBtn
                 onClick={() =>
@@ -69,6 +72,7 @@ const MainBanner = ({ setActiveAlert }: Props) => {
               >
                 더보기 ▸
               </MoreBtn>
+              </BannerBottom>
             </BannerContent>
           </BannerWrap>
         ))}
@@ -87,7 +91,7 @@ const MainBannerContainer = styled.div`
 
 const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
   display: inline flex;
-  width: 100vw;
+  width: 100%;
   margin: 0 auto;
   transition: ${({ bannerLength, count }) =>
     count === bannerLength || count === 0 ? '0s' : '-webkit-transform 900ms ease 0s'};
@@ -97,48 +101,98 @@ const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
 
 const BannerWrap = styled.div`
   display: flex;
-  height: 100%;
   padding: 0 10vw;
 
+  ${({theme})=> theme.lg`
+    padding: 0 5vw;
+  `}
+
+  ${({theme})=> theme.md`
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 5vw;
+  `}
+
+  ${({theme})=> theme.sm`
+    padding: 0 3vw;
+  `}
+
   img {
-    width: 50%;
+    max-width: 60%;
+    object-fit: contain;
+
+    ${({theme})=> theme.lg`
+      max-width: 60%;
+    `}
+
+    ${({theme})=> theme.md`
+      max-width: 100%;
+    `}
   }
 `;
 
 const BannerContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 0 0 75px;
+  justify-content: space-between;
+  padding: .625rem  0 0 4.6875rem;
   font-family: ${({ theme }) => theme.fontContent};
   font-weight: 600;
   word-break: keep-all;
+
+  ${({theme})=> theme.lg`
+    padding: 20px;
+  `}
+
+  ${({theme})=> theme.md`
+    padding: 10px;
+  `}
 `;
 
+const BannerTop = styled.div`
+  ${({theme})=> theme.md`
+    display: flex;
+    width: 100%;
+  `}
+`
+
+const BannerBottom = styled.div`
+
+`
+
 const GreetingText = styled.h1`
-  font-size: 39px;
+  font-size: 2.4375rem;
   color: ${({ theme }) => theme.orange};
+
+  ${({theme})=> theme.md`
+    margin-right: 10px;
+  `}
 `;
 
 const TitleText = styled.h2`
-  font-size: 35px;
+  font-size: 2.1875rem;
 `;
 
 const Detail = styled.p`
-  margin-top: 140px;
-  line-height: 30px;
-  font-size: 20px;
+  line-height: 1.875rem;
+  font-size: 1.25rem;
   font-weight: 300;
   font-family: ${({ theme }) => theme.fontContent};
 `;
 
 const MoreBtn = styled.button`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
+  width: 100%;
+  text-align: end;
+  margin-top: 1.25rem;
+  padding: 0 5px;
   border: none;
   outline: none;
-  font-size: 17px;
+  font-size: 1.0625rem;
   background-color: transparent;
   color: ${({ theme }) => theme.orange};
   cursor: pointer;
+
+  ${({theme})=> theme.md`
+    text-align: start;
+  `}
 `;

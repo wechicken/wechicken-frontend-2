@@ -16,5 +16,9 @@ declare module '@emotion/react' {
     fontColor: string;
     fontTitle: string;
     fontContent: string;
+    sm: (...args: TemplateStringsArray[]) => SerializedStyles;
+    md: (...args: TemplateStringsArray[]) => SerializedStyles;
+    lg: (...args: TemplateStringsArray[]) => SerializedStyles;
+    xl: (...args: TemplateStringsArray[]) => SerializedStyles;
   }
 }

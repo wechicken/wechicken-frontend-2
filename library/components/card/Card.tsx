@@ -6,8 +6,8 @@ import { Post } from 'library/models/main';
 
 type Props = {
   post: Post;
-  width: number;
-  space: number;
+  width: string;
+  space: string;
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
   handleRemoveCard?: () => void;
   search?: boolean;
@@ -86,10 +86,10 @@ function Card({
 
 export default Card;
 
-const CardContainer = styled.div<{ space: number; width: number; search: boolean | undefined }>`
-  width: ${({ width }) => width}px;
+const CardContainer = styled.div<{ space: string; width: string; search: boolean | undefined }>`
+  width: ${({ width }) => width};
   height: 327px;
-  margin: ${({ space }) => space}px;
+  margin: ${({ space }) => space};
   position: relative;
   border-radius: 7px;
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.08);
