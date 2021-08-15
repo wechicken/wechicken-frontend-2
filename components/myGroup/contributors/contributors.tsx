@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { Obj } from 'library/models';
-import { MyGroupSub, MyGroupUser, MyProfile } from '../myGroup.model';
+import { MyGroupSub, MyGroupUser, MyProfile, UserPostsCounting } from '../myGroup.model';
 import Contributor from './contributor';
 
 type Contributors = {
   myContribution: MyProfile;
   contributor: MyGroupUser[];
-  postsCounting: Obj;
+  postsCounting: UserPostsCounting;
   myGroup: MyGroupSub;
 };
 

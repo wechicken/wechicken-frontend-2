@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Contributors from 'components/myGroup/contributors/contributors';
-import { MyGroup } from 'components/myGroup/myGroup.model';
+import { Bydays, MyGroup, UserPostsCounting } from 'components/myGroup/myGroup.model';
 import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
 import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
 import { apiClient } from 'library/api/apiClient';
@@ -10,24 +10,40 @@ import { isNil } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { HeaderBox } from 'styles/theme';
+import { tempUser } from 'library/api/tempUser';
+import BtnTheme from 'library/components/button/ButtonTheme';
 
 const innerWidthLimit = 375;
-const tempUser = {
-  token:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwid2Vjb2RlX250aCI6MTQsImlhdCI6MTYyNzM2OTU1MH0.b8iTrY1FdcQjLlkcOx5v1nBbiFT4krjJ3rCe-I7SmmU',
-  profile: 'https://jwtbucket.s3.ap-northeast-2.amazonaws.com/profilepic.png',
-  myGroupStatus: true,
-  myNth: 14,
-  master: false,
+
+const initialBydays = {
+  MON: [],
+  TUE: [],
+  WED: [],
+  THU: [],
+  FRI: [],
+  SAT: [],
+  SUN: [],
 };
 
 export default function MyGroupPage() {
   const [isGroupTitleVisible, setIsGroupTitleVisible] = useState<boolean>(false);
-  const { data, isLoading } = useQuery<MyGroup>('MyGroup', () => {
-    return apiClient
-      .get(`${API_URL}/mygroup`, { headers: { Authorization: tempUser.token } })
-      .then(res => res.data);
-  });
+  const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
+  const [byDays, setByDays] = useState<Bydays>(initialBydays);
+  const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
+  const { data, isLoading } = useQuery<MyGroup>(
+    'MyGroup',
+    () => {
+      return apiClient
+        .get(`${API_URL}/mygroup`, { headers: { Authorization: tempUser.token } })
+        .then(res => res.data);
+    },
+    {
+      onSuccess: data => {
+        setByDays(data.by_days);
+        setUserPostsCounting(data.userPostsCounting);
+      },
+    },
+  );
 
   useEffect(() => {
     window.innerWidth <= innerWidthLimit && setIsGroupTitleVisible(true);
@@ -40,6 +56,7 @@ export default function MyGroupPage() {
 
   return (
     <MyPageContainer>
+      {isAddModalActive && <div className="addPostModal">{/* TODO 나중에  추가할것 */}</div>}
       <NthTitle>{isGroupTitleVisible ? data.myGroup.title : ''}</NthTitle>
       <MyGroupBanner ranking={data.Ranks}></MyGroupBanner>
       <ContentWrap>
@@ -50,7 +67,7 @@ export default function MyGroupPage() {
             </HeaderBox>
             <Contributors
               myGroup={data.myGroup}
-              postsCounting={data.userPostsCounting}
+              postsCounting={userPostsCounting}
               myContribution={data.myProfile}
               contributor={data.users}
             />
@@ -60,7 +77,18 @@ export default function MyGroupPage() {
           <HeaderBox width={149}>
             <div className="title">이주의 포스팅</div>
             <div className="btnUpdate">
-              <CustomCalendar></CustomCalendar>
+              <CustomCalendar
+                setByDays={setByDays}
+                setUserPostsCounting={setUserPostsCounting}
+              ></CustomCalendar>
+              {data.is_group_joined && (
+                <BtnTheme
+                  value="포스트 +"
+                  handleFunction={() => {
+                    setAddModalActive(true);
+                  }}
+                ></BtnTheme>
+              )}
             </div>
           </HeaderBox>
         </ThisWeek>

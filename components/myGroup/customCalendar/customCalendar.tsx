@@ -1,16 +1,53 @@
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { Dispatch, memo, SetStateAction, useState } from 'react';
 import { flexCenter } from 'styles/theme';
 import Calendar from 'react-calendar';
+import { useQueryClient } from 'react-query';
+import { Bydays, GroupByDate, UserPostsCounting } from '../myGroup.model';
+import { apiClient } from 'library/api/apiClient';
+import { API_URL } from 'library/constants';
+import { tempUser } from 'library/api/tempUser';
 import 'react-calendar/dist/Calendar.css';
 
-export default function CustomCalendar() {
+type Props = {
+  setByDays: Dispatch<SetStateAction<Bydays>>;
+  setUserPostsCounting: Dispatch<SetStateAction<UserPostsCounting>>;
+};
+
+function CustomCalendar({ setByDays, setUserPostsCounting }: Props) {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
+  const client = useQueryClient();
+
+  const fetchPostsByDay = async (date: dayjs.Dayjs): Promise<void> => {
+    const formattedDate = date.format('YYYYMMDD');
+
+    try {
+      const { data } = await client.fetchQuery(
+        'Get Posts by Date',
+        () => {
+          return apiClient.get<GroupByDate>(`${API_URL}/mygroup/calendar/:${formattedDate}`, {
+            headers: {
+              Authorization: tempUser.token,
+            },
+          });
+        },
+        { staleTime: 1000 },
+      );
+
+      setByDays(data.by_days);
+      setUserPostsCounting(data.userPostsCounting);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const selectDate = (selected: Date): void => {
-    setDate(dayjs(selected));
+    const selectedDate = dayjs(selected);
+
+    setDate(selectedDate);
+    fetchPostsByDay(selectedDate);
     setIsCalendarVisible(false);
   };
 
@@ -122,3 +159,5 @@ const MonthOfTheWeek = styled.div`
     margin: 0 10px;
   }
 `;
+
+export default memo(CustomCalendar);
