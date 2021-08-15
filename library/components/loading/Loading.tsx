@@ -4,8 +4,8 @@ import { flexCenter } from 'styles/theme';
 function Loading() {
   return (
     <LoadingContainer>
-      <div className="loadingText"></div>
-      <div className="loadingImg"></div>
+      <LoadingText/>
+      <LoadingImg/>
     </LoadingContainer>
   );
 }
@@ -17,28 +17,28 @@ const LoadingContainer = styled.div`
   height: 100vh;
   ${flexCenter};
 
-  .loadingText {
-    width: 320px;
-    height: 320px;
-    background: url('/images/loading.png');
-    background-size: contain;
-    animation: rotate_image 7s linear infinite;
-    transform-origin: 50% 50%;
-  }
-
   @keyframes rotate_image {
     100% {
       transform: rotate(360deg);
     }
   }
+`;
 
-  .loadingImg {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    position: absolute;
-    background: url('/images/doghair.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+const LoadingText = styled.div`
+  width: 320px;
+  height: 320px;
+  background: url('/images/loading.png');
+  background-size: contain;
+  animation: rotate_image 7s linear infinite;
+  transform-origin: 50% 50%;
+`;
+
+const LoadingImg = styled.div`
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+  background: url('/images/doghair.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
 `;

@@ -11,6 +11,11 @@
   "dependencies": {
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-regular-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "dayjs": "^1.10.6",
@@ -23,6 +28,7 @@
     "react-query": "^3.19.0"
   },
   "devDependencies": {
+    "@emotion/babel-plugin": "^11.3.0",
     "@types/lodash-es": "^4.17.4",
     "@types/react": "17.0.14",
     "@types/react-calendar": "^3.4.2",
