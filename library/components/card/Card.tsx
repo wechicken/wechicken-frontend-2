@@ -1,4 +1,7 @@
 import styled from '@emotion/styled';
+import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import BtnLike from 'library/components/button/BtnLike';
+import BtnEditOrDelete from 'library/components/button/BtnEditOrDelete';
 import { Post } from 'library/models/main';
 
 type Props = {
@@ -7,10 +10,9 @@ type Props = {
   space: number;
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
   handleRemoveCard?: () => void;
-  handleModifyModal?: () => void;
   search?: boolean;
-  handlePostId?: number;
-  getDeleteMyPostId?: number;
+  handlePostId?: (id: number) => void;
+  getDeleteMyPostId?: (id: number) => void;
 };
 
 function Card({
@@ -19,7 +21,6 @@ function Card({
   space,
   handleRemoveCard,
   setActiveAlert,
-  handleModifyModal,
   search,
   handlePostId,
   getDeleteMyPostId,
@@ -33,7 +34,7 @@ function Card({
         <img className="blogLogo" alt="blog_logo" src={`/Images/${post.type}.png`} />
         <ContentsBox>
           <Profile>
-            {/* <ProfileIcon size={40} img={post.user_profile} /> */}
+            <ProfileIcon size={40} img={post.user_profile} />
             <div className="ProfileText">
               <div className="nth">{post.nth}기</div>
               <div className="name">{post.user_name}</div>
@@ -51,31 +52,33 @@ function Card({
       </CardWrap>
       <Tags>{post.date}</Tags>
       <ButtonWrap>
-        {/* {typeof post.like === 'boolean' ? (
+        {typeof post.like === 'boolean' ? (
           <>
             <BtnLike
               id={post.id}
               status={post.like}
               handleRemoveCard={handleRemoveCard}
-              type={'likes'}
+              type="likes"
               setActiveAlert={setActiveAlert}
             />
             <BtnLike
               id={post.id}
               status={post.bookmark}
               handleRemoveCard={handleRemoveCard}
-              type={'bookmarks'}
+              type="bookmarks"
               setActiveAlert={setActiveAlert}
             />
           </>
         ) : (
-          <BtnEditOrDelete
-            postId={post.id}
-            handlePostId={handlePostId}
-            getDeleteMyPostId={getDeleteMyPostId}
-            handleModifyModal={handleModifyModal}
-          />
-        )} */}
+          handlePostId &&
+          getDeleteMyPostId && (
+            <BtnEditOrDelete
+              postId={post.id}
+              handlePostId={handlePostId}
+              getDeleteMyPostId={getDeleteMyPostId}
+            />
+          )
+        )}
       </ButtonWrap>
     </CardContainer>
   );

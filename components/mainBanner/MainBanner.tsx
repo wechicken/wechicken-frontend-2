@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import styled from '@emotion/styled';
-import { bannerContents } from './BannerContents';
 import { useRouter } from 'next/dist/client/router';
+import styled from '@emotion/styled';
+import { bannerContents } from 'components/mainBanner/BannerContents';
 
 type Props = {
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,15 +48,12 @@ const MainBanner = ({ setActiveAlert }: Props) => {
               <TitleText>{content.subtitle}</TitleText>
               <Detail>{content.content}</Detail>
               <MoreBtn
-                onClick={
-                  () =>
-                    content.id !== 'siteIn' // ? router.push(`${content.link}`)
-                      ? console.log(content.link)
-                      : console.log('yes')
-                  //   : JSON.parse(sessionStorage.getItem('USER') ?? '') !== ''
-                  //   ? // ? router.push(`${content.link}`)
-                  //     console.log(JSON.parse(sessionStorage.getItem('USER') ?? ''))
-                  //   : setActiveAlert(true)
+                onClick={() =>
+                  content.id !== 'siteIn'
+                    ? router.push(`${content.link}`)
+                    : JSON.parse(sessionStorage.getItem('USER') ?? '')
+                    ? router.push(`${content.link}`)
+                    : setActiveAlert(true)
                 }
               >
                 더보기 ▸
