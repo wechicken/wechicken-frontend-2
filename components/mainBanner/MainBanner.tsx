@@ -12,7 +12,7 @@ const MainBanner = ({ setActiveAlert }: Props) => {
   const [count, setCount] = useState(0);
   const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
   const isFirstRender = useRef(true);
-  let intervalTime = !isFirstRender.current && count === 0 ? 1 : 2000;
+  let intervalTime = !isFirstRender.current && count === 0 ? 1 : 4000;
 
   const start = useCallback(() => {
     if (intervalRef.current !== null) {
@@ -20,7 +20,7 @@ const MainBanner = ({ setActiveAlert }: Props) => {
     }
 
     if (isFirstRender.current) {
-      intervalTime = 2000;
+      intervalTime = 4000;
     }
 
     intervalRef.current = setInterval(() => {
