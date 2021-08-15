@@ -11,22 +11,17 @@ const MainBanner = ({ setActiveAlert }: Props) => {
   const router = useRouter();
   const [count, setCount] = useState(0);
   const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
-  const isFirstRender = useRef(true);
-  let intervalTime = !isFirstRender.current && count === 0 ? 1 : 4000;
+  const intervalTimeRef = useRef(4000);
 
   const start = useCallback(() => {
     if (intervalRef.current !== null) {
       return;
     }
 
-    if (isFirstRender.current) {
-      intervalTime = 4000;
-    }
-
     intervalRef.current = setInterval(() => {
       setCount(prev => (prev === bannerContents.length - 1 ? 0 : prev + 1));
-    }, intervalTime);
-  }, [intervalTime]);
+    }, intervalTimeRef.current);
+  }, []);
 
   const stop = useCallback(() => {
     if (intervalRef.current === null) {
@@ -42,11 +37,10 @@ const MainBanner = ({ setActiveAlert }: Props) => {
     return () => {
       stop();
     };
-  }, [intervalTime]);
+  }, [start, stop, intervalTimeRef.current]);
 
   useEffect(() => {
-    if (count === 0 || !isFirstRender.current) return;
-    isFirstRender.current = false;
+    count === 4 ? (intervalTimeRef.current = 1) : (intervalTimeRef.current = 4000);
   }, [count]);
 
   return (
@@ -68,9 +62,9 @@ const MainBanner = ({ setActiveAlert }: Props) => {
                 onClick={() =>
                   content.id !== 'siteIn'
                     ? router.push(`${content.link}`)
-                    : JSON.parse(sessionStorage.getItem('USER') ?? '')
-                    ? router.push(`${content.link}`)
-                    : setActiveAlert(true)
+                    : // : JSON.parse(sessionStorage.getItem('USER') ?? '')
+                      // ? router.push(`${content.link}`)
+                      setActiveAlert(true)
                 }
               >
                 더보기 ▸

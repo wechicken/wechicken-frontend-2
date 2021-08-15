@@ -1,14 +1,7 @@
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
-type Props = {
-  setLoginSuccess: () => void;
-  setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
-  setExistingUser: () => void;
-  handleGoogleInput: () => void;
-};
-
-function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogleInput }: Props) {
+function GoogleLogin() {
   const googleLoginBtn = useRef(null);
 
   return (

@@ -18,10 +18,10 @@ function Login({ setModalOn }: Props) {
             <div className="type">로그인</div>
           </Greeting>
           <GoogleLogin
-            setLoginSuccess={() => {}}
-            setModalOn={setModalOn}
-            setExistingUser={() => {}}
-            handleGoogleInput={() => {}}
+          // setLoginSuccess={() => console.log('login')}
+          // setModalOn={setModalOn}
+          // setExistingUser={() => console.log('existingUser')}
+          // handleGoogleInput={() => console.log('google')}
           />
         </LoginBoxRight>
       </LoginBox>

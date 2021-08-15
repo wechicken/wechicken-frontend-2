@@ -14,7 +14,7 @@ type Props = {
   handleRemoveCard?: (() => void) | undefined;
 };
 
-function BtnLike({ id, status, handleRemoveCard, type, setActiveAlert }: Props) {
+function BtnLike({ id, status, type, setActiveAlert }: Props) {
   const [isLiked, setLiked] = useState(status ?? false);
 
   const fetchLikeStatus = () => {
@@ -36,7 +36,7 @@ function BtnLike({ id, status, handleRemoveCard, type, setActiveAlert }: Props) 
   };
 
   return (
-    <BtnLikeBox type={type} onClick={checkLoginStatus}>
+    <BtnLikeBox type={type} onClick={checkLoginStatus} className={String(id)}>
       <BlankIcon isLiked={isLiked}>
         <FontAwesomeIcon className="blank" icon={type === 'likes' ? blankHeart : blankBookmarks} />
       </BlankIcon>
