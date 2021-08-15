@@ -9,6 +9,7 @@ import Button from 'library/components/button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
+// TODO 작성 중
 function Nav() {
   const router = useRouter();
   const [isdropDownOpen, setDropDownOpen] = useState(false);
@@ -39,14 +40,14 @@ function Nav() {
           setActiveAlert={setActiveAlert}
           setSelectedMenu={setSelectedMenu}
           selectedMenu={selectedMenu}
-          alertMessage={'로그아웃 하시겠습니까?'}
+          alertMessage="로그아웃 하시겠습니까?"
           excuteFunction={() => {
             sessionStorage.removeItem('USER');
             router.push('/');
             window.location.reload();
           }}
-          submitBtn={'확인'}
-          closeBtn={'취소'}
+          submitBtn="확인"
+          closeBtn="취소"
         />
       )}
       <NavBox onMouseLeave={() => setDropDownOpen(false)}>

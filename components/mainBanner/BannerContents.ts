@@ -1,16 +1,15 @@
 export const bannerContents = [
   {
     id: 'siteIn',
-    img: '/Images/main_banner1.png',
+    img: '/images/main_banner1.png',
     title: 'WOW!',
     subtitle: 'Well done!',
     content: '혹쉬...이번달 명예의 전당에 혹시 내 이름이!?지금 당장 확인하러 가보자!',
     link: '/MyGroup',
   },
-
   {
     id: 'siteOut',
-    img: '/Images/main_banner2.png',
+    img: '/images/main_banner2.png',
     title: 'Hi',
     subtitle: 'wechicken OPEN!',
     content:
@@ -19,7 +18,7 @@ export const bannerContents = [
   },
   {
     id: 'siteOut',
-    img: '/Images/main_banner3.png',
+    img: '/images/main_banner3.png',
     title: 'Hi',
     subtitle: 'Made by JWT',
     content: 'wechicken 솔직히 너무 멋지다... 누가 만들었냐구요? 바로바로~ JWT(현쥐,쥰,요쥬,토큰)',
@@ -27,10 +26,18 @@ export const bannerContents = [
   },
   {
     id: 'siteOut',
-    img: '/Images/main_banner4.png',
+    img: '/images/main_banner4.png',
     title: 'HOT!',
     subtitle: "I can't wait!",
     content: '이달의 HOT 블로그는 뭘까요? 핫하다 핫해! 지금 바로 공부하러 가보자! ',
     link: '',
+  },
+  {
+    id: 'siteIn',
+    img: '/images/main_banner1.png',
+    title: 'WOW!',
+    subtitle: 'Well done!',
+    content: '혹쉬...이번달 명예의 전당에 혹시 내 이름이!?지금 당장 확인하러 가보자!',
+    link: '/MyGroup',
   },
 ];

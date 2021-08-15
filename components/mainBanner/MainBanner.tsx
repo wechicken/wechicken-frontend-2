@@ -8,24 +8,31 @@ type Props = {
 };
 
 const MainBanner = ({ setActiveAlert }: Props) => {
+  const router = useRouter();
   const [count, setCount] = useState(0);
   const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
-  const delayTime = 4000;
-  const router = useRouter();
+  const isFirstRender = useRef(true);
+  let intervalTime = !isFirstRender.current && count === 0 ? 1 : 2000;
 
   const start = useCallback(() => {
     if (intervalRef.current !== null) {
       return;
     }
+
+    if (isFirstRender.current) {
+      intervalTime = 2000;
+    }
+
     intervalRef.current = setInterval(() => {
       setCount(prev => (prev === bannerContents.length - 1 ? 0 : prev + 1));
-    }, delayTime);
-  }, []);
+    }, intervalTime);
+  }, [intervalTime]);
 
   const stop = useCallback(() => {
     if (intervalRef.current === null) {
       return;
     }
+
     clearInterval(intervalRef.current);
     intervalRef.current = null;
   }, []);
@@ -35,11 +42,21 @@ const MainBanner = ({ setActiveAlert }: Props) => {
     return () => {
       stop();
     };
-  }, []);
+  }, [intervalTime]);
+
+  useEffect(() => {
+    if (count === 0 || !isFirstRender.current) return;
+    isFirstRender.current = false;
+  }, [count]);
 
   return (
     <MainBannerContainer>
-      <CarouselWrapper count={count} onMouseEnter={stop} onMouseLeave={start}>
+      <CarouselWrapper
+        count={count}
+        bannerLength={bannerContents.length}
+        onMouseEnter={stop}
+        onMouseLeave={start}
+      >
         {bannerContents.map((content, idx) => (
           <BannerWrap key={idx}>
             <img alt={`banner${idx}`} src={content.img} />
@@ -74,12 +91,14 @@ const MainBannerContainer = styled.div`
   overflow-x: hidden;
 `;
 
-const CarouselWrapper = styled.div<{ count: number }>`
+const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
   display: inline flex;
   width: 100vw;
   margin: 0 auto;
-  transition: 900ms;
-  transform: ${({ count }) => `translate3d(${-count * 100}%, 0, 0)`};
+  transition: ${({ bannerLength, count }) =>
+    count === bannerLength || count === 0 ? '0s' : '-webkit-transform 900ms ease 0s'};
+  transform: ${({ count, bannerLength }) =>
+    count === bannerLength || count === 0 ? 'none' : `translate3d(${-count * 100}%, 0, 0)`};
 `;
 
 const BannerWrap = styled.div`

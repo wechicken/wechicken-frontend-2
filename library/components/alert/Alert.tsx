@@ -12,6 +12,7 @@ type Props = {
   selectedMenu?: string;
 };
 
+// TODO 작성 중
 function Alert({ setActiveAlert, alertMessage, submitBtn, closeBtn, excuteFunction, type }: Props) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
