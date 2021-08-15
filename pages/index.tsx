@@ -35,9 +35,7 @@ export default function Home() {
     },
   );
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
 
   const handleSetLoginActive = () => {
     setLoginActive(true);
@@ -54,7 +52,6 @@ export default function Home() {
 
   return (
     <>
-      <Nav />
       {isLoginActive && <Login setModalOn={setLoginActive} />}
       {isActiveAlert && (
         <Alert
@@ -100,7 +97,6 @@ const HomeContainer = styled.div`
   align-items: center;
   padding-top: 150px;
   color: ${({ theme }) => theme.deepGrey};
-  background-color: ${({ theme }) => theme.background};
 `;
 
 const MainContentCards = styled.div`
