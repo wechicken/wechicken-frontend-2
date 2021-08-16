@@ -41,6 +41,7 @@ module.exports = {
             allowConciseArrowFunctionExpressionsStartingWithVoid: true,
           },
         ],
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         'react-hooks/rules-of-hooks': 2,
         'react-hooks/exhaustive-deps': 1,
         'import/first': 2,
