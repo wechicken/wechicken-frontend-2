@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from 'react-query';
 import { isNil } from 'lodash-es';
-import Nav from 'components/nav/Nav';
 import MainBanner from 'components/mainBanner/MainBanner';
 import Login from 'components/login/Login';
 import Card from 'library/components/card/Card';
@@ -34,8 +33,6 @@ export default function Home() {
       },
     },
   );
-
-
 
   const handleSetLoginActive = () => {
     setLoginActive(true);
@@ -77,8 +74,8 @@ export default function Home() {
                 <Card
                   key={post.id}
                   post={post}
-                  width='18rem'
-                  space='1.25rem'
+                  width="18rem"
+                  space="1.25rem"
                   setActiveAlert={setActiveAlert}
                 />
               )),
@@ -97,14 +94,11 @@ const HomeContainer = styled.div`
   align-items: center;
   padding-top: 9.375rem;
   color: ${({ theme }) => theme.deepGrey};
-<<<<<<< HEAD
-=======
   background-color: ${({ theme }) => theme.background};
 
-  ${({theme})=> theme.sm`
+  ${({ theme }) => theme.sm`
     padding-top: 115px;
   `}
->>>>>>> 2f47062... design: mainBanner, main index.tsx 미디어쿼리 적용
 `;
 
 const MainContentCards = styled.div`

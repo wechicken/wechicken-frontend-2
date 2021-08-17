@@ -60,18 +60,18 @@ const MainBanner = ({ setActiveAlert }: Props) => {
                 <TitleText>{content.subtitle}</TitleText>
               </BannerTop>
               <BannerBottom>
-              <Detail>{content.content}</Detail>
-              <MoreBtn
-                onClick={() =>
-                  content.id !== 'siteIn'
-                    ? router.push(`${content.link}`)
-                    : // : JSON.parse(sessionStorage.getItem('USER') ?? '')
-                      // ? router.push(`${content.link}`)
-                      setActiveAlert(true)
-                }
-              >
-                더보기 ▸
-              </MoreBtn>
+                <Detail>{content.content}</Detail>
+                <MoreBtn
+                  onClick={() =>
+                    content.id !== 'siteIn'
+                      ? router.push(`${content.link}`)
+                      : // : JSON.parse(sessionStorage.getItem('USER') ?? '')
+                        // ? router.push(`${content.link}`)
+                        setActiveAlert(true)
+                  }
+                >
+                  더보기 ▸
+                </MoreBtn>
               </BannerBottom>
             </BannerContent>
           </BannerWrap>
@@ -103,17 +103,17 @@ const BannerWrap = styled.div`
   display: flex;
   padding: 0 10vw;
 
-  ${({theme})=> theme.lg`
+  ${({ theme }) => theme.lg`
     padding: 0 5vw;
   `}
 
-  ${({theme})=> theme.md`
+  ${({ theme }) => theme.md`
     flex-direction: column;
     align-items: flex-start;
     padding: 0 5vw;
   `}
 
-  ${({theme})=> theme.sm`
+  ${({ theme }) => theme.sm`
     padding: 0 3vw;
   `}
 
@@ -121,11 +121,11 @@ const BannerWrap = styled.div`
     max-width: 60%;
     object-fit: contain;
 
-    ${({theme})=> theme.lg`
+    ${({ theme }) => theme.lg`
       max-width: 60%;
     `}
 
-    ${({theme})=> theme.md`
+    ${({ theme }) => theme.md`
       max-width: 100%;
     `}
   }
@@ -135,36 +135,34 @@ const BannerContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: .625rem  0 0 4.6875rem;
+  padding: 0.625rem 0 0 4.6875rem;
   font-family: ${({ theme }) => theme.fontContent};
   font-weight: 600;
   word-break: keep-all;
 
-  ${({theme})=> theme.lg`
+  ${({ theme }) => theme.lg`
     padding: 20px;
   `}
 
-  ${({theme})=> theme.md`
+  ${({ theme }) => theme.md`
     padding: 10px;
   `}
 `;
 
 const BannerTop = styled.div`
-  ${({theme})=> theme.md`
+  ${({ theme }) => theme.md`
     display: flex;
     width: 100%;
   `}
-`
+`;
 
-const BannerBottom = styled.div`
-
-`
+const BannerBottom = styled.div``;
 
 const GreetingText = styled.h1`
   font-size: 2.4375rem;
   color: ${({ theme }) => theme.orange};
 
-  ${({theme})=> theme.md`
+  ${({ theme }) => theme.md`
     margin-right: 10px;
   `}
 `;
@@ -192,7 +190,7 @@ const MoreBtn = styled.button`
   color: ${({ theme }) => theme.orange};
   cursor: pointer;
 
-  ${({theme})=> theme.md`
+  ${({ theme }) => theme.md`
     text-align: start;
   `}
 `;

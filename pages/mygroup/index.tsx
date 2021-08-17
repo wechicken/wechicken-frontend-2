@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import axios from 'axios';
 import Contributors from 'components/myGroup/contributors/contributors';
 import { MyGroup } from 'components/myGroup/myGroup.model';
 import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
@@ -82,22 +81,6 @@ const ContentWrap = styled.div`
 
   @media (max-width: 375px) {
     margin: 10px 3vw 0 3vw;
-  }
-`;
-
-const ThisWeek = styled.div`
-  .btnUpdate {
-    display: flex;
-    justify-content: space-between;
-    width: 200px;
-    margin: 20px;
-  }
-
-  @media (max-width: 375px) {
-    .btnUpdate {
-      margin: 20px 0;
-      justify-content: center;
-    }
   }
 `;
 
