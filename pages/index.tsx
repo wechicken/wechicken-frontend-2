@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from 'react-query';
-import { isNil } from 'lodash-es';
+import isNil from 'lodash-es/isNil';
 import MainBanner from 'components/mainBanner/MainBanner';
 import Login from 'components/login/Login';
 import Card from 'library/components/card/Card';
 import Alert from 'library/components/alert/Alert';
 import { Post } from 'library/models/main';
 import { getMainPage } from 'library/api';
-import { useIntersectionObserver } from 'library/hooks/useIntersectionObserver';
+import { useIntersectionObserver } from 'library/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -96,12 +96,12 @@ const HomeContainer = styled.div`
   color: ${({ theme }) => theme.deepGrey};
   background-color: ${({ theme }) => theme.background};
 
-  ${({ theme }) => theme.lg`
+  ${({ theme }) => theme.md`
     padding-top: 7.1875rem;
   `}
 
   ${({ theme }) => theme.sm`
-    padding-top: 5rem;
+    padding-top: 4.1875rem;
   `}
 `;
 

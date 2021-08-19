@@ -1,3 +1,7 @@
+export type Obj<T = any> = {
+  [k: string]: T;
+};
+
 export type Post = {
   type: string;
   thumbnail: string;
@@ -11,4 +15,25 @@ export type Post = {
   like: boolean;
   id: number;
   bookmark: boolean;
-}
+};
+
+export type LoginResponse = {
+  master: boolean;
+  message: string;
+  myGroupStatus: boolean;
+  nth: number;
+  profile: string;
+  token: string;
+};
+
+export type CreatedUser = {
+  message: string;
+  myGroupStatus: boolean;
+  nth: number;
+  profile: string;
+  token: string;
+};
+
+export type LoginUser = CreatedUser & {
+  master?: boolean;
+};

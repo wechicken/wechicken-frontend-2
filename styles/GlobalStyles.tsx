@@ -8,27 +8,34 @@ const style = css`
   }
 
   :root {
-      font-size: 0.625em;
+    font-size: 0.625em;
+  }
+  @media (${`min-width: ${breakpoints.sm}px`}) {
+    :root {
+      font-size: 0.75em;
     }
-    @media (${`min-width: ${breakpoints.sm}px`}) {
-      :root {
-        font-size: 0.75em;
-      }
+  }
+  @media (${`min-width: ${breakpoints.md}px`}) {
+    :root {
+      font-size: 0.875em;
     }
-    @media (${`min-width: ${breakpoints.md}px`}) {
-      :root {
-        font-size: 0.875em;
-      }
+  }
+  @media (${`min-width: ${breakpoints.lg}px`}) {
+    :root {
+      font-size: 1em;
     }
-    @media (${`min-width: ${breakpoints.lg}px`}) {
-      :root {
-        font-size: 1em;
-      }
-    }
+  }
 
   body {
     box-sizing: border-box;
 
+    .noDrag {
+      -ms-user-select: none;
+      -moz-user-select: -moz-none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;
+    }
   }
 `;
 

@@ -7,7 +7,7 @@ export const breakpoints: { [index: string]: number } = {
   xl: 1200,
 };
 
-export const mq = Object.keys(breakpoints)
+export const mediaQuery = Object.keys(breakpoints)
   .map((key) => [key, breakpoints[key]] as [string, number])
   .reduce((prev, [key]) => {
     prev[key] = (...args: string[]) =>  css`

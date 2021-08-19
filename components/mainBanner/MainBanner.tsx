@@ -121,10 +121,6 @@ const BannerWrap = styled.div`
     max-width: 60%;
     object-fit: contain;
 
-    ${({ theme }) => theme.lg`
-      max-width: 60%;
-    `}
-
     ${({ theme }) => theme.md`
       max-width: 100%;
     `}
@@ -152,7 +148,6 @@ const BannerContent = styled.div`
 const BannerTop = styled.div`
   ${({ theme }) => theme.md`
     display: flex;
-    width: 100%;
   `}
 `;
 
