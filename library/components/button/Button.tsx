@@ -7,12 +7,12 @@ type Props = {
 };
 
 function Button({ value, handleFunction }: Props) {
-  return <Container onClick={handleFunction}>{value}</Container>;
+  return <ButtonBox onClick={handleFunction}>{value}</ButtonBox>;
 }
 
 export default Button;
 
-const Container = styled.div`
+const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,6 +22,7 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.orange};
   border-radius: 1rem;
   cursor: pointer;
+  font-size: 14px;
   font-family: ${({ theme }) => theme.fontContent};
   font-size: 14px;
 `;

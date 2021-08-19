@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import Nav from 'components/nav/Nav';
-import { useIntersectionObserver } from 'library/hooks/useIntersectionObserver';
+import { useIntersectionObserver } from 'library/hooks';
 
 type Props = {
   children: React.ReactNode;
