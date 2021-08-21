@@ -156,7 +156,13 @@ const BannerTop = styled.div`
   `}
 `;
 
-const BannerBottom = styled.div``;
+const BannerBottom = styled.div`
+  font-size: 1.25rem;
+
+  ${({ theme }) => theme.sm`
+    font-size: 14px;
+  `}
+`;
 
 const GreetingText = styled.h1`
   font-size: 2.4375rem;
@@ -173,7 +179,7 @@ const TitleText = styled.h2`
 
 const Detail = styled.p`
   line-height: 1.875rem;
-  font-size: 1.25rem;
+
   font-weight: 300;
   font-family: ${({ theme }) => theme.fontContent};
 `;
@@ -185,12 +191,12 @@ const MoreBtn = styled.button`
   padding: 0 5px;
   border: none;
   outline: none;
-  font-size: 1.0625rem;
   background-color: transparent;
   color: ${({ theme }) => theme.orange};
   cursor: pointer;
 
   ${({ theme }) => theme.md`
+    padding: 0px;
     text-align: start;
-  `}
+`}
 `;
