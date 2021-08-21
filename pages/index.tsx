@@ -96,8 +96,12 @@ const HomeContainer = styled.div`
   color: ${({ theme }) => theme.deepGrey};
   background-color: ${({ theme }) => theme.background};
 
+  ${({ theme }) => theme.lg`
+    padding-top: 7.1875rem;
+  `}
+
   ${({ theme }) => theme.sm`
-    padding-top: 115px;
+    padding-top: 5rem;
   `}
 `;
 

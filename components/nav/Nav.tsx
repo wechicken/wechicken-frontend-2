@@ -155,6 +155,7 @@ const Logo = styled.a`
 const UserWrap = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 47px;
   position: relative;
 

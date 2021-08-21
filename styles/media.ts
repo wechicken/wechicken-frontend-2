@@ -9,7 +9,7 @@ export const breakpoints: { [index: string]: number } = {
 
 export const mq = Object.keys(breakpoints)
   .map((key) => [key, breakpoints[key]] as [string, number])
-  .reduce((prev, [key, breakpoint]) => {
+  .reduce((prev, [key]) => {
     prev[key] = (...args: string[]) =>  css`
     @media only screen and (max-width: ${breakpoints[key]}px) {
       ${args}

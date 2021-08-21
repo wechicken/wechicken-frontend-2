@@ -50,6 +50,10 @@ const ModalBox = styled.div<{ width: string; height: string; padding: string | u
   z-index: 11;
   box-sizing: border-box;
 
+  ${({ theme }) => theme.md`
+    width: 80%;  
+  `}
+
   .BtnClose {
     position: absolute;
     top: 0;

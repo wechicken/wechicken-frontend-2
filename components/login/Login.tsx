@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ModalLayout } from 'library/components/modal';
-import LogoBox from 'library/components/modal/LogoBox';
+import Logo from 'library/components/modal/LogoBox';
 import GoogleLogin from './GoogleLogin';
 
 type Props = {
@@ -9,9 +9,9 @@ type Props = {
 
 function Login({ setModalOn }: Props) {
   return (
-    <ModalLayout width="675px" height="470px" closeModal={() => setModalOn(false)}>
+    <ModalLayout width="675px" height="29.375rem" closeModal={() => setModalOn(false)}>
       <LoginBox>
-        <LogoBox />
+        <Logo />
         <LoginBoxRight>
           <Greeting>
             <div className="greeting">환영합니다!</div>

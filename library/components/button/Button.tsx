@@ -23,4 +23,5 @@ const Container = styled.div`
   border-radius: 1rem;
   cursor: pointer;
   font-family: ${({ theme }) => theme.fontContent};
+  font-size: 14px;
 `;
