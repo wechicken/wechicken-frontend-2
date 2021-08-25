@@ -9,7 +9,7 @@ import Layout from 'library/components/Layout/Layout';
 import { store } from 'library/store/index';
 import { mediaQuery } from 'styles/media';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient();
 
   return (

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
-import LogoBox from 'library/components/modal/LogoBox';
+import Logo from 'library/components/modal/Logo';
 import InputTheme from 'library/components/button/InputTheme';
 import BtnCheck from 'library/components/button/BtnCheck';
 import BtnSubmit from 'library/components/button/BtnSubmit';
@@ -24,7 +24,7 @@ export default function LoginForm({
   googleProfile,
   setLoginSuccess,
   setExistingUser,
-}: Props) {
+}: Props): JSX.Element {
   const dispatch = useDispatch();
   const [inputName, setInputName] = useState('');
   const [nth, setNth] = useState('');
@@ -38,7 +38,7 @@ export default function LoginForm({
   );
   const loginWithForm = useMutation((formData: FormData) => postAuthAddtional(formData));
 
-  const handleCheckBox = (type: string) => {
+  const handleCheckBox = (type: string): void => {
     type === '치킨계 가입(선택)'
       ? setJoinGroup(!isJoinGroup)
       : setAgreementStatus(!agreementStatus);
@@ -50,7 +50,7 @@ export default function LoginForm({
       : setSubmitActivate(false);
   }, [inputName, nth, blogAddress, agreementStatus]);
 
-  const fetchUserData = async (formData: FormData) => {
+  const fetchUserData = async (formData: FormData): Promise<void> => {
     const { data, status } = await loginWithForm.mutateAsync(formData);
 
     if (status === 201) {
@@ -75,7 +75,7 @@ export default function LoginForm({
     }
   };
 
-  const handleUploadForm = async () => {
+  const handleUploadForm = async (): Promise<void> => {
     const formData = new FormData();
     formData.append(
       'user_thumbnail',
@@ -93,7 +93,7 @@ export default function LoginForm({
 
   return (
     <LoginFormBox>
-      <LogoBox />
+      <Logo />
       <ContentsBox>
         <Greeting>
           <div className="name">{googleProfile.getName()}님</div>

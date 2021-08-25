@@ -5,39 +5,43 @@ import styled from '@emotion/styled';
 import Login from 'components/login/Login';
 import Alert from 'library/components/alert/Alert';
 import Button from 'library/components/button/Button';
+import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import { useSelector } from 'react-redux';
+import { currentUser } from 'library/store/saveUser';
+import SubMenu from './SubMenu';
+import { LoginUser } from 'library/models';
 
-// TODO 작성 중
 type Props = {
   isBlurred: boolean;
   setBlurred: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function Nav({ isBlurred, setBlurred }: Props) {
+function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
+  const user = useSelector(currentUser);
   const router = useRouter();
-  // const [isdropDownOpen, setDropDownOpen] = useState(false);
+  const [isdropDownOpen, setDropDownOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState('');
   const [isModalOn, setModalOn] = useState(false);
   const [isActiveAlert, setActiveAlert] = useState(false);
+  const [isCreateMyGroupModalOn, setCreateMyGroupModalOn] = useState(false);
 
-  const handleSelectedFunctions = (selected: string) => {
-    // setDropDownOpen(false);
+  const handleSelectedFunctions = (selected: string): void => {
+    setDropDownOpen(false);
     if (selected === '로그아웃') {
       setActiveAlert(true);
     }
   };
 
-  const loginStatus = false;
-
   useEffect(() => {
     handleSelectedFunctions(selectedMenu);
   }, [selectedMenu]);
 
-  const handleMouseOverNav = (idx: string) => {
+  const handleMouseOverNav = (idx: string): void => {
     if (idx === 'enter') {
       return setBlurred(false);
     }
     setBlurred(true);
-    // setDropDownOpen(false);
+    setDropDownOpen(false);
   };
 
   return (
@@ -63,6 +67,11 @@ function Nav({ isBlurred, setBlurred }: Props) {
         onMouseLeave={() => handleMouseOverNav('leave')}
       >
         {isModalOn && <Login setModalOn={setModalOn} />}
+        {isCreateMyGroupModalOn && (
+          <></>
+          // TODO 작성 중
+          // <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
+        )}
         <LogoWrap>
           <Link href="/" passHref>
             <Logo onClick={() => setSelectedMenu('')}>
@@ -72,19 +81,27 @@ function Nav({ isBlurred, setBlurred }: Props) {
           </Link>
         </LogoWrap>
         <UserWrap>
-          {loginStatus ? (
+          {user.token ? (
             <>
-              {JSON.parse(sessionStorage.getItem('USER') ?? '')?.master && (
+              {(user as LoginUser).master && (
                 <img className="masterCrown" alt="master" src="/images/crown.png" />
               )}
-              {/* <div onMouseOver={() => setDropDownOpen(true)}>
-                <ProfileIcon size={50} img={userProfileImg} />
-              </div> */}
+              <div onMouseOver={() => setDropDownOpen(true)}>
+                <ProfileIcon size={50} img={user.profile} />
+              </div>
             </>
           ) : (
             <Button value="로그인" handleFunction={() => setModalOn(true)} />
           )}
         </UserWrap>
+        {isdropDownOpen && (
+          <SubMenu
+            setDropDownOpen={setDropDownOpen}
+            selectedMenu={selectedMenu}
+            setSelectedMenu={setSelectedMenu}
+            setCreateMyGroupModalOn={setCreateMyGroupModalOn}
+          />
+        )}
       </NavBox>
     </>
   );
@@ -100,9 +117,9 @@ const NavBox = styled.div<{ isBlurred: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
-  height: 111px;
-  transition: 900ms;
+  padding: 0 1.875rem;
+  height: 6.9375rem;
+  transition: 700ms;
   background-color: ${({ theme, isBlurred }) => (isBlurred ? '#ffffff1d' : theme.white)};
   backdrop-filter: ${({ isBlurred }) => (isBlurred ? 'blur(5px)' : 'none')};
   z-index: 9;

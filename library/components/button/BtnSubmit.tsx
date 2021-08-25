@@ -7,7 +7,7 @@ type Props = {
   executeFunction: () => Promise<void>;
 };
 
-function BtnSubmit({ btnText, isSubmitActivate, executeFunction }: Props) {
+function BtnSubmit({ btnText, isSubmitActivate, executeFunction }: Props): JSX.Element {
   return (
     <Submit
       isSubmitActivate={isSubmitActivate}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from 'react-query';
 import isNil from 'lodash-es/isNil';
@@ -11,20 +11,24 @@ import { getMainPage } from 'library/api';
 import { useIntersectionObserver } from 'library/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { currentUser } from 'library/store/saveUser';
+import Loading from 'library/components/loading/Loading';
 
-export default function Home() {
+export default function Home(): JSX.Element {
+  const user = useSelector(currentUser);
   const [isActiveAlert, setActiveAlert] = useState(false);
   const [isLoginActive, setLoginActive] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isAfterLogin = useRef(false);
   const pageRef = useRef(0);
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
     'getMainPage',
     async ({ pageParam = 0 }) => {
-      const { status, data } = await getMainPage(pageParam);
+      const { status, data } = await getMainPage(pageParam, user.token);
       return status === 200 && data;
     },
     {
-      getPreviousPageParam: firstPage => firstPage?.previousId ?? false,
       getNextPageParam: lastPage => {
         if (isNil(lastPage)) {
           return undefined;
@@ -34,7 +38,12 @@ export default function Home() {
     },
   );
 
-  const handleSetLoginActive = () => {
+  useEffect(() => {
+    if (!user.token) return;
+    isAfterLogin.current = true;
+  }, [isLoginActive]);
+
+  const handleSetLoginActive = (): void => {
     setLoginActive(true);
   };
 
@@ -45,7 +54,10 @@ export default function Home() {
       fetchNextPage();
     },
     enabled: hasNextPage,
+    isLoading,
   });
+
+  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -69,17 +81,20 @@ export default function Home() {
             </div>
           </MainContentTitle>
           <MainContentCards>
-            {data?.pages.map(page =>
-              page?.posts.map((post: Post) => (
-                <Card
-                  key={post.id}
-                  post={post}
-                  width="18rem"
-                  space="1.25rem"
-                  setActiveAlert={setActiveAlert}
-                />
-              )),
-            )}
+            {data &&
+              data.pages.map(
+                page =>
+                  page &&
+                  page.posts.map((post: Post) => (
+                    <Card
+                      key={post.id}
+                      post={post}
+                      width="18rem"
+                      space="1.25rem"
+                      setActiveAlert={setActiveAlert}
+                    />
+                  )),
+              )}
             <div ref={ref} style={{ height: '10px', width: '3px' }} />
           </MainContentCards>
         </MainContents>
@@ -97,7 +112,7 @@ const HomeContainer = styled.div`
   background-color: ${({ theme }) => theme.background};
 
   ${({ theme }) => theme.md`
-    padding-top: 7.1875rem;
+    padding-top: 7rem;
   `}
 
   ${({ theme }) => theme.sm`

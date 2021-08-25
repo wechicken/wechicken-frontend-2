@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-function Logo() {
+function Logo(): JSX.Element {
   return (
     <LogoBox>
       <img className="logoImage" alt="logo" src="/images/logo.png" />

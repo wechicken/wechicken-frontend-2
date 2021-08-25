@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { bannerContents } from 'components/mainBanner/BannerContents';
+import { currentUser } from 'library/store/saveUser';
 
 type Props = {
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const MainBanner = ({ setActiveAlert }: Props) => {
+function MainBanner({ setActiveAlert }: Props): JSX.Element {
   const router = useRouter();
+  const user = useSelector(currentUser);
   const [count, setCount] = useState(0);
   const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
   const intervalTimeRef = useRef(4000);
@@ -65,9 +68,9 @@ const MainBanner = ({ setActiveAlert }: Props) => {
                   onClick={() =>
                     content.id !== 'siteIn'
                       ? router.push(`${content.link}`)
-                      : // : JSON.parse(sessionStorage.getItem('USER') ?? '')
-                        // ? router.push(`${content.link}`)
-                        setActiveAlert(true)
+                      : user.token
+                      ? router.push(`${content.link}`)
+                      : setActiveAlert(true)
                   }
                 >
                   더보기 ▸

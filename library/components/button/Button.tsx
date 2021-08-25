@@ -6,7 +6,7 @@ type Props = {
   handleFunction: () => void;
 };
 
-function Button({ value, handleFunction }: Props) {
+function Button({ value, handleFunction }: Props): JSX.Element {
   return <ButtonBox onClick={handleFunction}>{value}</ButtonBox>;
 }
 

@@ -1,5 +1,9 @@
-import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
+import styled from '@emotion/styled';
+import { currentUser } from 'library/store/saveUser';
+import { postLikeStatus } from 'library/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as blankHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as filledHeart } from '@fortawesome/free-solid-svg-icons';
@@ -11,25 +15,37 @@ type Props = {
   status: boolean;
   type: string;
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
-  handleRemoveCard?: (() => void) | undefined;
+  handleRemoveCard?: ((id: number, type: string) => void) | undefined;
 };
 
-function BtnLike({ id, status, type, setActiveAlert }: Props) {
+function BtnLike({ id, status, type, setActiveAlert, handleRemoveCard }: Props) {
+  const user = useSelector(currentUser);
   const [isLiked, setLiked] = useState(status ?? false);
+  const likeStatus = useMutation(([type, id, token]: [string, number, string]) =>
+    postLikeStatus(type, id, token),
+  );
 
-  const fetchLikeStatus = () => {
-    // TODO like api call 코드 추가
+  // TODO 쿠키에 토큰 저장 전까지 임시로 토큰 전달
+  const fetchLikeStatus = async (): Promise<void> => {
+    const { data, status } = await likeStatus.mutateAsync([type, id, user.token]);
+
+    if (status === 200) {
+      const type = data.message === 'LIKED' ? '좋아요' : '북마크';
+      const action = isLiked === true ? '에서 삭제' : '에 추가';
+
+      // TODO 토스트 알람 있으면 좋을 것 같아요
+      console.log(`${type} 목록${action}되었습니다.`);
+    }
   };
 
-  const handleLikeStatus = () => {
-    setLiked(!isLiked);
-    // TODO 작성 필요
-    // if (handleRemoveCard) setTimeout(() => handleRemoveCard(id, type), 500);
+  const handleLikeStatus = (): void => {
+    setLiked(prev => !prev);
+    if (handleRemoveCard) setTimeout(() => handleRemoveCard(id, type), 500);
     fetchLikeStatus();
   };
 
-  const checkLoginStatus = () => {
-    if (JSON.parse(sessionStorage.getItem('USER') ?? '')) {
+  const checkLoginStatus = (): void => {
+    if (user.token) {
       return handleLikeStatus();
     }
     return setActiveAlert(true);

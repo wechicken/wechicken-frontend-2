@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 
-export const handleHTTPError = (error: AxiosError) => {
+export const handleHTTPError = (error: AxiosError): Promise<never> => {
   const { status } = error.response as AxiosResponse;
   if (status < 500) {
     console.log(status, error);

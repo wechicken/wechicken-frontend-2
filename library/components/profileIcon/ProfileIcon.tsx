@@ -1,19 +1,20 @@
 import styled from '@emotion/styled';
 
-type ProfileIcon = {
+export type ProfileIconProps = {
   size: number;
   img?: string;
 };
 
-export default function ProfileIcon({ size, img }: ProfileIcon) {
-  return <Container size={size} img={img || '/images/default.png'}></Container>;
+export default function ProfileIcon({ size, img }: ProfileIconProps): JSX.Element {
+  return <ProfileIconBox size={size} img={img}></ProfileIconBox>;
 }
 
-const Container = styled.div<ProfileIcon>`
+const ProfileIconBox = styled.div<ProfileIconProps>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  background: url(${({ img }) => img});
+  background: url(${({ img }) => img || '/images/default.png'});
   background-size: cover;
   border-radius: 50%;
   cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.superLightGrey};
 `;

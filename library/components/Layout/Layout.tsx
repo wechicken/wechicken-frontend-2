@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children }: Props): JSX.Element {
   const [isBlurred, setBlurred] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

@@ -7,7 +7,7 @@ type Props = {
   isChecked: boolean;
 };
 
-const BtnCheck = ({ text, handleCheckBox, isChecked }: Props) => {
+const BtnCheck = ({ text, handleCheckBox, isChecked }: Props): JSX.Element => {
   return (
     <BtnCheckBox onClick={() => handleCheckBox(text)}>
       <Check isChecked={isChecked} />

@@ -11,7 +11,7 @@ type Props = {
   style?: Record<string, unknown>;
 };
 
-function ModalLayout({ children, closeModal, style, width, height, padding }: Props) {
+function ModalLayout({ children, closeModal, style, width, height, padding }: Props): JSX.Element {
   return (
     <Dimmer>
       <ModalBox width={width} height={height} padding={padding} style={style}>
@@ -51,7 +51,7 @@ const ModalBox = styled.div<{ width: string; height: string; padding: string | u
   box-sizing: border-box;
 
   ${({ theme }) => theme.md`
-    width: 80%;  
+    max-width: 80%;  
   `}
 
   .BtnClose {

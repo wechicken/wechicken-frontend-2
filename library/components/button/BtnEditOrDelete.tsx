@@ -9,10 +9,10 @@ type Props = {
   getDeleteMyPostId: (id: number) => void;
 };
 
-function BtnEditOrDelete({ postId, handlePostId, getDeleteMyPostId }: Props) {
+function BtnEditOrDelete({ postId, handlePostId, getDeleteMyPostId }: Props): JSX.Element {
   const [isBtnClicked, setBtnClicked] = useState(false);
 
-  const handleBtnClicked = () => {
+  const handleBtnClicked = (): void => {
     setBtnClicked(true);
   };
 
