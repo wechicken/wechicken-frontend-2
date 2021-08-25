@@ -21,17 +21,17 @@ function Alert({
   type,
   selectedMenu,
   setSelectedMenu,
-}: Props) {
-  const handleExecuteFunction = () => {
+}: Props): JSX.Element {
+  const handleExecuteFunction = (): void => {
     excuteFunction();
     setActiveAlert(false);
   };
 
   return (
     <ModalLayout
-      width="400px"
-      height="175px"
-      padding="30px"
+      width="25rem"
+      height="10.9375rem"
+      padding="1.875rem"
       style={{ borderRadius: '15px' }}
       closeModal={() => setActiveAlert(false)}
     >

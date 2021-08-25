@@ -10,6 +10,7 @@ export const theme = {
   yellow: '#FFD66C',
   textGrey: '#8a8383',
   grey: 'rgba(196,196,196,0.3)',
+  superLightGrey: 'rgb(214, 214, 214, 0.5)',
   lightGrey: 'rgb(214, 214, 214)',
   middleGrey: 'rgba(65,65,65,0.4)',
   deepGrey: '#828282',

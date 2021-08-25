@@ -20,7 +20,12 @@ type Props = {
   handleGoogleInput: (input: gapi.auth2.BasicProfile) => void;
 };
 
-function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogleInput }: Props) {
+function GoogleLogin({
+  setLoginSuccess,
+  setModalOn,
+  setExistingUser,
+  handleGoogleInput,
+}: Props): JSX.Element {
   const dispatch = useDispatch();
   const googleLoginBtn = useRef(null);
   const auth2 = useRef<gapi.auth2.GoogleAuth>();
@@ -34,7 +39,7 @@ function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogl
     };
   }, []);
 
-  const googleSDK = () => {
+  const googleSDK = (): void => {
     window.googleSDKLoaded = () => {
       window.gapi.load('auth2', () => {
         auth2.current = window.gapi.auth2.init({
@@ -44,7 +49,7 @@ function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogl
       });
     };
 
-    const makeJsElement = (d: Document, s: string, id: string) => {
+    const makeJsElement = (d: Document, s: string, id: string): void => {
       const fjs: Element = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
 
@@ -58,7 +63,7 @@ function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogl
     makeJsElement(document, 'script', 'google-jssdk');
   };
 
-  const GoogleApiPOST = async (googleToken: string) => {
+  const GoogleApiPOST = async (googleToken: string): Promise<void> => {
     const { data, status } = await loginWithGoogle.mutateAsync(googleToken);
 
     if (status === 201) {
@@ -86,7 +91,7 @@ function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogl
     }
   };
 
-  const googleLoginClickHandler = async () => {
+  const googleLoginClickHandler = async (): Promise<void> => {
     if (auth2.current) {
       try {
         const googleUser = await auth2.current.signIn({
@@ -95,7 +100,7 @@ function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogl
 
         if (!googleUser) throw new Error('Google Login Error');
 
-        const fetchGoogleUser = (googleUser: gapi.auth2.GoogleUser) => {
+        const fetchGoogleUser = (googleUser: gapi.auth2.GoogleUser): void => {
           const profile = googleUser.getBasicProfile();
           handleGoogleInput(profile);
           GoogleApiPOST(googleUser.getAuthResponse().id_token);

@@ -1,21 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LoginUser } from 'library/models/main';
+import { CreatedUser, LoginUser } from 'library/models/main';
+import { AppState } from '.';
 
-export const users = createSlice({
-  name: 'users',
+export const user = createSlice({
+  name: 'user',
   initialState: {
     token: '',
     profile: '',
     myGroupStatus: false,
-    myNth: 0,
-    master: false,
+    nth: 0,
+    message: '',
   },
   reducers: {
-    saveUser(state, action: PayloadAction<LoginUser>) {
+    saveUser(state, action: PayloadAction<LoginUser | CreatedUser>) {
       return { ...state, ...action.payload };
     },
   },
 });
 
-export const { saveUser } = users.actions;
-export default users.reducer;
+export const { saveUser } = user.actions;
+export const currentUser = (state: AppState): LoginUser | CreatedUser => state.user;
+export default user.reducer;

@@ -39,7 +39,7 @@ const style = css`
   }
 `;
 
-const GlobalStyle = () => {
+const GlobalStyle = (): JSX.Element => {
   return <Global styles={style} />;
 };
 

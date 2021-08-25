@@ -22,7 +22,7 @@ const InputTheme = ({
   size,
   name,
   validationCheck,
-}: Props) => {
+}: Props): JSX.Element => {
   const delaySetStateValue = useRef(debounce(q => handleType(q), 500)).current;
 
   return (

@@ -3,18 +3,18 @@ import styled from '@emotion/styled';
 import GoogleLogin from 'components/login/GoogleLogin';
 import LoginForm from 'components/login/LoginForm';
 import { ModalLayout } from 'library/components/modal';
-import LogoBox from 'library/components/modal/LogoBox';
+import Logo from 'library/components/modal/Logo';
 
 type Props = {
   setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function Login({ setModalOn }: Props) {
+function Login({ setModalOn }: Props): JSX.Element {
   const [isExistingUser, setExistingUser] = useState(true);
   const [googleProfile, setGoogleProfile] = useState<gapi.auth2.BasicProfile>();
   const [isLoginSuccess, setLoginSuccess] = useState(false);
 
-  const handleGoogleInput = (googleProfile: gapi.auth2.BasicProfile) => {
+  const handleGoogleInput = (googleProfile: gapi.auth2.BasicProfile): void => {
     setGoogleProfile(googleProfile);
   };
 
@@ -33,7 +33,7 @@ function Login({ setModalOn }: Props) {
         </CelebratingBox>
       ) : isExistingUser ? (
         <LoginBox>
-          <LogoBox />
+          <Logo />
           <LoginBoxRight>
             <Greeting>
               <div className="greeting">환영합니다!</div>
