@@ -3,6 +3,7 @@ import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import BtnLike from 'library/components/button/BtnLike';
 import BtnEditOrDelete from 'library/components/button/BtnEditOrDelete';
 import { Post } from 'library/models/main';
+import { css } from '@emotion/react';
 
 type Props = {
   post: Post;
@@ -95,12 +96,11 @@ const CardContainer = styled.div<{ space: string; width: string; search: boolean
   border-radius: 7px;
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: box-shadow 0.5s ease-in-out;
   cursor: pointer;
-  transition: 200ms;
+  transition: box-shadow 0.5s ease-in-out;
 
   @media (min-width: 1200px) {
-    width: 20%;
+    width: '20%';
   }
 
   ${({ theme }) => theme.lg`
@@ -117,6 +117,14 @@ const CardContainer = styled.div<{ space: string; width: string; search: boolean
     width: 100%;
     margin: 0 2.25rem 2.25rem 2.25rem;
   `}
+
+  ${({ search, width }) =>
+    search &&
+    css`
+      min-width: unset !important;
+      width: ${width} !important;
+      min-height: 230px !important;
+    `}
 
   &:hover {
     transform: translate(0, -10px);
@@ -194,6 +202,12 @@ const Title = styled.div<{ search: boolean | undefined }>`
     margin: 10px 0;
     -webkit-line-clamp: 2;
   `}
+
+  ${({ search }) =>
+    search &&
+    css`
+      -webkit-line-clamp: 2;
+    `}
 `;
 
 const Subtitle = styled.div`

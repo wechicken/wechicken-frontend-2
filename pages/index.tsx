@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from 'react-query';
 import isNil from 'lodash-es/isNil';
@@ -19,11 +19,10 @@ export default function Home(): JSX.Element {
   const user = useSelector(currentUser);
   const [isActiveAlert, setActiveAlert] = useState(false);
   const [isLoginActive, setLoginActive] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const isAfterLogin = useRef(false);
+  const observerRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-    'getMainPage',
+    ['getMainPage', user.token],
     async ({ pageParam = 0 }) => {
       const { status, data } = await getMainPage(pageParam, user.token);
       return status === 200 && data;
@@ -38,17 +37,12 @@ export default function Home(): JSX.Element {
     },
   );
 
-  useEffect(() => {
-    if (!user.token) return;
-    isAfterLogin.current = true;
-  }, [isLoginActive]);
-
   const handleSetLoginActive = (): void => {
     setLoginActive(true);
   };
 
   useIntersectionObserver({
-    target: ref,
+    target: observerRef,
     onIntersect: () => {
       pageRef.current++;
       fetchNextPage();
@@ -95,7 +89,7 @@ export default function Home(): JSX.Element {
                     />
                   )),
               )}
-            <div ref={ref} style={{ height: '10px', width: '3px' }} />
+            <Observer ref={observerRef} />
           </MainContentCards>
         </MainContents>
       </HomeContainer>
@@ -159,4 +153,8 @@ const MainContentTitle = styled.div`
       font-weight: 600;
     }
   }
+`;
+
+const Observer = styled.div`
+  height: 10px;
 `;

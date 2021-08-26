@@ -38,7 +38,7 @@ const LayoutBox = styled.div`
 
 const Observer = styled.div`
   position: absolute;
-  top: calc(100vh + 213px);
+  top: calc(100vh + 13.3125rem);
   height: 10px;
   width: 3px;
 `;

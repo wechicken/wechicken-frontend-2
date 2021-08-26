@@ -82,7 +82,7 @@ function MainBanner({ setActiveAlert }: Props): JSX.Element {
       </CarouselWrapper>
     </MainBannerContainer>
   );
-};
+}
 
 export default MainBanner;
 
