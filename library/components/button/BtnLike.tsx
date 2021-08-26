@@ -18,7 +18,7 @@ type Props = {
   handleRemoveCard?: ((id: number, type: string) => void) | undefined;
 };
 
-function BtnLike({ id, status, type, setActiveAlert, handleRemoveCard }: Props) {
+function BtnLike({ id, status, type, setActiveAlert, handleRemoveCard }: Props): JSX.Element {
   const user = useSelector(currentUser);
   const [isLiked, setLiked] = useState(status ?? false);
   const likeStatus = useMutation(([type, id, token]: [string, number, string]) =>

@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import Search from 'components/nav/Search';
+import SubMenu from 'components/nav/SubMenu';
 import Login from 'components/login/Login';
+import ModifyMyGroup from 'components/myGroup/modifyMyGroup/ModifyMyGroup';
 import Alert from 'library/components/alert/Alert';
 import Button from 'library/components/button/Button';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import { useSelector } from 'react-redux';
 import { currentUser } from 'library/store/saveUser';
-import SubMenu from './SubMenu';
 import { LoginUser } from 'library/models';
 
 type Props = {
@@ -24,6 +26,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
   const [isModalOn, setModalOn] = useState(false);
   const [isActiveAlert, setActiveAlert] = useState(false);
   const [isCreateMyGroupModalOn, setCreateMyGroupModalOn] = useState(false);
+  const [isModifyMyGroup, setModifyMyGroup] = useState(false);
 
   const handleSelectedFunctions = (selected: string): void => {
     setDropDownOpen(false);
@@ -72,6 +75,9 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           // TODO 작성 중
           // <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
         )}
+        {isModifyMyGroup && (
+          <ModifyMyGroup getMyGroupTitle={''} setModifyMyGroup={setModifyMyGroup} />
+        )}
         <LogoWrap>
           <Link href="/" passHref>
             <Logo onClick={() => setSelectedMenu('')}>
@@ -81,6 +87,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           </Link>
         </LogoWrap>
         <UserWrap>
+          {router.pathname !== '/search' && <Search isBlurred={isBlurred} />}
           {user.token ? (
             <>
               {(user as LoginUser).master && (
@@ -175,6 +182,10 @@ const UserWrap = styled.div`
   align-items: center;
   height: 47px;
   position: relative;
+
+  ${({ theme }) => theme.sm`
+    justify-content: space-between;
+  `}
 
   .masterCrown {
     width: 25px;

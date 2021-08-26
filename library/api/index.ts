@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { apiClient } from 'library/api/apiClient';
-import { POSTS_LIMIT } from 'library/constants/constants';
+import { POSTS_LIMIT, SEARCH_RESULTS_LIMIT } from 'library/constants/constants';
 import { CreatedUser, LoginUser, Page } from 'library/models';
 
 export const getMainPage = (page: number, token?: string): Promise<AxiosResponse<Page>> => {
@@ -26,4 +26,10 @@ export const postLikeStatus = (
   token: string,
 ): Promise<AxiosResponse<{ message: string }>> => {
   return apiClient.post(`/posts/${type}/${id}`, {}, { headers: { Authorization: token } });
+};
+
+export const getSearch = (query: string, page: number, token?: string) => {
+  return apiClient.get(`/search?keyword=${query}&page=${page}&size=${SEARCH_RESULTS_LIMIT}`, {
+    headers: { Authorization: token },
+  });
 };
