@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import { HeaderBox } from 'styles/theme';
 import { tempUser } from 'library/api/tempUser';
 import BtnTheme from 'library/components/button/ButtonTheme';
+import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
 
 const innerWidthLimit = 375;
 
@@ -49,6 +50,10 @@ export default function MyGroupPage() {
     window.innerWidth <= innerWidthLimit && setIsGroupTitleVisible(true);
     window.scrollTo(0, 0);
   }, []);
+
+  const handleGroupJoined = (): void => {
+    // TODO 나중에 채워넣을것
+  };
 
   if (isLoading || isNil(data)) {
     return <Loading></Loading>;
@@ -91,6 +96,11 @@ export default function MyGroupPage() {
               )}
             </div>
           </HeaderBox>
+          <PostsOfTheWeek
+            dayPosts={byDays}
+            isGroupJoined={data.is_group_joined}
+            executeFunction={handleGroupJoined}
+          ></PostsOfTheWeek>
         </ThisWeek>
       </ContentWrap>
     </MyPageContainer>

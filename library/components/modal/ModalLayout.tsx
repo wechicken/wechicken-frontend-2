@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Obj } from 'library/models';
 
 type Props = {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ type Props = {
   height: string;
   padding?: string;
   closeModal?: () => void;
-  style?: object;
+  style?: Obj;
 };
 
 function ModalLayout({ children, closeModal, style, width, height, padding }: Props) {

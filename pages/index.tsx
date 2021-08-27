@@ -6,12 +6,13 @@ import Nav from 'components/nav/Nav';
 import MainBanner from 'components/mainBanner/MainBanner';
 import Login from 'components/login/Login';
 import Card from 'library/components/card/Card';
-import Alert from 'library/components/alert/Alert';
+// import Alert from 'library/components/alert/Alert';
 import { Post } from 'library/models/main';
 import { getMainPage } from 'library/api';
 import { useIntersectionObserver } from 'library/hooks/useIntersectionObserver';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import Alert from 'library/components/modal/Alert';
 
 export default function Home() {
   const [isActiveAlert, setActiveAlert] = useState(false);
@@ -60,9 +61,9 @@ export default function Home() {
         <Alert
           setActiveAlert={setActiveAlert}
           alertMessage="로그인이 필요한 서비스입니다."
-          submitBtn="로그인"
-          closeBtn="취소"
-          excuteFunction={handleSetLoginActive}
+          submitBtnText="로그인"
+          closeBtnText="취소"
+          onSubmit={handleSetLoginActive}
         />
       )}
       <HomeContainer>

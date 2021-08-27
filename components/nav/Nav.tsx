@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import Login from 'components/login/Login';
-import Alert from 'library/components/alert/Alert';
+import Alert from 'library/components/modal/Alert';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import Button from 'library/components/button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

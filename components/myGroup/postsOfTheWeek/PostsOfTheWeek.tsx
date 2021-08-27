@@ -1,19 +1,26 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Alert from 'library/components/modal/Alert';
+import { Obj } from 'library/models';
+import { map } from 'lodash-es';
 import { useState } from 'react';
 import { flexCenter } from 'styles/theme';
 import { Bydays } from '../myGroup.model';
-import MyGroupJoinModal from '../myGroupJoinModal/MyGroupJoinModal';
+import DayColumn from './DayColumn';
+import MyGroupJoinModal from './MyGroupJoinModal';
 
 type Props = {
-  dayPosts: Bydays[];
+  dayPosts: Bydays;
   isGroupJoined: boolean;
   executeFunction: () => void;
 };
 
 export default function PostsOfTheWeek({ dayPosts, isGroupJoined, executeFunction }: Props) {
   const [isActiveAlert, setActiveAlert] = useState<boolean>(false);
+
+  const getDayColumns = (): Obj[] => {
+    return map(dayPosts, (posts, day) => ({ day, posts: posts.sort((a, b) => b.id - a.id) }));
+  };
 
   return (
     <Wrap>
@@ -27,7 +34,16 @@ export default function PostsOfTheWeek({ dayPosts, isGroupJoined, executeFunctio
       )}
       {!isGroupJoined && <MyGroupJoinModal setActiveAlert={setActiveAlert}></MyGroupJoinModal>}
       <Container isGroupJoined={isGroupJoined}>
-        <DayColumns></DayColumns>
+        <DayColumns>
+          {/* {getDayColumns().map(({ data, day }) => (
+            <DayColumn day={day} dayPosts={data} key={day}>
+              {'호이'}
+            </DayColumn>
+          ))} */}
+          {getDayColumns().map(({ posts, day }) => (
+            <DayColumn key={day} day={day} dayPosts={posts}></DayColumn>
+          ))}
+        </DayColumns>
       </Container>
     </Wrap>
   );
