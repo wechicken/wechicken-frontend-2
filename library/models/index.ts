@@ -1,3 +1,1 @@
-export interface Obj<T = any> {
-  [k: string]: T;
-}
+export * from 'library/models/main';

@@ -1,12 +1,12 @@
 import { AxiosError, AxiosResponse } from 'axios';
 
-export const handleHTTPError = (error: AxiosError) => {
-  const { status, data } = error.response as AxiosResponse;
+export const handleHTTPError = (error: AxiosError): Promise<never> => {
+  const { status } = error.response as AxiosResponse;
   if (status < 500) {
-    console.log(error);
+    console.log(status, error);
   }
   if (status >= 500) {
-    console.log(error);
+    console.log(status, error);
   }
   return Promise.reject(error);
 };

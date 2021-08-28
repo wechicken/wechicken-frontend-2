@@ -5,6 +5,7 @@ type Props = {
   onIntersect: () => void;
   threshold?: number;
   enabled?: boolean;
+  isLoading?: boolean;
 };
 
 export const useIntersectionObserver = ({
@@ -12,11 +13,14 @@ export const useIntersectionObserver = ({
   onIntersect,
   threshold = 1.0,
   enabled = true,
-}: Props) => {
+  isLoading
+}: Props): {
+  observer: IntersectionObserver | undefined;
+} => {
   const observerRef = useRef<IntersectionObserver>();
 
   useEffect(() => {
-    if (!enabled) {
+    if (isLoading && !enabled) {
       return;
     }
 
@@ -35,7 +39,7 @@ export const useIntersectionObserver = ({
     return () => {
       observer.unobserve(el);
     };
-  }, []);
+  }, [isLoading]);
 
   return { observer: observerRef.current };
 };

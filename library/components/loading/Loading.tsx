@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { flexCenter } from 'styles/theme';
 
-function Loading() {
+function Loading(): JSX.Element {
   return (
     <LoadingContainer>
       <LoadingText/>

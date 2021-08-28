@@ -1,68 +1,164 @@
+import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import styled from '@emotion/styled';
-import { useRef } from 'react';
+import { useMutation } from 'react-query';
+import { postGoogleLogin } from 'library/api';
+import { GOOGLE_CLIENT_ID } from 'library/constants';
+import { LoginUser } from 'library/models';
+import { saveUser } from 'library/store/saveUser';
+declare global {
+  interface Window {
+    googleSDKLoaded: () => void;
+  }
+}
 
 type Props = {
-  setLoginSuccess: () => void;
+  setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
-  setExistingUser: () => void;
-  handleGoogleInput: () => void;
+  setExistingUser: React.Dispatch<React.SetStateAction<boolean>>;
+  handleGoogleInput: (input: gapi.auth2.BasicProfile) => void;
 };
 
-function GoogleLogin({ setLoginSuccess, setModalOn, setExistingUser, handleGoogleInput }: Props) {
+function GoogleLogin({
+  setLoginSuccess,
+  setModalOn,
+  setExistingUser,
+  handleGoogleInput,
+}: Props): JSX.Element {
+  const dispatch = useDispatch();
   const googleLoginBtn = useRef(null);
+  const auth2 = useRef<gapi.auth2.GoogleAuth>();
+  const js = useRef<HTMLElement>();
+  const loginWithGoogle = useMutation((googleToken: string) => postGoogleLogin(googleToken));
+
+  useEffect(() => {
+    googleSDK();
+    return () => {
+      axios.CancelToken.source().cancel();
+    };
+  }, []);
+
+  const googleSDK = (): void => {
+    window.googleSDKLoaded = () => {
+      window.gapi.load('auth2', () => {
+        auth2.current = window.gapi.auth2.init({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: 'profile email',
+        });
+      });
+    };
+
+    const makeJsElement = (d: Document, s: string, id: string): void => {
+      const fjs: Element = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+
+      js.current = d.createElement(s);
+      js.current.id = id;
+      (js.current as HTMLImageElement).src =
+        'https://apis.google.com/js/platform.js?onload=googleSDKLoaded';
+      fjs.parentNode?.insertBefore(js.current, fjs);
+    };
+
+    makeJsElement(document, 'script', 'google-jssdk');
+  };
+
+  const GoogleApiPOST = async (googleToken: string): Promise<void> => {
+    const { data, status } = await loginWithGoogle.mutateAsync(googleToken);
+
+    if (status === 201) {
+      if (data.message === 'FIRST') return setExistingUser(false);
+
+      setLoginSuccess(true);
+      // TODO 쿠키 저장 변경
+      // sessionStorage.setItem(
+      //   'USER',
+      //   JSON.stringify({
+      //     token: data.token,
+      //     profile: data.profile,
+      //     myGroupStatus: data.myGroupStatus,
+      //     myNth: data.nth,
+      //     master: data.master,
+      //   }),
+      // );
+
+      setTimeout(() => {
+        setLoginSuccess(false);
+        setModalOn(false);
+      }, 1000);
+
+      dispatch(saveUser(data as LoginUser));
+    }
+  };
+
+  const googleLoginClickHandler = async (): Promise<void> => {
+    if (auth2.current) {
+      try {
+        const googleUser = await auth2.current.signIn({
+          scope: 'profile email',
+        });
+
+        if (!googleUser) throw new Error('Google Login Error');
+
+        const fetchGoogleUser = (googleUser: gapi.auth2.GoogleUser): void => {
+          const profile = googleUser.getBasicProfile();
+          handleGoogleInput(profile);
+          GoogleApiPOST(googleUser.getAuthResponse().id_token);
+        };
+
+        return fetchGoogleUser(googleUser);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   return (
-    <GoogleLoginBox id="gSignInWrapper">
-      <span className="label" />
-      <div
-        ref={googleLoginBtn}
-        id="customBtn"
-        className="customGPlusSignIn"
-        // onClick={googleLoginClickHandler}
-      >
-        <span className="icon"></span>
-        <span className="buttonText">구글로 로그인하기</span>
-      </div>
-    </GoogleLoginBox>
+    <>
+      <GoogleLoginBtn ref={googleLoginBtn} onClick={googleLoginClickHandler}>
+        <GoogleIcon />
+        <GoogleBtnText>구글로 로그인하기</GoogleBtnText>
+      </GoogleLoginBtn>
+    </>
   );
 }
 
 export default GoogleLogin;
 
-const GoogleLoginBox = styled.div`
-  #customBtn {
-    width: 184px;
-    height: 38px;
-    border: none;
-    margin-top: 85px;
-    margin-bottom: 3px;
-    padding-left: 4%;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    background-color: rgba(255, 153, 0, 0.7);
-  }
-  #customBtn:hover {
-    cursor: pointer;
-  }
-  span.label {
-    font-family: ${({ theme }) => theme.fontContent};
-    font-weight: normal;
-  }
-  span.icon {
-    background: url('/Images/google_logo.svg') no-repeat;
-    background-size: 50%;
-    background-position: center;
-    display: inline-block;
-    vertical-align: middle;
-    width: 42px;
-    height: 42px;
-  }
-  span.buttonText {
-    font-family: ${({ theme }) => theme.fontContent};
-    font-size: 14px;
-    line-height: 16px;
-    text-align: center;
-    color: ${({ theme }) => theme.white};
-  }
+const GoogleLoginBtn = styled.button`
+  height: 38px;
+  border: none;
+  margin-top: 5.3125rem;
+  margin-bottom: 3px;
+  padding-left: 4%;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  background-color: rgba(255, 153, 0, 0.7);
+  cursor: pointer;
+`;
+
+const GoogleIcon = styled.div`
+  background: url('/images/google_logo.svg') no-repeat;
+  background-size: 50%;
+  background-position: center;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+`;
+
+const GoogleBtnText = styled.span`
+  margin-right: 15px;
+  font-family: ${({ theme }) => theme.fontContent};
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: ${({ theme }) => theme.white};
+  white-space: nowrap;
+
+  ${({ theme }) => theme.sm`
+    white-space: normal;
+    word-break: keep-all;
+  `}
 `;

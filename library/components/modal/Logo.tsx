@@ -1,26 +1,35 @@
 import styled from '@emotion/styled';
 
-function LogoBox() {
+function Logo(): JSX.Element {
   return (
-    <Container>
+    <LogoBox>
       <img className="logoImage" alt="logo" src="/images/logo.png" />
       <span>{`>wechicken`}</span>
-    </Container>
+    </LogoBox>
   );
 }
 
-export default LogoBox;
+export default Logo;
 
-const Container = styled.div`
+const LogoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 50%;
 
+  ${({ theme }) => theme.sm`
+    width: 45%;
+  `}
+
   .logoImage {
     width: 157px;
     height: 157px;
+
+    ${({ theme }) => theme.sm`
+      width: 9.8125rem;
+      height: 9.8125rem;
+    `}
   }
 
   span {

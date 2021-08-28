@@ -1,32 +1,30 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { bannerContents } from 'components/mainBanner/BannerContents';
+import { currentUser } from 'library/store/saveUser';
 
 type Props = {
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const MainBanner = ({ setActiveAlert }: Props) => {
+function MainBanner({ setActiveAlert }: Props): JSX.Element {
   const router = useRouter();
+  const user = useSelector(currentUser);
   const [count, setCount] = useState(0);
   const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
-  const isFirstRender = useRef(true);
-  let intervalTime = !isFirstRender.current && count === 0 ? 1 : 4000;
+  const intervalTimeRef = useRef(4000);
 
   const start = useCallback(() => {
     if (intervalRef.current !== null) {
       return;
     }
 
-    if (isFirstRender.current) {
-      intervalTime = 4000;
-    }
-
     intervalRef.current = setInterval(() => {
       setCount(prev => (prev === bannerContents.length - 1 ? 0 : prev + 1));
-    }, intervalTime);
-  }, [intervalTime]);
+    }, intervalTimeRef.current);
+  }, []);
 
   const stop = useCallback(() => {
     if (intervalRef.current === null) {
@@ -42,11 +40,10 @@ const MainBanner = ({ setActiveAlert }: Props) => {
     return () => {
       stop();
     };
-  }, [intervalTime]);
+  }, [start, stop, intervalTimeRef.current]);
 
   useEffect(() => {
-    if (count === 0 || !isFirstRender.current) return;
-    isFirstRender.current = false;
+    count === 4 ? (intervalTimeRef.current = 1) : (intervalTimeRef.current = 4000);
   }, [count]);
 
   return (
@@ -61,27 +58,31 @@ const MainBanner = ({ setActiveAlert }: Props) => {
           <BannerWrap key={idx}>
             <img alt={`banner${idx}`} src={content.img} />
             <BannerContent>
-              <GreetingText>{content.title}</GreetingText>
-              <TitleText>{content.subtitle}</TitleText>
-              <Detail>{content.content}</Detail>
-              <MoreBtn
-                onClick={() =>
-                  content.id !== 'siteIn'
-                    ? router.push(`${content.link}`)
-                    : JSON.parse(sessionStorage.getItem('USER') ?? '')
-                    ? router.push(`${content.link}`)
-                    : setActiveAlert(true)
-                }
-              >
-                더보기 ▸
-              </MoreBtn>
+              <BannerTop>
+                <GreetingText>{content.title}</GreetingText>
+                <TitleText>{content.subtitle}</TitleText>
+              </BannerTop>
+              <BannerBottom>
+                <Detail>{content.content}</Detail>
+                <MoreBtn
+                  onClick={() =>
+                    content.id !== 'siteIn'
+                      ? router.push(`${content.link}`)
+                      : user.token
+                      ? router.push(`${content.link}`)
+                      : setActiveAlert(true)
+                  }
+                >
+                  더보기 ▸
+                </MoreBtn>
+              </BannerBottom>
             </BannerContent>
           </BannerWrap>
         ))}
       </CarouselWrapper>
     </MainBannerContainer>
   );
-};
+}
 
 export default MainBanner;
 
@@ -93,7 +94,7 @@ const MainBannerContainer = styled.div`
 
 const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
   display: inline flex;
-  width: 100vw;
+  width: 100%;
   margin: 0 auto;
   transition: ${({ bannerLength, count }) =>
     count === bannerLength || count === 0 ? '0s' : '-webkit-transform 900ms ease 0s'};
@@ -103,48 +104,97 @@ const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
 
 const BannerWrap = styled.div`
   display: flex;
-  height: 100%;
   padding: 0 10vw;
 
+  ${({ theme }) => theme.lg`
+    padding: 0 5vw;
+  `}
+
+  ${({ theme }) => theme.md`
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 5vw;
+  `}
+
+  ${({ theme }) => theme.sm`
+    padding: 0 3vw;
+  `}
+
   img {
-    width: 50%;
+    max-width: 60%;
+    object-fit: contain;
+
+    ${({ theme }) => theme.md`
+      max-width: 100%;
+    `}
   }
 `;
 
 const BannerContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 0 0 75px;
+  justify-content: space-between;
+  padding: 0.625rem 0 0 4.6875rem;
   font-family: ${({ theme }) => theme.fontContent};
   font-weight: 600;
   word-break: keep-all;
+
+  ${({ theme }) => theme.lg`
+    padding: 20px;
+  `}
+
+  ${({ theme }) => theme.md`
+    padding: 10px;
+  `}
+`;
+
+const BannerTop = styled.div`
+  ${({ theme }) => theme.md`
+    display: flex;
+  `}
+`;
+
+const BannerBottom = styled.div`
+  font-size: 1.25rem;
+
+  ${({ theme }) => theme.sm`
+    font-size: 14px;
+  `}
 `;
 
 const GreetingText = styled.h1`
-  font-size: 39px;
+  font-size: 2.4375rem;
   color: ${({ theme }) => theme.orange};
+
+  ${({ theme }) => theme.md`
+    margin-right: 10px;
+  `}
 `;
 
 const TitleText = styled.h2`
-  font-size: 35px;
+  font-size: 2.1875rem;
 `;
 
 const Detail = styled.p`
-  margin-top: 140px;
-  line-height: 30px;
-  font-size: 20px;
+  line-height: 1.875rem;
+
   font-weight: 300;
   font-family: ${({ theme }) => theme.fontContent};
 `;
 
 const MoreBtn = styled.button`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
+  width: 100%;
+  text-align: end;
+  margin-top: 1.25rem;
+  padding: 0 5px;
   border: none;
   outline: none;
-  font-size: 17px;
   background-color: transparent;
   color: ${({ theme }) => theme.orange};
   cursor: pointer;
+
+  ${({ theme }) => theme.md`
+    padding: 0px;
+    text-align: start;
+`}
 `;

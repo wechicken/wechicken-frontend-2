@@ -3,11 +3,12 @@ import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import BtnLike from 'library/components/button/BtnLike';
 import BtnEditOrDelete from 'library/components/button/BtnEditOrDelete';
 import { Post } from 'library/models/main';
+import { css } from '@emotion/react';
 
 type Props = {
   post: Post;
-  width: number;
-  space: number;
+  width: string;
+  space: string;
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
   handleRemoveCard?: () => void;
   search?: boolean;
@@ -24,7 +25,7 @@ function Card({
   search,
   handlePostId,
   getDeleteMyPostId,
-}: Props) {
+}: Props): JSX.Element {
   const subtitleLimitLength = 125;
 
   return (
@@ -86,19 +87,45 @@ function Card({
 
 export default Card;
 
-const CardContainer = styled.div<{ space: number; width: number; search: boolean | undefined }>`
-  width: ${({ width }) => width}px;
-  height: 327px;
-  margin: ${({ space }) => space}px;
+const CardContainer = styled.div<{ space: string; width: string; search: boolean | undefined }>`
+  width: ${({ width }) => width};
+  min-width: 260px;
+  height: 20.4375rem;
+  margin: ${({ space }) => space};
   position: relative;
   border-radius: 7px;
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: box-shadow 0.5s ease-in-out;
   cursor: pointer;
-  @media (max-width: 1450px) {
-    width: ${({ search, width }) => (search ? width : 250)}px;
+  transition: box-shadow 0.5s ease-in-out;
+
+  @media (min-width: 1200px) {
+    width: '20%';
   }
+
+  ${({ theme }) => theme.lg`
+    width: 29%;
+    height: 280px;
+  `}
+
+  ${({ theme }) => theme.md`
+    width: 43%;
+    height: 250px;
+  `}
+
+  ${({ theme }) => theme.sm`
+    width: 100%;
+    margin: 0 2.25rem 2.25rem 2.25rem;
+  `}
+
+  ${({ search, width }) =>
+    search &&
+    css`
+      min-width: unset !important;
+      width: ${width} !important;
+      min-height: 230px !important;
+    `}
+
   &:hover {
     transform: translate(0, -10px);
   }
@@ -160,6 +187,27 @@ const Title = styled.div<{ search: boolean | undefined }>`
   line-height: 20px;
   margin-bottom: 2px;
   color: #2d2b2b;
+  word-break: break-word;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  ${({ theme }) => theme.lg`
+    -webkit-line-clamp: 3;
+  `}
+
+  ${({ theme }) => theme.md`
+    margin: 10px 0;
+    -webkit-line-clamp: 2;
+  `}
+
+  ${({ search }) =>
+    search &&
+    css`
+      -webkit-line-clamp: 2;
+    `}
 `;
 
 const Subtitle = styled.div`

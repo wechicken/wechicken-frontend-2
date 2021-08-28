@@ -12,7 +12,7 @@ type Props = {
   style?: Obj;
 };
 
-function ModalLayout({ children, closeModal, style, width, height, padding }: Props) {
+function ModalLayout({ children, closeModal, style, width, height, padding }: Props): JSX.Element {
   return (
     <Dimmer>
       <ModalBox width={width} height={height} padding={padding} style={style}>
@@ -49,13 +49,19 @@ const ModalBox = styled.div<{ width: string; height: string; padding: string | u
   background-color: ${({ theme }) => theme.white};
   box-shadow: -14px -14px 20px rgba(0, 0, 0, 0.02), 14px 14px 20px rgba(0, 0, 0, 0.05);
   z-index: 11;
+  box-sizing: border-box;
+
+  ${({ theme }) => theme.md`
+    max-width: 80%;  
+  `}
 
   .BtnClose {
     position: absolute;
+    top: 0;
     right: 0;
     width: 21px;
     height: 21px;
-    margin: 15px;
+    margin: 5%;
     color: ${({ theme }) => theme.deepGrey};
     cursor: pointer;
   }

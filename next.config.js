@@ -5,5 +5,6 @@ module.exports = withTM({
   env: {
     API_URL: process.env.API_URL,
     STAGE: process.env.STAGE,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   },
 });

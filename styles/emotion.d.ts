@@ -8,13 +8,20 @@ declare module '@emotion/react' {
     orange: string;
     opacityOrange: string;
     yellow: string;
+    textGrey: string;
     grey: string;
+    superLightGrey: string;
     lightGrey: string;
     middleGrey: string;
     deepGrey: string;
+    darkGrey: string;
     lightOrange: string;
     fontColor: string;
     fontTitle: string;
     fontContent: string;
+    sm: (...args: Array) => SerializedStyles;
+    md: (...args: Array) => SerializedStyles;
+    lg: (...args: Array) => SerializedStyles;
+    xl: (...args: Array) => SerializedStyles;
   }
 }
