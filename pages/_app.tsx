@@ -15,6 +15,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     defaultOptions: {
       queries: {
         retry: process.env.STAGE === Stage.Development ? false : 3,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
       },
     },
   });

@@ -21,7 +21,8 @@ export const bannerContents = [
     img: '/images/main_banner3.png',
     title: 'Hi',
     subtitle: 'Made by JWT',
-    content: 'wechicken 솔직히 너무 멋지다... 누가 만들었냐구요? 바로바로~ JWT(현쥐,쥰,요쥬,토큰)',
+    content:
+      'wechicken 솔직히 너무 멋지다... 누가 만들었냐구요? 바로바로~ JWT(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)',
     link: 'https://www.notion.so/wecode-468e2e6236734a82b7da2ccfcb02fdc4',
   },
   {

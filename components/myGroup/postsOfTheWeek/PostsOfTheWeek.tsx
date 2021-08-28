@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Alert from 'library/components/modal/Alert';
+import Alert from 'library/components/alert/Alert';
 import { Obj } from 'library/models';
 import { map } from 'lodash-es';
 import { useState } from 'react';

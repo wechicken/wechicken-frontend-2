@@ -55,13 +55,11 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           setSelectedMenu={setSelectedMenu}
           selectedMenu={selectedMenu}
           alertMessage="로그아웃 하시겠습니까?"
-          excuteFunction={() => {
+          onSubmit={() => {
             sessionStorage.removeItem('USER');
             router.push('/');
             window.location.reload();
           }}
-          submitBtn="확인"
-          closeBtn="취소"
         />
       )}
       <NavBox

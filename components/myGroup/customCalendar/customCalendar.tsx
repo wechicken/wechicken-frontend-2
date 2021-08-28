@@ -1,53 +1,39 @@
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import { Dispatch, memo, SetStateAction, useState } from 'react';
+import { memo, useState } from 'react';
 import { flexCenter } from 'styles/theme';
 import Calendar from 'react-calendar';
-import { useQueryClient } from 'react-query';
-import { Bydays, GroupByDate, UserPostsCounting } from '../myGroup.model';
-import { apiClient } from 'library/api/apiClient';
-import { API_URL } from 'library/constants';
-import { tempUser } from 'library/api/tempUser';
+import { QueryFunctionContext, useQuery } from 'react-query';
+import { GroupByDate } from '../myGroup.model';
+import { getPostsByDate } from 'library/api/mygroup';
 import 'react-calendar/dist/Calendar.css';
 
 type Props = {
-  setByDays: Dispatch<SetStateAction<Bydays>>;
-  setUserPostsCounting: Dispatch<SetStateAction<UserPostsCounting>>;
+  handleClickDate: (_: GroupByDate) => void;
 };
 
-function CustomCalendar({ setByDays, setUserPostsCounting }: Props) {
+function CustomCalendar({ handleClickDate }: Props): JSX.Element {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
-  const client = useQueryClient();
+  useQuery(
+    ['Get Posts By Date', date],
+    ({ queryKey }: QueryFunctionContext) => {
+      const [_, selectedDate] = queryKey;
+      const formattedDate = (selectedDate as dayjs.Dayjs).format('YYYYMMDD');
 
-  const fetchPostsByDay = async (date: dayjs.Dayjs): Promise<void> => {
-    const formattedDate = date.format('YYYYMMDD');
-
-    try {
-      const { data } = await client.fetchQuery(
-        'Get Posts by Date',
-        () => {
-          return apiClient.get<GroupByDate>(`${API_URL}/mygroup/calendar/:${formattedDate}`, {
-            headers: {
-              Authorization: tempUser.token,
-            },
-          });
-        },
-        { staleTime: 1000 },
-      );
-
-      setByDays(data.by_days);
-      setUserPostsCounting(data.userPostsCounting);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      return getPostsByDate(formattedDate);
+    },
+    {
+      onSuccess: (data): void => {
+        handleClickDate(data);
+      },
+    },
+  );
 
   const selectDate = (selected: Date): void => {
     const selectedDate = dayjs(selected);
 
     setDate(selectedDate);
-    fetchPostsByDay(selectedDate);
     setIsCalendarVisible(false);
   };
 

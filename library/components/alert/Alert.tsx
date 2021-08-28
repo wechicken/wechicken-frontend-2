@@ -4,9 +4,10 @@ import { ModalLayout } from 'library/components/modal';
 type Props = {
   setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
   alertMessage: string;
-  submitBtn: string;
-  closeBtn: string;
-  excuteFunction: () => void;
+  submitBtnText?: string;
+  closeBtnText?: string;
+  onSubmit?: () => void;
+  onClose?: () => void;
   type?: string;
   setSelectedMenu?: React.Dispatch<React.SetStateAction<string>>;
   selectedMenu?: string;
@@ -15,16 +16,23 @@ type Props = {
 function Alert({
   setActiveAlert,
   alertMessage,
-  submitBtn,
-  closeBtn,
-  excuteFunction,
+  submitBtnText = '확인',
+  closeBtnText = '취소',
+  onSubmit,
+  onClose,
   type,
   selectedMenu,
   setSelectedMenu,
 }: Props): JSX.Element {
-  const handleExecuteFunction = (): void => {
-    excuteFunction();
+  const onClickSubmit = (): void => {
+    onSubmit && onSubmit();
     setActiveAlert(false);
+  };
+
+  const onClickCancel = (): void => {
+    onClose && onClose();
+    setActiveAlert(false);
+    selectedMenu === '로그아웃' && setSelectedMenu && setSelectedMenu('');
   };
 
   return (
@@ -38,17 +46,11 @@ function Alert({
       <AlertBox>
         <AlertText>{alertMessage}</AlertText>
         <AlertBtnBox>
-          <button
-            onClick={() => {
-              setActiveAlert(false);
-              selectedMenu === '로그아웃' && setSelectedMenu && setSelectedMenu('');
-            }}
-            className="closeBtn"
-          >
-            {closeBtn} {type}
+          <button onClick={onClickCancel} className="closeBtn">
+            {closeBtnText} {type}
           </button>
-          <button onClick={handleExecuteFunction} className="submitBtn">
-            {submitBtn}
+          <button onClick={onClickSubmit} className="submitBtn">
+            {submitBtnText}
           </button>
         </AlertBtnBox>
       </AlertBox>
