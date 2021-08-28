@@ -75,7 +75,7 @@ const CalendarContainer = styled.div`
   z-index: 20;
   position: absolute;
   top: 60px;
-  right: -12px;
+  right: 100px;
 
   @keyframes showBox {
     0% {
