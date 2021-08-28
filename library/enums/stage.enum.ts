@@ -1,4 +1,4 @@
 export enum Stage {
   Development = 'development',
-  Production = 'Production',
+  Production = 'production',
 }

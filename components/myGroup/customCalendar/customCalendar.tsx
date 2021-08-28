@@ -5,7 +5,7 @@ import { flexCenter } from 'styles/theme';
 import Calendar from 'react-calendar';
 import { QueryFunctionContext, useQuery } from 'react-query';
 import { GroupByDate } from '../myGroup.model';
-import { getPostsByDate } from 'library/api/mygroup';
+import { getPostsByDate } from 'library/api';
 import 'react-calendar/dist/Calendar.css';
 
 type Props = {
@@ -51,7 +51,7 @@ function CustomCalendar({ handleClickDate }: Props): JSX.Element {
         </span>
       </MonthOfTheWeek>
       <CalendarContainer>
-        {isCalendarVisible && <Calendar onClickDay={selectDate}></Calendar>}
+        {isCalendarVisible && <Calendar onClickDay={selectDate} />}
       </CalendarContainer>
     </>
   );

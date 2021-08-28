@@ -57,8 +57,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           alertMessage="로그아웃 하시겠습니까?"
           onSubmit={() => {
             sessionStorage.removeItem('USER');
-            router.push('/');
-            window.location.reload();
+            window.location.replace('/');
           }}
         />
       )}

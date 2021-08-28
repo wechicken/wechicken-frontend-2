@@ -18,7 +18,7 @@ export default function DayColumn({ day, dayPosts }: Props): JSX.Element {
       </DayOfTheWeek>
       <Wrap>
         {dayPosts.map(post => (
-          <MiniCard post={post} key={post.id}></MiniCard>
+          <MiniCard post={post} key={post.id} />
         ))}
       </Wrap>
     </DayColumnContainer>
