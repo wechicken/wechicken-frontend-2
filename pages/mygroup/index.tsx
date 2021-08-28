@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
 import Contributors from 'components/myGroup/contributors/contributors';
-import { Bydays, MyGroup, UserPostsCounting } from 'components/myGroup/myGroup.model';
+import { Bydays, GroupByDate, MyGroup, UserPostsCounting } from 'components/myGroup/myGroup.model';
 import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
 import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
-import { apiClient } from 'library/api/apiClient';
 import Loading from 'library/components/loading/Loading';
-import { API_URL } from 'library/constants';
 import { isNil } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { HeaderBox } from 'styles/theme';
-import { tempUser } from 'library/api/tempUser';
 import BtnTheme from 'library/components/button/ButtonTheme';
 import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
+import { getMyGroup } from 'library/api/mygroup';
 
 const innerWidthLimit = 375;
 
@@ -31,20 +29,12 @@ export default function MyGroupPage() {
   const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
   const [byDays, setByDays] = useState<Bydays>(initialBydays);
   const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
-  const { data, isLoading } = useQuery<MyGroup>(
-    'MyGroup',
-    () => {
-      return apiClient
-        .get(`${API_URL}/mygroup`, { headers: { Authorization: tempUser.token } })
-        .then(res => res.data);
+  const { data, isLoading } = useQuery<MyGroup>('MyGroup', () => getMyGroup(), {
+    onSuccess: ({ by_days, userPostsCounting }) => {
+      setByDays(by_days);
+      setUserPostsCounting(userPostsCounting);
     },
-    {
-      onSuccess: data => {
-        setByDays(data.by_days);
-        setUserPostsCounting(data.userPostsCounting);
-      },
-    },
-  );
+  });
 
   useEffect(() => {
     window.innerWidth <= innerWidthLimit && setIsGroupTitleVisible(true);
@@ -53,6 +43,11 @@ export default function MyGroupPage() {
 
   const handleGroupJoined = (): void => {
     // TODO 나중에 채워넣을것
+  };
+
+  const handleClickDate = ({ by_days, userPostsCounting }: GroupByDate): void => {
+    setByDays(by_days);
+    setUserPostsCounting(userPostsCounting);
   };
 
   if (isLoading || isNil(data)) {
@@ -82,10 +77,7 @@ export default function MyGroupPage() {
           <HeaderBox width={149}>
             <div className="title">이주의 포스팅</div>
             <div className="btnUpdate">
-              <CustomCalendar
-                setByDays={setByDays}
-                setUserPostsCounting={setUserPostsCounting}
-              ></CustomCalendar>
+              <CustomCalendar handleClickDate={handleClickDate}></CustomCalendar>
               {data.is_group_joined && (
                 <BtnTheme
                   value="포스트 +"

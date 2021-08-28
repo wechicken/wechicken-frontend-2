@@ -7,7 +7,7 @@ export type MyGroup = {
   myProfile: MyProfile;
   users: MyGroupUser[];
   myGroup: MyGroupSub;
-  userPostsCounting: Obj; // UserPostsCounting
+  userPostsCounting: UserPostsCounting;
   Ranks: Rank[];
 };
 
@@ -16,8 +16,9 @@ export type Rank = {
   user_profile: string;
 };
 
-// TODO 추후 type 채워넣을것
-// export type UserPostsCounting = {}
+export type UserPostsCounting = {
+  [k: string]: number;
+};
 
 export type MyGroupSub = {
   title: string;
@@ -45,11 +46,29 @@ export type MyProfile = {
 
 // TODO 이것두
 export type Bydays = {
-  MON: Obj[];
-  TUE: Obj[];
-  WED: Obj[];
-  THU: Obj[];
-  FRI: Obj[];
-  SAT: Obj[];
-  SUN: Obj[];
+  MON: BydayData[];
+  TUE: BydayData[];
+  WED: BydayData[];
+  THU: BydayData[];
+  FRI: BydayData[];
+  SAT: BydayData[];
+  SUN: BydayData[];
+};
+
+export type BydayData = {
+  date: string;
+  id: number;
+  link: string;
+  subtitle: string;
+  thumbnail: string;
+  title: string;
+  type: string;
+  user_name: string;
+  user_profile: string;
+};
+
+export type GroupByDate = {
+  message: string;
+  by_days: Bydays;
+  userPostsCounting: UserPostsCounting;
 };

@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/dist/client/router';
-import Link from 'next/link';
 import styled from '@emotion/styled';
-import Search from 'components/nav/Search';
-import SubMenu from 'components/nav/SubMenu';
 import Login from 'components/login/Login';
 import ModifyMyGroup from 'components/myGroup/modifyMyGroup/ModifyMyGroup';
+import Search from 'components/nav/Search';
+import SubMenu from 'components/nav/SubMenu';
 import Alert from 'library/components/alert/Alert';
 import Button from 'library/components/button/Button';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import { currentUser } from 'library/store/saveUser';
 import { LoginUser } from 'library/models';
+import { currentUser } from 'library/store/saveUser';
+import { useRouter } from 'next/dist/client/router';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 type Props = {
   isBlurred: boolean;
@@ -55,13 +55,10 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           setSelectedMenu={setSelectedMenu}
           selectedMenu={selectedMenu}
           alertMessage="로그아웃 하시겠습니까?"
-          excuteFunction={() => {
+          onSubmit={() => {
             sessionStorage.removeItem('USER');
-            router.push('/');
-            window.location.reload();
+            window.location.replace('/');
           }}
-          submitBtn="확인"
-          closeBtn="취소"
         />
       )}
       <NavBox

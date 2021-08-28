@@ -60,9 +60,9 @@ export default function Home(): JSX.Element {
         <Alert
           setActiveAlert={setActiveAlert}
           alertMessage="로그인이 필요한 서비스입니다."
-          submitBtn="로그인"
-          closeBtn="취소"
-          excuteFunction={handleSetLoginActive}
+          submitBtnText="로그인"
+          closeBtnText="취소"
+          onSubmit={handleSetLoginActive}
         />
       )}
       <HomeContainer>
