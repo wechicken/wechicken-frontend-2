@@ -42,12 +42,12 @@ function Search({ isBlurred }: Props): JSX.Element {
     <>
       <Input
         ref={inputRef}
-        isSearchActive
+        isSearchActive={isSearchActive}
         onKeyDown={e => delaySetSearchValue(e)}
         placeholder="블로그 포스팅을 검색하세요"
       />
       <SearchIcon
-        isSearchActive
+        isSearchActive={isSearchActive}
         onClick={() => {
           setSearchActive(isSearchActive => !isSearchActive);
         }}
