@@ -42,7 +42,7 @@ function SubMenu({
 
     if ((e.target as HTMLLIElement).innerText === page.myGroup) {
       setSelectedMenu((e.target as HTMLLIElement).innerText);
-      return router.push('/myGroup');
+      return router.push('/mygroup');
     }
     setCreateMyGroupModalOn(true);
   };
