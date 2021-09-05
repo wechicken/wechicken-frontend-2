@@ -1,6 +1,11 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/dist/client/router';
+import Link from 'next/link';
 import styled from '@emotion/styled';
 import Login from 'components/login/Login';
-import ModifyMyGroup from 'components/myGroup/modifyMyGroup/ModifyMyGroup';
+import CreateMyGroup from 'components/myGroup/createAndModifyMyGroup/CreateMyGroup';
+import ModifyMyGroup from 'components/myGroup/createAndModifyMyGroup/ModifyMyGroup';
 import Search from 'components/nav/Search';
 import SubMenu from 'components/nav/SubMenu';
 import Alert from 'library/components/alert/Alert';
@@ -8,10 +13,6 @@ import Button from 'library/components/button/Button';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { LoginUser } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
-import { useRouter } from 'next/dist/client/router';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 type Props = {
   isBlurred: boolean;
@@ -68,9 +69,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
       >
         {isModalOn && <Login setModalOn={setModalOn} />}
         {isCreateMyGroupModalOn && (
-          <></>
-          // TODO 작성 중
-          // <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
+          <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
         )}
         {isModifyMyGroup && (
           <ModifyMyGroup getMyGroupTitle={''} setModifyMyGroup={setModifyMyGroup} />

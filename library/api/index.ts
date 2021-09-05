@@ -29,8 +29,28 @@ export const postLikeStatus = (
   return apiClient.post(`/posts/${type}/${id}`, {}, { headers: { Authorization: token } });
 };
 
-export const getSearch = (query: string, page: number, token?: string) => {
+export const getSearch = (
+  query: string,
+  page: number,
+  token?: string,
+): Promise<AxiosResponse<Page>> => {
   return apiClient.get(`/search?keyword=${query}&page=${page}&size=${SEARCH_RESULTS_LIMIT}`, {
     headers: { Authorization: token },
   });
+};
+
+export const postCreateOrModifyGroup = (
+  title: string,
+  count: string,
+  penalty: string,
+  token?: string,
+  // TODO response type 확인 후 정의 필요
+): Promise<AxiosResponse<any>> => {
+  return apiClient.post(
+    '/mygroup/createOrModifyMyGroup',
+    { title, count, penalty },
+    {
+      headers: { Authorization: token },
+    },
+  );
 };
