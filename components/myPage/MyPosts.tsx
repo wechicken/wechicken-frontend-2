@@ -8,13 +8,14 @@ import { HeaderBox, MainContentCards } from 'styles/theme';
 import { Post } from 'library/models/main';
 
 type MyPost = {
-  myPosts: Post;
+  myPosts: Post[];
   setMyPosts: React.Dispatch<React.SetStateAction<[]>>;
   getDeleteMyPostId: (deletePostId: number) => void;
 };
 
 function MyPosts({ myPosts, setMyPosts }: MyPost): JSX.Element {
-  const [isAddModalActive, _setAddModalActive] = useState<boolean>(false);
+  const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
+  const [isActiveAlert, setActiveAlert] = useState<boolean>(false);
   // const [_postId, setPostId] = useState<number>(0);
 
   useEffect(() => {
@@ -45,9 +46,10 @@ function MyPosts({ myPosts, setMyPosts }: MyPost): JSX.Element {
               key={idx}
               // handlePostId={handlePostId}
               // getDeleteMyPostId={getDeleteMyPostId}
+              setActiveAlert={setActiveAlert}
               post={post}
-              width={288}
-              space={20}
+              width={'288px'}
+              space={'20px'}
             />
           );
         })}

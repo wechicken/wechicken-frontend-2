@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { apiClient } from 'library/api/apiClient';
 import { POSTS_LIMIT } from 'library/constants/constants';
-import { CreatedUser, LoginUser, Page } from 'library/models';
+import { CreatedUser, LoginUser, Page, MyProfile } from 'library/models';
 
 export const getMainPage = (page: number, token?: string): Promise<AxiosResponse<Page>> => {
   return apiClient.get(`/main?page=${page}&size=${POSTS_LIMIT}`, {
@@ -16,6 +16,12 @@ export const postGoogleLogin = (googleToken: string): Promise<AxiosResponse<Logi
 export const postAuthAddtional = (formData: FormData): Promise<AxiosResponse<CreatedUser>> => {
   return apiClient.post('/auth/additional', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
+export const getMyProfile = (token?: string): Promise<AxiosResponse<MyProfile>> => {
+  return apiClient.get('/mypage', {
+    headers: { Authorization: token },
   });
 };
 

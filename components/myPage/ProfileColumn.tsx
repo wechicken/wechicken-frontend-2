@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
@@ -5,9 +6,12 @@ import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import Alert from 'library/components/alert/Alert';
 import EditForm from './EditForm';
 import { theme, flexCenter } from 'styles/theme';
+import { MyProfile } from 'library/models';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 type ProfileColumn = {
-  myProfile: { [key: string]: string | number };
+  myProfile: MyProfile;
   deleteProfileImg: (deleteTarget: string) => void;
 };
 
@@ -17,6 +21,7 @@ function ProfileColumn({ myProfile, deleteProfileImg }: ProfileColumn) {
   const [isEdit, setisEdit] = useState<boolean>(false);
   const [deleteEvent, setDeleteEvent] = useState<string>('');
   const [contentValue, setContentValue] = useState<string>('');
+  console.log({ myProfile });
 
   // useEffect(() => {
   //   if (editedProfileImg) {
@@ -25,13 +30,13 @@ function ProfileColumn({ myProfile, deleteProfileImg }: ProfileColumn) {
   // }, [editedProfileImg]);
 
   useEffect(() => {
-    setContentValue(myProfile.blog_address as string);
-  }, [myProfile.blog_address]);
+    setContentValue(myProfile?.blog_address as string);
+  }, [myProfile?.blog_address]);
 
   // 수정 아이콘
-  // const activeEditForm = () => {
-  //   setisEdit(!isEdit);
-  // };
+  const activeEditForm = () => {
+    setisEdit(!isEdit);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setisEdit(!isEdit);
@@ -50,6 +55,10 @@ function ProfileColumn({ myProfile, deleteProfileImg }: ProfileColumn) {
   const modifyProfileImg = () => {
     console.log('modifyProfileImg');
   };
+  const handleDeleteProfileImg = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // setDeleteEvent(e.target.name);
+    setActiveAlert(true);
+  };
 
   return (
     <ProfileContainer>
@@ -67,24 +76,18 @@ function ProfileColumn({ myProfile, deleteProfileImg }: ProfileColumn) {
       <ProfilePhoto>
         <ProfileIcon size={131} />
         <label>
-          <input type="file" onSubmit={modifyProfileImg} />
+          {/* <input type="file" onChange={handleEditProfileImg} onSubmit={modifyProfileImg} /> */}
           <UploadPhotoBtn>이미지 업로드</UploadPhotoBtn>
         </label>
-        <DeletePhotoBtn
-          data-name="user_thumbnail"
-          onClick={e => {
-            setDeleteEvent(e.target.dataset.name as string);
-            setActiveAlert(true);
-          }}
-        >
+        <DeletePhotoBtn name="user_thumbnail" onClick={e => handleDeleteProfileImg(e)}>
           이미지 제거
         </DeletePhotoBtn>
       </ProfilePhoto>
       <ProfileContents>
-        <span className="userNth">wecode_nth기</span>
-        <h1 className="userName">user_name</h1>
+        <span className="userNth">{myProfile?.wecode_nth}기</span>
+        <h1 className="userName">{myProfile?.user_name}</h1>
         <div className="userInfo">
-          <span className="email">gmail</span>
+          <span className="email">{myProfile?.gmail}</span>
           {isEdit ? (
             <EditForm
               contentValue={contentValue}
@@ -93,7 +96,10 @@ function ProfileColumn({ myProfile, deleteProfileImg }: ProfileColumn) {
             />
           ) : (
             <div className="userBlogAddress">
-              <span>{contentValue}</span>
+              <span>
+                {contentValue}
+                <FontAwesomeIcon className="editBtn" onClick={activeEditForm} icon={faEdit} />
+              </span>
             </div>
           )}
         </div>
@@ -143,7 +149,7 @@ const ProfilePhoto = styled.div`
   }
 `;
 
-const UploadPhotoBtn = styled.div`
+const UploadPhotoBtn = styled.button`
   width: 164px;
   height: 36px;
   margin: 10px 0;
@@ -151,6 +157,7 @@ const UploadPhotoBtn = styled.div`
   border-radius: 4px;
   color: ${theme.white};
   background: ${theme.opacityOrange};
+  border: none;
   cursor: pointer;
 
   &:hover {
