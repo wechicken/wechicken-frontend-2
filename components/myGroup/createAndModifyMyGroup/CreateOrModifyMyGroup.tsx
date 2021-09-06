@@ -4,7 +4,7 @@ import { useRouter } from 'next/dist/client/router';
 import styled from '@emotion/styled';
 import CelebratingModal from 'components/login/CelebratingModal';
 import BtnSubmit from 'library/components/button/BtnSubmit';
-import InputTheme from 'library/components/button/InputTheme';
+import InputTheme from 'library/components/input/InputTheme';
 import { currentUser, saveUser } from 'library/store/saveUser';
 import { postCreateOrModifyGroup } from 'library/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,13 +29,18 @@ function CreateOrModifyMyGroup({
 }: Props): JSX.Element {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [myGroupTitle, setMyGroupTitle] = useState('');
-  const [count, setCount] = useState('');
-  const [penalty, setPenalty] = useState('');
+  const [form, setForm] = useState({ myGroupTitle: '', count: '', penalty: '' });
   const [isSubmitActivate, setSubmitActivate] = useState(false);
   const [isCelebratingModalOn, setCelebratingModalOn] = useState(false);
 
   const user = useSelector(currentUser);
+
+  const { myGroupTitle, count, penalty } = form;
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
+    setForm({ ...form, [e.target.name]: value });
+  };
 
   const setMyGroupPage = async (): Promise<void> => {
     setCelebratingModalOn(true);
@@ -106,21 +111,24 @@ function CreateOrModifyMyGroup({
             <InputTheme
               width="10.625rem"
               type="기수 페이지명"
-              handleType={setMyGroupTitle}
+              name="myGroupTitle"
+              handleEvent={handleChangeInput}
               placeholder={myGroupTitleText}
               size="14px"
             />
             <InputTheme
               width="10.625rem"
               type="주 블로그 업로드 횟수"
-              handleType={setCount}
+              name="count"
+              handleEvent={handleChangeInput}
               placeholder="예시) 주 3회"
               size="14px"
             />
             <InputTheme
               width="10.625rem"
               type="회당 기부금"
-              handleType={setPenalty}
+              name="penalty"
+              handleEvent={handleChangeInput}
               placeholder="예시)3000원"
               size="14px"
             />
