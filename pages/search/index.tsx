@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { queryToSearch, searchQuery } from 'library/store/searchQuery';
-import { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/dist/client/router';
 import { useInfiniteQuery } from 'react-query';
 import isNil from 'lodash-es/isNil';
 import { getSearch } from 'library/api';
@@ -9,15 +9,15 @@ import { useIntersectionObserver } from 'library/hooks';
 import Loading from 'library/components/loading/Loading';
 import InputTheme from 'library/components/input/InputTheme';
 import Card from 'library/components/card/Card';
-import { Obj, Post } from 'library/models';
+import { Page, Post } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 
 function SearchPage(): JSX.Element {
-  const dispatch = useDispatch();
+  const router = useRouter();
+  const { query } = router.query;
   const user = useSelector(currentUser);
-  const query = useSelector(queryToSearch);
   const [isActiveAlert, setActiveAlert] = useState(false);
-  const [keyword, setKeyword] = useState(query);
+  const [keyword, setKeyword] = useState(String(query ?? ''));
   const observerRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
@@ -46,35 +46,37 @@ function SearchPage(): JSX.Element {
     isLoading,
   });
 
-  useEffect(() => {
-    dispatch(searchQuery('search'));
+  const searchingStatus = (keyword: string): JSX.Element => {
+    return !keyword ? (
+      <NoResult>검색 키워드를 입력해주세요</NoResult>
+    ) : (
+      <NoResult>검색 결과가 없습니다</NoResult>
+    );
+  };
 
-    return () => {
-      dispatch(searchQuery(''));
-    };
-  }, [dispatch]);
-
-  const searchingStatus = (keyword: string, isSearching: boolean): JSX.Element => {
-    const keywordError: Obj = {
-      [String(!keyword)]: <NoResult>검색 키워드를 입력해주세요</NoResult>,
-      [String(!!keyword && isSearching)]: <NoResult>검색 중 입니다</NoResult>,
-      [String(!!keyword && !isSearching)]: <NoResult>검색 결과가 없습니다</NoResult>,
-    };
-
-    return keywordError[String(true)];
+  const moveToSearchURL = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { value: query } = event.target;
+    router.push(`/search?query=${query}`);
+    setKeyword(query);
   };
 
   if (isLoading) return <Loading />;
 
   return (
-    <SearchPageBox>
+    <>
       {isActiveAlert && <></>}
       <>
         <SearchWrap>
-        <InputTheme width="40.625rem" value={keyword} handleType={setKeyword} size="2.8125rem" search/>
+          <InputTheme
+            width="40.625rem"
+            value={keyword}
+            handleEvent={moveToSearchURL}
+            size="2.8125rem"
+            search
+          />
         </SearchWrap>
         <PostWrap>
-          {data && keyword
+          {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
             ? data.pages.map(
                 page =>
                   page &&
@@ -89,17 +91,15 @@ function SearchPage(): JSX.Element {
                     />
                   )),
               )
-            : searchingStatus(keyword, isLoading)}
+            : searchingStatus(keyword)}
           <Observer ref={observerRef} />
         </PostWrap>
       </>
-    </SearchPageBox>
+    </>
   );
 }
 
 export default SearchPage;
-
-const SearchPageBox = styled.div``;
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -115,6 +115,10 @@ const SearchWrap = styled.div`
   z-index: 1;
   background: linear-gradient(to bottom, #ffffff1d 0%, #ffffff1d 80%, rgba(255, 255, 255, 0) 100%);
   backdrop-filter: blur(5px);
+
+  ${({ theme }) => theme.sm`
+    padding: 5.55rem 0 3rem 0;
+  `}
 `;
 
 const PostWrap = styled.div`
@@ -126,6 +130,7 @@ const PostWrap = styled.div`
 
   ${({ theme }) => theme.sm`
     padding-top: 0;
+    padding: 0 1.9375rem;
   `}
 `;
 

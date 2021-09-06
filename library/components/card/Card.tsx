@@ -99,32 +99,28 @@ const CardContainer = styled.div<{ space: string; width: string; search: boolean
   cursor: pointer;
   transition: box-shadow 0.5s ease-in-out;
 
-  @media (min-width: 1200px) {
-    width: '20%';
-  }
+  ${({ theme, search, width }) => theme.xl`
+    width: 20%;
+    ${search && `width: ${width}`}
+  `}
 
-  ${({ theme }) => theme.lg`
+  ${({ theme, search, width }) => theme.lg`
     width: 29%;
     height: 280px;
+    ${search && `width: ${width}`}
   `}
 
-  ${({ theme }) => theme.md`
+  ${({ theme, search, width }) => theme.md`
     width: 43%;
     height: 250px;
+    ${search && `width: ${width}`}
   `}
 
-  ${({ theme }) => theme.sm`
+  ${({ theme, search }) => theme.sm`
     width: 100%;
     margin: 0 2.25rem 2.25rem 2.25rem;
+    ${search && `margin: 10px`}
   `}
-
-  ${({ search, width }) =>
-    search &&
-    css`
-      min-width: unset !important;
-      width: ${width} !important;
-      min-height: 230px !important;
-    `}
 
   &:hover {
     transform: translate(0, -10px);

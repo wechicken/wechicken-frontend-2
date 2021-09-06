@@ -4,15 +4,20 @@ import React from 'react';
 type Props = {
   value: string;
   handleFunction: () => void;
+  isSearchActive?: boolean;
 };
 
-function Button({ value, handleFunction }: Props): JSX.Element {
-  return <ButtonBox onClick={handleFunction}>{value}</ButtonBox>;
+function Button({ value, handleFunction, isSearchActive }: Props): JSX.Element {
+  return (
+    <ButtonBox onClick={handleFunction} isSearchActive={isSearchActive}>
+      {value}
+    </ButtonBox>
+  );
 }
 
 export default Button;
 
-const ButtonBox = styled.div`
+const ButtonBox = styled.div<{ isSearchActive: boolean | undefined }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,4 +30,8 @@ const ButtonBox = styled.div`
   font-size: 14px;
   font-family: ${({ theme }) => theme.fontContent};
   font-size: 14px;
+
+  ${({ theme, isSearchActive }) => theme.sm`
+    ${isSearchActive && 'display: none'}
+  `}
 `;

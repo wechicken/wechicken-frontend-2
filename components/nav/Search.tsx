@@ -1,27 +1,26 @@
 import styled from '@emotion/styled';
 import debounce from 'lodash-es/debounce';
-import { searchQuery } from 'library/store/searchQuery';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { SearchSvg } from 'styles/Svg';
 
 type Props = {
   isBlurred: boolean;
+  isSearchActive: boolean;
+  setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function Search({ isBlurred }: Props): JSX.Element {
-  const dispatch = useDispatch();
+function Search({ isBlurred, isSearchActive, setSearchActive }: Props): JSX.Element {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isSearchActive, setSearchActive] = useState(false);
+
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     if (isSearchActive && isBlurred && !searchValue) {
       setSearchActive(false);
     }
-  }, [isBlurred]);
+  }, [isBlurred, searchValue]);
 
   const delaySetSearchValue = useRef(debounce(q => handleInput(q), 300)).current;
 
@@ -30,11 +29,10 @@ function Search({ isBlurred }: Props): JSX.Element {
     setSearchValue(query);
 
     if (e.code === 'Enter') {
-      dispatch(searchQuery(query));
       setSearchActive(false);
       setSearchValue('');
       (inputRef.current as HTMLInputElement).value = '';
-      router.push('/search');
+      router.push(`/search?query=${query}`);
     }
   };
 
@@ -62,7 +60,8 @@ export default Search;
 
 const Input = styled.input<{ isSearchActive: boolean }>`
   display: ${({ isSearchActive }) => (isSearchActive ? 'block' : 'none')};
-  height: 25px;
+  min-width: 170px;
+  height: 1.5625rem;
   border: none;
   outline: none;
   font-size: 1.125rem;
@@ -70,7 +69,13 @@ const Input = styled.input<{ isSearchActive: boolean }>`
   caret-color: ${({ theme }) => theme.vermilion};
   background-color: transparent;
 
-  ::placeholder {
+  ${({ theme }) => theme.sm`
+    min-width: 160px;
+  `}
+
+  &::placeholder,
+  ::-webkit-input-placeholder,
+  ::-ms-input-placeholder {
     padding-left: 5px;
     font-size: 14px;
     color: ${({ theme }) => theme.orange};
@@ -82,16 +87,21 @@ const SearchIcon = styled.div<{ isSearchActive: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 38px;
-  height: 38px;
-  margin-right: 15px;
+  width: 2.375rem;
+  height: 2.375rem;
+  margin-right: 0.9375rem;
   border-radius: 50%;
   background-color: inherit;
   transform: ${({ isSearchActive }) => (isSearchActive ? 'translateX(-15.5rem)' : 'translateX(0)')};
   transition: all 0.2s ease-in-out;
 
+  ${({ theme, isSearchActive }) => theme.md`
+    ${isSearchActive ? `transform: translateX(-16.5rem)` : 'transform: none'}
+  `}
+
   ${({ theme, isSearchActive }) => theme.sm`
     ${isSearchActive ? `transform: translateX(-12.5rem)` : 'transform: none'}
+    ${isSearchActive ? `display: none` : 'display: flex'}
   `}
 
   &:hover {
@@ -99,9 +109,9 @@ const SearchIcon = styled.div<{ isSearchActive: boolean }>`
   }
 
   svg {
-    width: 22px;
-    height: 22px;
-    margin-top: 3px;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-top: 0.1875rem;
     fill: ${({ theme }) => theme.deepGrey};
     cursor: pointer;
   }
