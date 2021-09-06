@@ -28,6 +28,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
   const [isActiveAlert, setActiveAlert] = useState(false);
   const [isCreateMyGroupModalOn, setCreateMyGroupModalOn] = useState(false);
   const [isModifyMyGroup, setModifyMyGroup] = useState(false);
+  const [isSearchActive, setSearchActive] = useState(false);
 
   const handleSelectedFunctions = (selected: string): void => {
     setDropDownOpen(false);
@@ -83,7 +84,13 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           </Link>
         </LogoWrap>
         <UserWrap>
-          {router.pathname !== '/search' && <Search isBlurred={isBlurred} />}
+          {router.pathname !== '/search' && (
+            <Search
+              setSearchActive={setSearchActive}
+              isSearchActive={isSearchActive}
+              isBlurred={isBlurred}
+            />
+          )}
           {user.token ? (
             <>
               {(user as LoginUser).master && (
@@ -94,7 +101,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
               </div>
             </>
           ) : (
-            <Button value="로그인" handleFunction={() => setModalOn(true)} />
+            <Button value="로그인" handleFunction={() => setModalOn(true)} isSearchActive={isSearchActive} />
           )}
         </UserWrap>
         {isdropDownOpen && (
@@ -152,23 +159,27 @@ const LogoWrap = styled.div`
 const Logo = styled.a`
   display: flex;
   align-items: center;
-  width: 190px;
+  width: 11.875rem;
   text-decoration: none;
   color: ${({ theme }) => theme.fontColor};
 
   .logoImage {
-    width: 51px;
-    height: 52px;
+    width: 3.1875rem;
+    height: 3.25rem;
     margin-right: 10px;
     border-radius: 50px;
   }
 
   .logoText {
-    width: 130px;
+    width: 8.125rem;
     font-family: ${({ theme }) => theme.fontTitle};
     font-weight: 500;
-    font-size: 20px;
-    line-height: 27px;
+    font-size: 1.25rem;
+    line-height: 1.6875rem;
+
+    ${({ theme }) => theme.sm`
+      font-size: 15px;
+    `}
   }
 `;
 
@@ -178,10 +189,6 @@ const UserWrap = styled.div`
   align-items: center;
   height: 47px;
   position: relative;
-
-  ${({ theme }) => theme.sm`
-    justify-content: space-between;
-  `}
 
   .masterCrown {
     width: 25px;
