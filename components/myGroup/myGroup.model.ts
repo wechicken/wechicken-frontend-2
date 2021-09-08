@@ -1,5 +1,3 @@
-import { Obj } from 'library/models';
-
 export type MyGroup = {
   message: string;
   is_group_joined: boolean;
@@ -44,7 +42,6 @@ export type MyProfile = {
   blog_type: string;
 };
 
-// TODO 이것두
 export type Bydays = {
   MON: BydayData[];
   TUE: BydayData[];
@@ -71,4 +68,10 @@ export type GroupByDate = {
   message: string;
   by_days: Bydays;
   userPostsCounting: UserPostsCounting;
+};
+
+export type AddPostInputValue = {
+  title: string;
+  link: string;
+  date: string;
 };

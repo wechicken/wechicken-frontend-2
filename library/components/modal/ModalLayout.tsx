@@ -2,19 +2,37 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Obj } from 'library/models';
+import { css } from '@emotion/react';
 
 type Props = {
   children: React.ReactNode;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
   padding?: string;
   closeModal?: () => void;
   style?: Obj;
+  closeOnClickDimmer?: boolean;
 };
 
-function ModalLayout({ children, closeModal, style, width, height, padding }: Props): JSX.Element {
+function ModalLayout({
+  children,
+  closeModal,
+  style,
+  width,
+  height,
+  padding,
+  closeOnClickDimmer = false,
+}: Props): JSX.Element {
+  const handleClickDimmer = ({ target, currentTarget }: MouseEvent): void => {
+    if (target !== currentTarget) {
+      return;
+    }
+
+    closeOnClickDimmer && closeModal && closeModal();
+  };
+
   return (
-    <Dimmer>
+    <Dimmer onClick={handleClickDimmer}>
       <ModalBox width={width} height={height} padding={padding} style={style}>
         {closeModal && <FontAwesomeIcon onClick={closeModal} className="BtnClose" icon={faTimes} />}
         {children}
@@ -40,10 +58,10 @@ const Dimmer = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
-const ModalBox = styled.div<{ width: string; height: string; padding: string | undefined }>`
+const ModalBox = styled.div<{ width?: string; height?: string; padding: string | undefined }>`
   position: relative;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  ${({ width }) => `width: ${width}`};
+  ${({ height }) => height && `height: ${height}`};
   padding: ${({ padding }) => (padding ? padding : '10px')};
   border-radius: 3px;
   background-color: ${({ theme }) => theme.white};

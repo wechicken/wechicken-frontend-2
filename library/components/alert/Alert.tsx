@@ -11,6 +11,8 @@ type Props = {
   type?: string;
   setSelectedMenu?: React.Dispatch<React.SetStateAction<string>>;
   selectedMenu?: string;
+  width?: string;
+  height?: string;
 };
 
 function Alert({
@@ -23,6 +25,8 @@ function Alert({
   type,
   selectedMenu,
   setSelectedMenu,
+  width = '25rem',
+  height = '10.9375rem',
 }: Props): JSX.Element {
   const onClickSubmit = (): void => {
     onSubmit && onSubmit();
@@ -37,8 +41,8 @@ function Alert({
 
   return (
     <ModalLayout
-      width="25rem"
-      height="10.9375rem"
+      width={width}
+      height={height}
       padding="1.875rem"
       style={{ borderRadius: '15px' }}
       closeModal={() => setActiveAlert(false)}
