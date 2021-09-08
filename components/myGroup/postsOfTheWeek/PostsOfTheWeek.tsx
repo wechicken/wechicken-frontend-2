@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Alert from 'library/components/alert/Alert';
 import { Obj } from 'library/models';
-import { map } from 'lodash-es';
+import map from 'lodash-es/map';
 import { useState } from 'react';
 import { flexCenter } from 'styles/theme';
 import { Bydays } from '../myGroup.model';
@@ -73,9 +73,9 @@ const Container = styled.div<{ isGroupJoined: boolean }>`
       filter: blur(4px);
     `}
 
-  @media (max-width: 375px) {
+  ${({ theme }) => theme.sm`
     box-shadow: none;
-  }
+  `}
 `;
 
 const DayColumns = styled.div`

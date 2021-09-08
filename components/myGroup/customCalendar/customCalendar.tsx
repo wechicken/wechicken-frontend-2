@@ -1,18 +1,19 @@
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { flexCenter } from 'styles/theme';
 import Calendar from 'react-calendar';
 import { QueryFunctionContext, useQuery } from 'react-query';
-import { GroupByDate } from '../myGroup.model';
+import { GroupByDate, MyGroup } from '../myGroup.model';
 import { getPostsByDate } from 'library/api';
 import 'react-calendar/dist/Calendar.css';
 
 type Props = {
   handleClickDate: (_: GroupByDate) => void;
+  data: MyGroup;
 };
 
-function CustomCalendar({ handleClickDate }: Props): JSX.Element {
+function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
   useQuery(
@@ -29,6 +30,10 @@ function CustomCalendar({ handleClickDate }: Props): JSX.Element {
       },
     },
   );
+
+  useEffect(() => {
+    setDate(dayjs());
+  }, [data]);
 
   const selectDate = (selected: Date): void => {
     const selectedDate = dayjs(selected);
@@ -72,10 +77,10 @@ const CalendarContainer = styled.div`
     }
   }
 
-  @media (max-width: 375px) {
-    top: 95px;
-    right: 25px;
-  }
+  ${({ theme }) => theme.sm`
+  top: 95px;
+  right: 25px;
+  `}
 
   .react-calendar {
     width: 300px;
@@ -141,9 +146,9 @@ const MonthOfTheWeek = styled.div`
     color: ${({ theme }) => theme.deepGrey};
   }
 
-  @media (max-width: 375px) {
-    margin: 0 10px;
-  }
+  ${({ theme }) => theme.sm`
+  margin: 0 10px;
+  `}
 `;
 
 export default memo(CustomCalendar);

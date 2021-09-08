@@ -32,7 +32,10 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         // This rule is not compatible with Next.js's <Link /> components
         'jsx-a11y/anchor-is-valid': 'off',
-        '@typescript-eslint/no-unused-vars': [2, { argsIgnorePattern: '^_' }],
+        '@typescript-eslint/no-unused-vars': [
+          2,
+          { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        ],
         // I suggest this setting for requiring return types on functions only where useful
         '@typescript-eslint/explicit-function-return-type': [
           1,

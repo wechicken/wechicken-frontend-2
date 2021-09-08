@@ -46,26 +46,26 @@ const BannerContents = styled.div`
     width: 530px;
   }
 
-  @media (max-width: 800px) {
-    flex-direction: column;
-  }
+  ${({ theme }) => theme.sm`
+  flex-direction: column;
 
-  @media (max-width: 375px) {
-    flex-direction: column;
-
-    img {
-      width: 330px;
-    }
+  img {
+    width: 330px;
   }
+  `}
+
+  ${({ theme }) => theme.md`
+  flex-direction: column;
+  `}
 
   .contents {
     margin-left: 100px;
     display: flex;
     flex-direction: column;
 
-    @media (max-width: 800px) {
-      margin: 0;
-    }
+    ${({ theme }) => theme.md`
+    margin: 0;
+    `}
 
     .title {
       width: 350px;
@@ -76,14 +76,14 @@ const BannerContents = styled.div`
       color: ${({ theme }) => theme.vermilion};
       word-break: keep-all;
 
-      @media (max-width: 800px) {
-        margin-top: 40px;
-      }
+      ${({ theme }) => theme.md`
+      margin-top: 40px;
+      `}
 
-      @media (max-width: 375px) {
-        font-size: 30px;
-        text-align: center;
-      }
+      ${({ theme }) => theme.sm`
+      font-size: 30px;
+      text-align: center;
+      `}
     }
 
     .rankList {
@@ -95,9 +95,9 @@ const BannerContents = styled.div`
       font-family: ${({ theme }) => theme.fontContent};
       color: ${({ theme }) => theme.vermilion};
 
-      @media (max-width: 800px) {
-        justify-content: center;
-      }
+      ${({ theme }) => theme.md`
+      justify-content: center;
+      `}
 
       .rank {
         margin-right: 20px;
@@ -108,9 +108,10 @@ const BannerContents = styled.div`
         font-size: 20px;
         color: ${({ theme }) => theme.fontColor};
       }
-      @media (max-width: 375px) {
-        font-size: 20px;
-      }
+
+      ${({ theme }) => theme.sm`
+      font-size: 20px;
+      `}
     }
   }
 `;
