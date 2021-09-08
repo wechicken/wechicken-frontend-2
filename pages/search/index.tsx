@@ -7,7 +7,7 @@ import isNil from 'lodash-es/isNil';
 import { getSearch } from 'library/api';
 import { useIntersectionObserver } from 'library/hooks';
 import Loading from 'library/components/loading/Loading';
-import InputTheme from 'library/components/button/InputTheme';
+import InputTheme from 'library/components/input/InputTheme';
 import Card from 'library/components/card/Card';
 import { Obj, Post } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
@@ -71,7 +71,7 @@ function SearchPage(): JSX.Element {
       {isActiveAlert && <></>}
       <>
         <SearchWrap>
-          <InputTheme width="40.625rem" value={keyword} handleType={setKeyword} size="2.8125rem" search/>
+        <InputTheme width="40.625rem" value={keyword} handleType={setKeyword} size="2.8125rem" search/>
         </SearchWrap>
         <PostWrap>
           {data && keyword

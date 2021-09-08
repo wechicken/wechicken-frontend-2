@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import Logo from 'library/components/modal/Logo';
-import InputTheme from 'library/components/button/InputTheme';
+import InputTheme from 'library/components/input/InputTheme';
 import BtnCheck from 'library/components/button/BtnCheck';
 import BtnSubmit from 'library/components/button/BtnSubmit';
 import useUpload from 'library/hooks/useUpload';
@@ -26,29 +26,42 @@ export default function LoginForm({
   setExistingUser,
 }: Props): JSX.Element {
   const dispatch = useDispatch();
-  const [inputName, setInputName] = useState('');
-  const [nth, setNth] = useState('');
-  const [blogAddress, setBlogAddress] = useState('');
-  const [isJoinGroup, setJoinGroup] = useState(true);
-  const [agreementStatus, setAgreementStatus] = useState(true);
+  const [loginForm, setLoginForm] = useState({
+    inputName: '',
+    nth: '',
+    blogAddress: '',
+    isJoinGroup: true,
+  });
+  const [isAgreed, setAgreed] = useState(true);
   const [isSubmitActivate, setSubmitActivate] = useState(false);
   const googleProfileImage = useRef(googleProfile.getImageUrl());
+
   const { handleInputImage, convertedImage, ProfileIcon, uploadedImage } = useUpload(
     googleProfileImage.current,
   );
+
   const loginWithForm = useMutation((formData: FormData) => postAuthAddtional(formData));
+
+  const { inputName, nth, blogAddress, isJoinGroup } = loginForm;
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
+    setLoginForm({ ...loginForm, [e.target.name]: value });
+  };
 
   const handleCheckBox = (type: string): void => {
     type === '치킨계 가입(선택)'
-      ? setJoinGroup(!isJoinGroup)
-      : setAgreementStatus(!agreementStatus);
+      ? setLoginForm(prev => {
+          return { ...prev, isJoinGroup: !prev.isJoinGroup };
+        })
+      : setAgreed(!isAgreed);
   };
 
   useEffect(() => {
-    inputName && nth && blogAddress && agreementStatus
+    inputName && nth && blogAddress && isAgreed
       ? setSubmitActivate(true)
       : setSubmitActivate(false);
-  }, [inputName, nth, blogAddress, agreementStatus]);
+  }, [inputName, nth, blogAddress, isAgreed]);
 
   const fetchUserData = async (formData: FormData): Promise<void> => {
     const { data, status } = await loginWithForm.mutateAsync(formData);
@@ -114,9 +127,21 @@ export default function LoginForm({
             </label>
           </ImageBox>
           <FormWrap>
-            <InputTheme width="156px" type="기수" handleType={setNth} size="14px" />
-            <InputTheme width="156px" type="이름" handleType={setInputName} size="14px" />
-            <InputTheme width="156px" type="블로그 주소" handleType={setBlogAddress} size="14px" />
+            <InputTheme width="156px" type="기수" handleEvent={handleChangeInput} name="nth" size="14px" />
+            <InputTheme
+              width="156px"
+              type="이름"
+              handleEvent={handleChangeInput}
+              name="inputName"
+              size="14px"
+            />
+            <InputTheme
+              width="156px"
+              type="블로그 주소"
+              handleEvent={handleChangeInput}
+              name="blogAddress"
+              size="14px"
+            />
             <BtnCheck
               text="치킨계 가입(선택)"
               handleCheckBox={handleCheckBox}
@@ -125,7 +150,7 @@ export default function LoginForm({
             <BtnCheck
               text="블로그 정보 수집 동의(필수)"
               handleCheckBox={handleCheckBox}
-              isChecked={agreementStatus}
+              isChecked={isAgreed}
             />
           </FormWrap>
         </Form>
