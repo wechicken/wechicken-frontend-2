@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { bannerContents } from 'components/mainBanner/BannerContents';
 import { currentUser } from 'library/store/saveUser';
+import { setAlert } from 'library/store/setAlert';
+import { setLoginModalOn } from 'library/store/setLoginModal';
 
-type Props = {
-  setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function MainBanner({ setActiveAlert }: Props): JSX.Element {
+function MainBanner(): JSX.Element {
+  const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector(currentUser);
   const [count, setCount] = useState(0);
@@ -70,7 +69,14 @@ function MainBanner({ setActiveAlert }: Props): JSX.Element {
                       ? router.push(`${content.link}`)
                       : user.token
                       ? router.push(`${content.link}`)
-                      : setActiveAlert(true)
+                      : dispatch(
+                          setAlert({
+                            alertMessage: '로그인이 필요한 서비스입니다.',
+                            submitBtnText: '로그인',
+                            closeBtnText: '취소',
+                            onSubmit: () => dispatch(setLoginModalOn(true)),
+                          }),
+                        )
                   }
                 >
                   더보기 ▸

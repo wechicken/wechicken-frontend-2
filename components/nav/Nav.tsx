@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import Login from 'components/login/Login';
 import CreateMyGroup from 'components/myGroup/createAndModifyMyGroup/CreateMyGroup';
 import ModifyMyGroup from 'components/myGroup/createAndModifyMyGroup/ModifyMyGroup';
 import Search from 'components/nav/Search';
 import SubMenu from 'components/nav/SubMenu';
-import Alert from 'library/components/alert/Alert';
 import Button from 'library/components/button/Button';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { LoginUser } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
+import { setAlert } from 'library/store/setAlert';
+import { setLoginModalOn } from 'library/store/setLoginModal';
 
 type Props = {
   isBlurred: boolean;
@@ -20,26 +20,38 @@ type Props = {
 };
 
 function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
+  const dispatch = useDispatch();
   const user = useSelector(currentUser);
   const router = useRouter();
   const [isdropDownOpen, setDropDownOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState('');
-  const [isModalOn, setModalOn] = useState(false);
-  const [isActiveAlert, setActiveAlert] = useState(false);
   const [isCreateMyGroupModalOn, setCreateMyGroupModalOn] = useState(false);
   const [isModifyMyGroup, setModifyMyGroup] = useState(false);
   const [isSearchActive, setSearchActive] = useState(false);
 
-  const handleSelectedFunctions = (selected: string): void => {
-    setDropDownOpen(false);
-    if (selected === '로그아웃') {
-      setActiveAlert(true);
-    }
-  };
+  const handleSelectedFunctions = useCallback(
+    (selected: string): void => {
+      setDropDownOpen(false);
+      if (selected === '로그아웃') {
+        dispatch(
+          setAlert({
+            setSelectedMenu,
+            selectedMenu,
+            alertMessage: '로그아웃 하시겠습니까?',
+            onSubmit: () => {
+              sessionStorage.removeItem('USER');
+              window.location.replace('/');
+            },
+          }),
+        );
+      }
+    },
+    [dispatch, selectedMenu],
+  );
 
   useEffect(() => {
     handleSelectedFunctions(selectedMenu);
-  }, [selectedMenu]);
+  }, [selectedMenu, handleSelectedFunctions]);
 
   const handleMouseOverNav = (idx: string): void => {
     if (idx === 'enter') {
@@ -51,24 +63,11 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
 
   return (
     <>
-      {isActiveAlert && (
-        <Alert
-          setActiveAlert={setActiveAlert}
-          setSelectedMenu={setSelectedMenu}
-          selectedMenu={selectedMenu}
-          alertMessage="로그아웃 하시겠습니까?"
-          onSubmit={() => {
-            sessionStorage.removeItem('USER');
-            window.location.replace('/');
-          }}
-        />
-      )}
       <NavBox
         isBlurred={isBlurred}
         onMouseEnter={() => handleMouseOverNav('enter')}
         onMouseLeave={() => handleMouseOverNav('leave')}
       >
-        {isModalOn && <Login setModalOn={setModalOn} />}
         {isCreateMyGroupModalOn && (
           <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
         )}
@@ -101,7 +100,11 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
               </div>
             </>
           ) : (
-            <Button value="로그인" handleFunction={() => setModalOn(true)} isSearchActive={isSearchActive} />
+            <Button
+              value="로그인"
+              handleFunction={() => dispatch(setLoginModalOn(true))}
+              isSearchActive={isSearchActive}
+            />
           )}
         </UserWrap>
         {isdropDownOpen && (
@@ -184,11 +187,12 @@ const Logo = styled.a`
 `;
 
 const UserWrap = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 47px;
-  position: relative;
+  
 
   .masterCrown {
     width: 25px;

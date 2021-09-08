@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-export const InputBox = styled.div<{ width: string; size: string; search?: boolean;  }>`
+export const InputBox = styled.div<{ width: string; size: string; search?: boolean }>`
   margin: 5px 0;
 
-  ${({search})=> search && css`
-    background-color: #ffffff1d;
-    backdrop-filter: blur(5px);
-  `}
+  ${({ search }) =>
+    search &&
+    css`
+      background-color: #ffffff1d;
+      backdrop-filter: blur(5px);
+    `}
 
   .nameBox {
     padding-left: 12px;
@@ -31,9 +33,14 @@ export const InputBox = styled.div<{ width: string; size: string; search?: boole
       outline: none;
       cursor: text;
       caret-color: ${({ theme }) => theme.vermilion};
-      ${({search})=> search && css`
-        background-color: #ffffff1d;
-        backdrop-filter: blur(5px);
+      ${({ search }) =>
+        search &&
+        css`
+          background-color: #ffffff1d;
+          backdrop-filter: blur(5px);
+        `}
+      ${({ search, theme }) => theme.sm`
+        ${search && 'width: 100%'}
       `}
     }
 

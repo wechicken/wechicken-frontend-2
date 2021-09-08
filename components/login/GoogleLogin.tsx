@@ -7,6 +7,7 @@ import { postGoogleLogin } from 'library/api';
 import { GOOGLE_CLIENT_ID } from 'library/constants';
 import { LoginUser } from 'library/models';
 import { saveUser } from 'library/store/saveUser';
+import { setLoginModalOn } from 'library/store/setLoginModal';
 declare global {
   interface Window {
     googleSDKLoaded: () => void;
@@ -15,14 +16,12 @@ declare global {
 
 type Props = {
   setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
   setExistingUser: React.Dispatch<React.SetStateAction<boolean>>;
   handleGoogleInput: (input: gapi.auth2.BasicProfile) => void;
 };
 
 function GoogleLogin({
   setLoginSuccess,
-  setModalOn,
   setExistingUser,
   handleGoogleInput,
 }: Props): JSX.Element {
@@ -84,7 +83,7 @@ function GoogleLogin({
 
       setTimeout(() => {
         setLoginSuccess(false);
-        setModalOn(false);
+        dispatch(setLoginModalOn(false))
       }, 1000);
 
       dispatch(saveUser(data as LoginUser));

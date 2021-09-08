@@ -25,7 +25,7 @@ function Search({ isBlurred, isSearchActive, setSearchActive }: Props): JSX.Elem
   const delaySetSearchValue = useRef(debounce(q => handleInput(q), 300)).current;
 
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    const query = (e.target as HTMLInputElement).value;
+    const { value: query } = e.target as HTMLInputElement;
     setSearchValue(query);
 
     if (e.code === 'Enter') {
@@ -71,6 +71,7 @@ const Input = styled.input<{ isSearchActive: boolean }>`
 
   ${({ theme }) => theme.sm`
     min-width: 160px;
+    font-size: 14px;
   `}
 
   &::placeholder,
