@@ -16,7 +16,6 @@ function SearchPage(): JSX.Element {
   const router = useRouter();
   const { query } = router.query;
   const user = useSelector(currentUser);
-  const [isActiveAlert, setActiveAlert] = useState(false);
   const [keyword, setKeyword] = useState(String(query ?? ''));
   const observerRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
@@ -64,7 +63,6 @@ function SearchPage(): JSX.Element {
 
   return (
     <>
-      {isActiveAlert && <></>}
       <>
         <SearchWrap>
           <InputTheme
@@ -81,14 +79,7 @@ function SearchPage(): JSX.Element {
                 page =>
                   page &&
                   page.posts.map((post: Post) => (
-                    <Card
-                      key={post.id}
-                      post={post}
-                      width="40.625rem"
-                      space="1.25rem"
-                      setActiveAlert={setActiveAlert}
-                      search
-                    />
+                    <Card key={post.id} post={post} width="40.625rem" space="1.25rem" search />
                   )),
               )
             : searchingStatus(keyword)}

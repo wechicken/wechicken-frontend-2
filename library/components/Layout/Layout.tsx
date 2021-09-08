@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import Nav from 'components/nav/Nav';
+import Login from 'components/login/Login';
+import Alert from 'library/components/alert/Alert';
 import { useIntersectionObserver } from 'library/hooks';
+import { useSelector } from 'react-redux';
+import { alertForm } from 'library/store/setAlert';
+import { loginModal } from 'library/store/setLoginModal';
 
 type Props = {
   children: React.ReactNode;
@@ -10,6 +15,8 @@ type Props = {
 export default function Layout({ children }: Props): JSX.Element {
   const [isBlurred, setBlurred] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const alert = useSelector(alertForm);
+  const isLoginModalOn = useSelector(loginModal);
 
   useIntersectionObserver({
     target: ref,
@@ -24,6 +31,19 @@ export default function Layout({ children }: Props): JSX.Element {
 
   return (
     <LayoutBox>
+      {isLoginModalOn && <Login />}
+      {alert && (
+        <Alert
+          alertMessage={alert.alertMessage}
+          submitBtnText={alert.submitBtnText}
+          closeBtnText={alert.closeBtnText}
+          onSubmit={alert.onSubmit}
+          onClose={alert.onClose}
+          type={alert.type}
+          setSelectedMenu={alert.setSelectedMenu}
+          selectedMenu={alert.selectedMenu}
+        />
+      )}
       <Nav isBlurred={isBlurred} setBlurred={setBlurred} />
       <main>{children}</main>
       <Observer ref={ref} />

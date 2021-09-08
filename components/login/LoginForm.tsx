@@ -11,16 +11,15 @@ import { postAuthAddtional } from 'library/api';
 import { CreatedUser } from 'library/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { setLoginModalOn } from 'library/store/setLoginModal';
 
 type Props = {
-  setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
   googleProfile: gapi.auth2.BasicProfile;
   setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
   setExistingUser: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function LoginForm({
-  setModalOn,
   googleProfile,
   setLoginSuccess,
   setExistingUser,
@@ -45,8 +44,8 @@ export default function LoginForm({
   const { inputName, nth, blogAddress, isJoinGroup } = loginForm;
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
-    setLoginForm({ ...loginForm, [e.target.name]: value });
+    const { value, name } = e.target;
+    setLoginForm({ ...loginForm, [name]: value });
   };
 
   const handleCheckBox = (type: string): void => {
@@ -81,7 +80,7 @@ export default function LoginForm({
 
       setTimeout(() => {
         setLoginSuccess(false);
-        setModalOn(false);
+        dispatch(setLoginModalOn(false));
       }, 1000);
 
       dispatch(data as CreatedUser);
@@ -127,7 +126,13 @@ export default function LoginForm({
             </label>
           </ImageBox>
           <FormWrap>
-            <InputTheme width="156px" type="기수" handleEvent={handleChangeInput} name="nth" size="14px" />
+            <InputTheme
+              width="156px"
+              type="기수"
+              handleEvent={handleChangeInput}
+              name="nth"
+              size="14px"
+            />
             <InputTheme
               width="156px"
               type="이름"

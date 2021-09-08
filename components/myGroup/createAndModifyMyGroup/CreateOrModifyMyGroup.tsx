@@ -38,8 +38,8 @@ function CreateOrModifyMyGroup({
   const { myGroupTitle, count, penalty } = form;
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
-    setForm({ ...form, [e.target.name]: value });
+    const { value, name } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const setMyGroupPage = async (): Promise<void> => {

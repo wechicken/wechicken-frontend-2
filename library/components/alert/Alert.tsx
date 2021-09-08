@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { ModalLayout } from 'library/components/modal';
+import { setAlert } from 'library/store/setAlert';
+import { useDispatch } from 'react-redux';
 
 type Props = {
-  setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
   alertMessage: string;
   submitBtnText?: string;
   closeBtnText?: string;
@@ -16,7 +17,6 @@ type Props = {
 };
 
 function Alert({
-  setActiveAlert,
   alertMessage,
   submitBtnText = '확인',
   closeBtnText = '취소',
@@ -28,14 +28,15 @@ function Alert({
   width = '25rem',
   height = '10.9375rem',
 }: Props): JSX.Element {
+  const dispatch = useDispatch();
   const onClickSubmit = (): void => {
     onSubmit && onSubmit();
-    setActiveAlert(false);
+    dispatch(setAlert(null));
   };
 
   const onClickCancel = (): void => {
     onClose && onClose();
-    setActiveAlert(false);
+    dispatch(setAlert(null));
     selectedMenu === '로그아웃' && setSelectedMenu && setSelectedMenu('');
   };
 
@@ -45,7 +46,7 @@ function Alert({
       height={height}
       padding="1.875rem"
       style={{ borderRadius: '15px' }}
-      closeModal={() => setActiveAlert(false)}
+      closeModal={() => dispatch(setAlert(null))}
     >
       <AlertBox>
         <AlertText>{alertMessage}</AlertText>
@@ -79,6 +80,10 @@ const AlertText = styled.span`
   font-family: ${({ theme }) => theme.fontContent};
   font-size: 17px;
   color: ${({ theme }) => theme.fontColor};
+
+  ${({ theme }) => theme.sm`
+    font-size: 15px;
+  `}
 `;
 
 const AlertBtnBox = styled.div`

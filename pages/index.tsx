@@ -1,11 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from 'react-query';
 import isNil from 'lodash-es/isNil';
 import MainBanner from 'components/mainBanner/MainBanner';
-import Login from 'components/login/Login';
 import Card from 'library/components/card/Card';
-import Alert from 'library/components/alert/Alert';
 import { Post } from 'library/models/main';
 import { getMainPage } from 'library/api';
 import { useIntersectionObserver } from 'library/hooks';
@@ -17,8 +15,6 @@ import Loading from 'library/components/loading/Loading';
 
 export default function Home(): JSX.Element {
   const user = useSelector(currentUser);
-  const [isActiveAlert, setActiveAlert] = useState(false);
-  const [isLoginActive, setLoginActive] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
@@ -37,10 +33,6 @@ export default function Home(): JSX.Element {
     },
   );
 
-  const handleSetLoginActive = (): void => {
-    setLoginActive(true);
-  };
-
   useIntersectionObserver({
     target: observerRef,
     onIntersect: () => {
@@ -55,18 +47,8 @@ export default function Home(): JSX.Element {
 
   return (
     <>
-      {isLoginActive && <Login setModalOn={setLoginActive} />}
-      {isActiveAlert && (
-        <Alert
-          setActiveAlert={setActiveAlert}
-          alertMessage="로그인이 필요한 서비스입니다."
-          submitBtnText="로그인"
-          closeBtnText="취소"
-          onSubmit={handleSetLoginActive}
-        />
-      )}
       <HomeContainer>
-        <MainBanner setActiveAlert={setActiveAlert} />
+        <MainBanner />
         <MainContents>
           <MainContentTitle>
             <div className="titleContainer">
@@ -85,7 +67,6 @@ export default function Home(): JSX.Element {
                       post={post}
                       width="18rem"
                       space="1.25rem"
-                      setActiveAlert={setActiveAlert}
                     />
                   )),
               )}

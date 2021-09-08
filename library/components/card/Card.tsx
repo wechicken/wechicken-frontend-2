@@ -1,15 +1,17 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { useDispatch } from 'react-redux';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import BtnLike from 'library/components/button/BtnLike';
 import BtnEditOrDelete from 'library/components/button/BtnEditOrDelete';
 import { Post } from 'library/models/main';
-import { css } from '@emotion/react';
+import { setAlert } from 'library/store/setAlert';
+import { setLoginModalOn } from 'library/store/setLoginModal';
 
 type Props = {
   post: Post;
   width: string;
   space: string;
-  setActiveAlert: React.Dispatch<React.SetStateAction<boolean>>;
   handleRemoveCard?: () => void;
   search?: boolean;
   handlePostId?: (id: number) => void;
@@ -21,12 +23,24 @@ function Card({
   width,
   space,
   handleRemoveCard,
-  setActiveAlert,
   search,
   handlePostId,
   getDeleteMyPostId,
 }: Props): JSX.Element {
+  const dispatch = useDispatch();
   const subtitleLimitLength = 125;
+
+  const needToLogin = (): void => {
+    dispatch(
+      setAlert({
+        alertMessage: '로그인이 필요한 서비스입니다.',
+        submitBtnText: '로그인',
+        closeBtnText: '취소',
+        onClose: () => dispatch(setAlert(null)),
+        onSubmit: () => dispatch(setLoginModalOn(true)),
+      }),
+    );
+  };
 
   return (
     <CardContainer space={space} width={width} search={search}>
@@ -60,14 +74,14 @@ function Card({
               status={post.like}
               handleRemoveCard={handleRemoveCard}
               type="likes"
-              setActiveAlert={setActiveAlert}
+              setActiveAlert={needToLogin}
             />
             <BtnLike
               id={post.id}
               status={post.bookmark}
               handleRemoveCard={handleRemoveCard}
               type="bookmarks"
-              setActiveAlert={setActiveAlert}
+              setActiveAlert={needToLogin}
             />
           </>
         ) : (

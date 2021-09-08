@@ -38,3 +38,14 @@ export type CreatedUser = {
 export type LoginUser = CreatedUser & {
   master: boolean;
 };
+
+export type Alert = {
+  alertMessage: string;
+  submitBtnText?: string;
+  closeBtnText?: string;
+  onSubmit?: () => void;
+  onClose?: () => void;
+  type?: string;
+  setSelectedMenu?: React.Dispatch<React.SetStateAction<string>>;
+  selectedMenu?: string;
+};

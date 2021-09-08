@@ -5,12 +5,11 @@ import LoginForm from 'components/login/LoginForm';
 import CelebratingModal from 'components/login/CelebratingModal';
 import { ModalLayout } from 'library/components/modal';
 import Logo from 'library/components/modal/Logo';
+import { useDispatch } from 'react-redux';
+import { setLoginModalOn } from 'library/store/setLoginModal';
 
-type Props = {
-  setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function Login({ setModalOn }: Props): JSX.Element {
+function Login(): JSX.Element {
+  const dispatch = useDispatch();
   const [isExistingUser, setExistingUser] = useState(true);
   const [googleProfile, setGoogleProfile] = useState<gapi.auth2.BasicProfile>();
   const [isLoginSuccess, setLoginSuccess] = useState(false);
@@ -20,7 +19,7 @@ function Login({ setModalOn }: Props): JSX.Element {
   };
 
   return (
-    <ModalLayout width="675px" height="470px" closeModal={() => setModalOn(false)}>
+    <ModalLayout width="675px" height="29.375rem" closeModal={() => dispatch(setLoginModalOn(false))}>
       {isLoginSuccess ? (
         <CelebratingModal celebratingMessage="잠시만 기다려주세요!" />
       ) : isExistingUser ? (
@@ -33,7 +32,6 @@ function Login({ setModalOn }: Props): JSX.Element {
             </Greeting>
             <GoogleLogin
               setLoginSuccess={setLoginSuccess}
-              setModalOn={setModalOn}
               setExistingUser={setExistingUser}
               handleGoogleInput={handleGoogleInput}
             />
@@ -42,7 +40,6 @@ function Login({ setModalOn }: Props): JSX.Element {
       ) : (
         googleProfile && (
           <LoginForm
-            setModalOn={setModalOn}
             googleProfile={googleProfile}
             setLoginSuccess={setLoginSuccess}
             setExistingUser={setExistingUser}
