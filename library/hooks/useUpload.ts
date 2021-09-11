@@ -5,18 +5,18 @@ type ReturnType = {
   handleInputImage: (e: ChangeEvent<HTMLInputElement>) => void;
   convertedImage: string;
   ProfileIcon: ({ size, img }: ProfileIconProps) => JSX.Element;
-  uploadedImage: string;
+  uploadedImage: File | undefined;
 };
 
 const useUpload = (input: string): ReturnType => {
   const [convertedImage, setConvertedImage] = useState(input);
-  const [uploadedImage, setUploadedImage] = useState(input);
+  const [uploadedImage, setUploadedImage] = useState<File>();
 
   const handleInputImage = (e: ChangeEvent<HTMLInputElement>): void => {
     const { files } = e.target;
     if (!e.target || !files) return;
     setConvertedImage(window.URL.createObjectURL(files[0]));
-    setUploadedImage(String(files[0]));
+    setUploadedImage(files[0]);
   };
 
   return { handleInputImage, convertedImage, ProfileIcon, uploadedImage };

@@ -20,11 +20,7 @@ type Props = {
   handleGoogleInput: (input: gapi.auth2.BasicProfile) => void;
 };
 
-function GoogleLogin({
-  setLoginSuccess,
-  setExistingUser,
-  handleGoogleInput,
-}: Props): JSX.Element {
+function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Props): JSX.Element {
   const dispatch = useDispatch();
   const googleLoginBtn = useRef(null);
   const auth2 = useRef<gapi.auth2.GoogleAuth>();
@@ -83,7 +79,7 @@ function GoogleLogin({
 
       setTimeout(() => {
         setLoginSuccess(false);
-        dispatch(setLoginModalOn(false))
+        dispatch(setLoginModalOn(false));
       }, 1000);
 
       dispatch(saveUser(data as LoginUser));
