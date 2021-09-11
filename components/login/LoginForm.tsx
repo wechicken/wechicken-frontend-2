@@ -128,21 +128,21 @@ export default function LoginForm({
           </ImageBox>
           <FormWrap>
             <InputTheme
-              width="156px"
+              width="9.75rem"
               type="기수"
               handleEvent={handleChangeInput}
               name="nth"
               size="14px"
             />
             <InputTheme
-              width="156px"
+              width="9.75rem"
               type="이름"
               handleEvent={handleChangeInput}
               name="inputName"
               size="14px"
             />
             <InputTheme
-              width="156px"
+              width="9.75rem"
               type="블로그 주소"
               handleEvent={handleChangeInput}
               name="blogAddress"
@@ -160,11 +160,13 @@ export default function LoginForm({
             />
           </FormWrap>
         </Form>
-        <BtnSubmit
-          btnText="제출"
-          executeFunction={handleUploadForm}
-          isSubmitActivate={isSubmitActivate}
-        />
+        <SubmitButtonBox>
+          <BtnSubmit
+            btnText="제출"
+            executeFunction={handleUploadForm}
+            isSubmitActivate={isSubmitActivate}
+          />
+        </SubmitButtonBox>
       </ContentsBox>
     </LoginFormBox>
   );
@@ -178,7 +180,8 @@ const LoginFormBox = styled.div`
 
 const ContentsBox = styled.div`
   width: 50%;
-  padding: 20px;
+  padding: 1.25rem;
+  overflow-y: auto;
 `;
 
 const Greeting = styled.div`
@@ -195,16 +198,16 @@ const Greeting = styled.div`
 
   .greeting {
     font-weight: bold;
-    font-size: 20px;
-    line-height: 29px;
+    font-size: 18px;
+    line-height: 26px;
     color: ${({ theme }) => theme.darkGrey};
   }
 
   .type {
-    margin-top: 20px;
+    margin-top: 1.25rem;
     font-weight: 500;
     font-size: 15px;
-    line-height: 22px;
+    line-height: 1.375rem;
     color: ${({ theme }) => theme.textGrey};
   }
 `;
@@ -214,12 +217,21 @@ const Form = styled.form`
   justify-content: space-between;
   height: 230px;
   margin-top: 20px;
+
+  ${({ theme }) => theme.sm`
+    flex-direction: column;
+    height: auto;
+  `}
 `;
 
 const ImageBox = styled.div`
   display: flex;
   align-items: flex-start;
   margin: 15px 10px 0 10px;
+  ${({ theme }) => theme.sm`
+    display: flex;
+    justify-contents: center;
+  `}
 
   label {
     position: relative;
@@ -253,4 +265,8 @@ const CameraIcon = styled.div`
   input {
     display: none;
   }
+`;
+
+const SubmitButtonBox = styled.div`
+  padding-top: 20px;
 `;

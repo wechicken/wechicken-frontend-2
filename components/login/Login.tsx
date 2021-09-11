@@ -19,7 +19,11 @@ function Login(): JSX.Element {
   };
 
   return (
-    <ModalLayout width="675px" height="29.375rem" closeModal={() => dispatch(setLoginModalOn(false))}>
+    <ModalLayout
+      width="675px"
+      height="29.375rem"
+      closeModal={() => dispatch(setLoginModalOn(false))}
+    >
       {isLoginSuccess ? (
         <CelebratingModal celebratingMessage="잠시만 기다려주세요!" />
       ) : isExistingUser ? (
@@ -70,7 +74,7 @@ const Greeting = styled.div`
     font-weight: bold;
     font-size: 18px;
     line-height: 26px;
-    color: #525151;
+    color: ${({ theme }) => theme.darkGrey};
   }
 
   .type {
