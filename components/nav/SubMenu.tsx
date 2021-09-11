@@ -57,7 +57,7 @@ function SubMenu({
           {page.bookmark}
         </li>
       </Link>
-      <Link href="/MyPage" passHref>
+      <Link href="/myprofile" passHref>
         <li onClick={handleSelected} className={handleFocus(page.myPage)}>
           {page.myPage}
         </li>

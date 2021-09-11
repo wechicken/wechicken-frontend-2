@@ -15,9 +15,12 @@ export const user = createSlice({
     saveUser(state, action: PayloadAction<LoginUser | CreatedUser>) {
       return { ...state, ...action.payload };
     },
+    setUserProfileImg: (state, { payload }) => {
+      state.profile = payload;
+    },
   },
 });
 
-export const { saveUser } = user.actions;
+export const { saveUser, setUserProfileImg } = user.actions;
 export const currentUser = (state: AppState): LoginUser | CreatedUser => state.user;
 export default user.reducer;
