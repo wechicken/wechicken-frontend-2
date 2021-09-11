@@ -35,12 +35,12 @@ const CelebratingImg = styled.div`
   display: flex;
   justify-content: space-between;
   width: 80%;
-  margin-bottom: 60px;
+  margin-bottom: 3.75rem;
 
   .firework {
     width: 100px;
     height: 100px;
-    margin-top: 30px;
+    margin-top: 1.875rem;
     background: url('/images/firework.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -69,6 +69,6 @@ const CelebratingText = styled.div`
   font-size: 18px;
   font-weight: 500;
   text-align: center;
-  line-height: 27px;
+  line-height: 1.6875rem;
   color: ${({ theme }) => theme.orange};
 `;

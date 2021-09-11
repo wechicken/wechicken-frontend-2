@@ -1,9 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Alert from 'library/components/alert/Alert';
-import { Obj } from 'library/models';
 import map from 'lodash-es/map';
-import { useState } from 'react';
+import { Obj } from 'library/models';
 import { flexCenter } from 'styles/theme';
 import { Bydays } from '../myGroup.model';
 import DayColumn from './DayColumn';
@@ -15,24 +13,18 @@ type Props = {
   executeFunction: () => void;
 };
 
-export default function PostsOfTheWeek({ dayPosts, isGroupJoined, executeFunction }: Props) {
-  const [isActiveAlert, setActiveAlert] = useState<boolean>(false);
-
+export default function PostsOfTheWeek({
+  dayPosts,
+  isGroupJoined,
+  executeFunction,
+}: Props): JSX.Element {
   const getDayColumns = (): Obj[] => {
     return map(dayPosts, (posts, day) => ({ day, posts: posts.sort((a, b) => b.id - a.id) }));
   };
 
   return (
     <Wrap>
-      {isActiveAlert && (
-        <Alert
-          setActiveAlert={setActiveAlert}
-          alertMessage="치킨계에 가입하시겠습니까?"
-          onSubmit={executeFunction}
-          submitBtnText="가입"
-        ></Alert>
-      )}
-      {!isGroupJoined && <MyGroupJoinModal setActiveAlert={setActiveAlert}></MyGroupJoinModal>}
+      {!isGroupJoined && <MyGroupJoinModal executeFunction={executeFunction} />}
       <Container isGroupJoined={isGroupJoined}>
         <DayColumns>
           {/* {getDayColumns().map(({ data, day }) => (
@@ -88,14 +80,4 @@ const DayColumns = styled.div`
     background: ${({ theme }) => theme.yellow};
     border-radius: 10px;
   }
-`;
-
-const ModalBackground = styled.div`
-  width: 101%;
-  height: 100%;
-  position: absolute;
-  border-radius: 35px;
-  background-color: ${({ theme }) => theme.white};
-  opacity: 0.5;
-  z-index: 1;
 `;

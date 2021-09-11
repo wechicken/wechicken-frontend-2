@@ -21,7 +21,7 @@ function SubMenu({
   const user = useSelector(currentUser);
   const router = useRouter();
   const page = {
-    myGroup: '내 기수 블로그',
+    mygroup: '내 기수 블로그',
     createMyGroup: '내 기수 페이지 생성',
     bookmark: '북마크',
     myPage: '마이페이지',
@@ -40,7 +40,7 @@ function SubMenu({
   const handleMyGroup = (e: React.MouseEvent<HTMLLIElement>): Promise<boolean> | void => {
     setDropDownOpen(false);
 
-    if ((e.target as HTMLLIElement).innerText === page.myGroup) {
+    if ((e.target as HTMLLIElement).innerText === page.mygroup) {
       setSelectedMenu((e.target as HTMLLIElement).innerText);
       return router.push('/mygroup');
     }
@@ -49,8 +49,8 @@ function SubMenu({
 
   return (
     <SubMenuBox>
-      <li onClick={handleMyGroup} className={handleFocus(page.myGroup)}>
-        <div>{user.myGroupStatus ? page.myGroup : page.createMyGroup}</div>
+      <li onClick={handleMyGroup} className={handleFocus(page.mygroup)}>
+        <div>{user.myGroupStatus ? page.mygroup : page.createMyGroup}</div>
       </li>
       <Link href="/Liked" passHref>
         <li onClick={handleSelected} className={handleFocus(page.bookmark)}>

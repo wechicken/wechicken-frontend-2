@@ -27,8 +27,9 @@ const InputTheme = ({
   validationCheck,
   search,
 }: Props): JSX.Element => {
-  const delaySetStateValue = useRef(debounce(e => handleEvent && handleEvent(e), 500)).current;
-  const delayChangeEvent = useRef(debounce(q => handleType && handleType(q), 500)).current;
+  const delayChangeEvent = (e: React.ChangeEvent<HTMLInputElement>): void =>
+    handleEvent && handleEvent(e);
+  const delaySetStateValue = useRef(debounce(q => handleType && handleType(q), 500)).current;
 
   return (
     <S.InputBox width={width} size={size} search={search ?? false}>
@@ -37,7 +38,7 @@ const InputTheme = ({
         <input
           type="text"
           defaultValue={value}
-          onChange={e => (handleEvent ? delaySetStateValue(e) : delayChangeEvent(e.target.value))}
+          onChange={e => (handleEvent ? delayChangeEvent(e) : delaySetStateValue(e.target.value))}
           placeholder={placeholder}
           name={name}
         />
