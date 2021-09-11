@@ -1,16 +1,30 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAlert } from 'library/store/setAlert';
 import { flexCenter } from 'styles/theme';
 
 type Props = {
-  setActiveAlert: Dispatch<SetStateAction<boolean>>;
+  executeFunction: () => void;
 };
 
-export default function MyGroupJoinModal({ setActiveAlert }: Props) {
+export default function MyGroupJoinModal({ executeFunction }: Props): JSX.Element {
+  const dispatch = useDispatch();
+
   return (
     <MyGroupJoinModalContainer>
       <span>동기들의 포스트를 보고싶다면?</span>
-      <button className="joinBtn" onClick={() => setActiveAlert(true)}>
+      <button
+        className="joinBtn"
+        onClick={() =>
+          dispatch(
+            setAlert({
+              alertMessage: '치킨계에 가입하시겠습니까?',
+              onSubmit: executeFunction,
+              submitBtnText: '가입',
+            }),
+          )
+        }
+      >
         치킨계 가입하고 전체 보기
       </button>
     </MyGroupJoinModalContainer>

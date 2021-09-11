@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import { Obj } from 'library/models';
 import { MyGroupSub, MyGroupUser, MyProfile, UserPostsCounting } from '../myGroup.model';
 import Contributor from './contributor';
 
@@ -17,7 +16,7 @@ export default function Contributors({
   contributor,
   postsCounting,
   myGroup,
-}: Contributors) {
+}: Contributors): JSX.Element {
   // const userProfileImg = useSelector(state => state.userProfileReducer);
 
   const calculatePenalty = (userCount: number): JSX.Element => {

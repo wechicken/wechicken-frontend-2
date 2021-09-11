@@ -5,7 +5,7 @@ export const bannerContents = [
     title: 'WOW!',
     subtitle: 'Well done!',
     content: '혹쉬...이번달 명예의 전당에 혹시 내 이름이!?지금 당장 확인하러 가보자!',
-    link: '/MyGroup',
+    link: '/mygroup',
   },
   {
     id: 'siteOut',
@@ -39,6 +39,6 @@ export const bannerContents = [
     title: 'WOW!',
     subtitle: 'Well done!',
     content: '혹쉬...이번달 명예의 전당에 혹시 내 이름이!?지금 당장 확인하러 가보자!',
-    link: '/MyGroup',
+    link: '/mygroup',
   },
 ];
