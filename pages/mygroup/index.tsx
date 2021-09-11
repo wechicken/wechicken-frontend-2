@@ -16,10 +16,12 @@ import Loading from 'library/components/loading/Loading';
 import { HeaderBox } from 'styles/theme';
 import BtnTheme from 'library/components/button/ButtonTheme';
 import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
-import { createPost, getMyGroup } from 'library/api/mygroup';
+import { createPost, getMyGroup, joinGroup } from 'library/api/mygroup';
 import AddPost from 'components/addPost/AddPost';
 import { ModalLayout } from 'library/components/modal';
 import { Obj } from 'library/models';
+import { useSelector } from 'react-redux';
+import { currentUser } from 'library/store/saveUser';
 
 const initialBydays = {
   MON: [],
@@ -32,16 +34,26 @@ const initialBydays = {
 };
 
 export default function MyGroupPage(): JSX.Element {
+  const user = useSelector(currentUser);
   const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
   const [byDays, setByDays] = useState<Bydays>(initialBydays);
   const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
-  const { data, isLoading, refetch } = useQuery<MyGroup>('MyGroup', () => getMyGroup(), {
-    onSuccess: ({ by_days, userPostsCounting }) => {
-      setByDays(by_days);
-      setUserPostsCounting(userPostsCounting);
+  const { data, isLoading, refetch } = useQuery<MyGroup>(
+    ['MyGroup', user.token],
+    () => getMyGroup(user.token),
+    {
+      onSuccess: ({ by_days, userPostsCounting }) => {
+        setByDays(by_days);
+        setUserPostsCounting(userPostsCounting);
+      },
     },
+  );
+  const { mutate: mutateCreatePost } = useMutation((body: Obj) => createPost(body, user.token), {
+    onSuccess: () => refetch(),
   });
-  const { mutate } = useMutation((body: Obj) => createPost(body), { onSuccess: () => refetch() });
+  const { mutate: mutateJoinGroup } = useMutation(() => joinGroup(user.token), {
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,12 +64,12 @@ export default function MyGroupPage(): JSX.Element {
   };
 
   const handleAddPost = (body: AddPostInputValue): void => {
-    mutate(body);
+    mutateCreatePost(body);
     setAddModalActive(false);
   };
 
   const handleGroupJoined = (): void => {
-    // TODO 나중에 채워넣을것
+    mutateJoinGroup();
   };
 
   const handleClickDate = ({ by_days, userPostsCounting }: GroupByDate): void => {
@@ -119,7 +131,7 @@ export default function MyGroupPage(): JSX.Element {
 }
 
 const MyPageContainer = styled.div`
-  padding-top: 130px;
+  padding-top: 5rem;
   margin-bottom: 70px;
   background-color: ${({ theme }) => theme.background};
 `;
@@ -164,5 +176,5 @@ const ThisWeek = styled.div`
 `;
 
 const Contribution = styled.div`
-  margin: 100px 0;
+  margin: 6rem 0;
 `;

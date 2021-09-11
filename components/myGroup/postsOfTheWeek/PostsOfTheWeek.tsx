@@ -27,11 +27,6 @@ export default function PostsOfTheWeek({
       {!isGroupJoined && <MyGroupJoinModal executeFunction={executeFunction} />}
       <Container isGroupJoined={isGroupJoined}>
         <DayColumns>
-          {/* {getDayColumns().map(({ data, day }) => (
-            <DayColumn day={day} dayPosts={data} key={day}>
-              {'호이'}
-            </DayColumn>
-          ))} */}
           {getDayColumns().map(({ posts, day }) => (
             <DayColumn key={day} day={day} dayPosts={posts}></DayColumn>
           ))}

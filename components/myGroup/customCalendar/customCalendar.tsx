@@ -7,6 +7,8 @@ import { QueryFunctionContext, useQuery } from 'react-query';
 import { GroupByDate, MyGroup } from '../myGroup.model';
 import { getPostsByDate } from 'library/api';
 import 'react-calendar/dist/Calendar.css';
+import { useSelector } from 'react-redux';
+import { currentUser } from 'library/store/saveUser';
 
 type Props = {
   handleClickDate: (_: GroupByDate) => void;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
+  const user = useSelector(currentUser);
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
   useQuery(
@@ -22,7 +25,7 @@ function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
       const [_, selectedDate] = queryKey;
       const formattedDate = (selectedDate as dayjs.Dayjs).format('YYYYMMDD');
 
-      return getPostsByDate(formattedDate);
+      return getPostsByDate(formattedDate, user.token);
     },
     {
       onSuccess: (data): void => {
@@ -147,7 +150,7 @@ const MonthOfTheWeek = styled.div`
   }
 
   ${({ theme }) => theme.sm`
-  margin: 0 10px;
+  margin: 0 0.5rem;
   `}
 `;
 
