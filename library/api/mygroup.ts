@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
 import { GroupByDate, MyGroup } from 'components/myGroup/myGroup.model';
-import { TEST_TOKEN } from 'library/constants';
 import { Obj } from 'library/models';
 import { apiClient } from './apiClient';
 

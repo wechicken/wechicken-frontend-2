@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Obj } from 'library/models';
-import { css } from '@emotion/react';
 
 type Props = {
   children: React.ReactNode;
@@ -23,7 +22,7 @@ function ModalLayout({
   padding,
   closeOnClickDimmer = false,
 }: Props): JSX.Element {
-  const handleClickDimmer = ({ target, currentTarget }: MouseEvent): void => {
+  const handleClickDimmer = ({ target, currentTarget }: React.MouseEvent<HTMLDivElement>): void => {
     if (target !== currentTarget) {
       return;
     }

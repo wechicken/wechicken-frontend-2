@@ -6,6 +6,5 @@ module.exports = withTM({
     API_URL: process.env.API_URL,
     STAGE: process.env.STAGE,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    TEST_TOKEN: process.env.TEST_TOKEN,
   },
 });
