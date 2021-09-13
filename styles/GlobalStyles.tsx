@@ -28,6 +28,7 @@ const style = css`
 
   body {
     box-sizing: border-box;
+    font-family: 'NotoSansKR', sans-serif;
 
     .noDrag {
       -ms-user-select: none;

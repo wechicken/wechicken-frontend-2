@@ -45,8 +45,8 @@ function Card({
   return (
     <CardContainer space={space} width={width} search={search}>
       <CardWrap type={post.type} onClick={() => window.open(`${post.link}`)}>
-        <ImageBox img={post.thumbnail || '/Images/blogDefaultImg.png'} />
-        <img className="blogLogo" alt="blog_logo" src={`/Images/${post.type}.png`} />
+        <ImageBox img={post.thumbnail || '/images/blogDefaultImg.png'} />
+        <img className="blogLogo" alt="blog_logo" src={`/images/${post.type}.png`} />
         <ContentsBox>
           <Profile>
             <ProfileIcon size={40} img={post.user_profile} />

@@ -1,6 +1,7 @@
+import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@emotion/react';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '@emotion/react';
 import GlobalStyle from 'styles/GlobalStyles';
 import { theme } from 'styles/theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -22,17 +23,23 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   });
 
   return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={{ ...theme, ...mediaQuery }}>
-          <GlobalStyle />
-          <Layout>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <Component {...pageProps} />
-          </Layout>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </Provider>
+    <>
+      <Head>
+        {' '}
+        <title>{`>wechicken`}</title>
+      </Head>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={{ ...theme, ...mediaQuery }}>
+            <GlobalStyle />
+            <Layout>
+              <ReactQueryDevtools initialIsOpen={false} />
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </Provider>
+    </>
   );
 }
 export default MyApp;
