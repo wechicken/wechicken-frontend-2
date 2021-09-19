@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.2.1",
+    "@egjs/react-flicking": "^4.3.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@fortawesome/fontawesome": "^1.1.8",

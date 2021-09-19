@@ -33,12 +33,4 @@ export const bannerContents = [
     content: '이달의 HOT 블로그는 뭘까요? 핫하다 핫해! 지금 바로 공부하러 가보자! ',
     link: '',
   },
-  {
-    id: 'siteIn',
-    img: '/images/main_banner1.png',
-    title: 'WOW!',
-    subtitle: 'Well done!',
-    content: '혹쉬...이번달 명예의 전당에 혹시 내 이름이!?지금 당장 확인하러 가보자!',
-    link: '/mygroup',
-  },
 ];

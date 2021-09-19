@@ -1,61 +1,39 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import { useDispatch, useSelector } from 'react-redux';
+import Flicking from '@egjs/react-flicking';
+import { AutoPlay, Fade } from '@egjs/flicking-plugins';
 import styled from '@emotion/styled';
 import { bannerContents } from 'components/mainBanner/BannerContents';
 import { currentUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
+import '@egjs/flicking-plugins/dist/flicking-plugins.css';
 
 function MainBanner(): JSX.Element {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector(currentUser);
-  const [count, setCount] = useState(0);
-  const intervalRef = useRef<null | ReturnType<typeof setTimeout>>(null);
-  const intervalTimeRef = useRef(4000);
-
-  const start = useCallback(() => {
-    if (intervalRef.current !== null) {
-      return;
-    }
-
-    intervalRef.current = setInterval(() => {
-      setCount(prev => (prev === bannerContents.length - 1 ? 0 : prev + 1));
-    }, intervalTimeRef.current);
-  }, []);
-
-  const stop = useCallback(() => {
-    if (intervalRef.current === null) {
-      return;
-    }
-
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
-  }, []);
-
-  useEffect(() => {
-    start();
-    return () => {
-      stop();
-    };
-  }, [start, stop, intervalTimeRef.current]);
-
-  useEffect(() => {
-    count === 4 ? (intervalTimeRef.current = 1) : (intervalTimeRef.current = 4000);
-  }, [count]);
+  const plugins = [
+    new AutoPlay({ duration: 2000, direction: 'NEXT', stopOnHover: true }),
+    new Fade('', 1),
+  ];
 
   return (
     <MainBannerContainer>
-      <CarouselWrapper
-        count={count}
-        bannerLength={bannerContents.length}
-        onMouseEnter={stop}
-        onMouseLeave={start}
+      <Flicking
+        hideBeforeInit
+        circular
+        panelsPerView={1}
+        autoResize
+        firstPanelSize="100%"
+        plugins={plugins}
+        inputType={['touch', 'mouse']}
       >
         {bannerContents.map((content, idx) => (
-          <BannerWrap key={idx}>
-            <img alt={`banner${idx}`} src={content.img} />
+          <BannerWrap key={idx} className="flicking-panel">
+            <ImgBox>
+              <img alt={`banner${idx}`} src={content.img} />
+            </ImgBox>
             <BannerContent>
               <BannerTop>
                 <GreetingText>{content.title}</GreetingText>
@@ -85,7 +63,7 @@ function MainBanner(): JSX.Element {
             </BannerContent>
           </BannerWrap>
         ))}
-      </CarouselWrapper>
+      </Flicking>
     </MainBannerContainer>
   );
 }
@@ -93,46 +71,31 @@ function MainBanner(): JSX.Element {
 export default MainBanner;
 
 const MainBannerContainer = styled.div`
-  width: 100%;
-  max-width: 1600px;
-  overflow-x: hidden;
-`;
-
-const CarouselWrapper = styled.div<{ count: number; bannerLength: number }>`
-  display: inline flex;
-  width: 100%;
-  margin: 0 auto;
-  transition: ${({ bannerLength, count }) =>
-    count === bannerLength || count === 0 ? '0s' : '-webkit-transform 900ms ease 0s'};
-  transform: ${({ count, bannerLength }) =>
-    count === bannerLength || count === 0 ? 'none' : `translate3d(${-count * 100}%, 0, 0)`};
+  width: 95%;
+  max-width: 1100px;
 `;
 
 const BannerWrap = styled.div`
   display: flex;
-  padding: 0 10vw;
-
-  ${({ theme }) => theme.lg`
-    padding: 0 5vw;
-  `}
+  width: 100%;
 
   ${({ theme }) => theme.md`
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 5vw;
   `}
+`;
 
-  ${({ theme }) => theme.sm`
-    padding: 0 3vw;
+const ImgBox = styled.div`
+  padding: 1rem;
+  max-width: 60%;
+
+  ${({ theme }) => theme.md`
+    max-width: 100%;
   `}
 
   img {
-    max-width: 60%;
     object-fit: contain;
-
-    ${({ theme }) => theme.md`
-      max-width: 100%;
-    `}
+    width: 100%;
   }
 `;
 
