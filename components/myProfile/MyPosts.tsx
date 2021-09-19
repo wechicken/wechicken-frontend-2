@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';

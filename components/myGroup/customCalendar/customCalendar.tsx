@@ -7,8 +7,6 @@ import { QueryFunctionContext, useQuery } from 'react-query';
 import { GroupByDate, MyGroup } from '../myGroup.model';
 import { getPostsByDate } from 'library/api';
 import 'react-calendar/dist/Calendar.css';
-import { useSelector } from 'react-redux';
-import { currentUser } from 'library/store/saveUser';
 
 type Props = {
   handleClickDate: (_: GroupByDate) => void;
@@ -16,7 +14,6 @@ type Props = {
 };
 
 function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
-  const user = useSelector(currentUser);
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
   useQuery(
