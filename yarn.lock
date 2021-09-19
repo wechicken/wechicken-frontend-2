@@ -130,6 +130,73 @@
   dependencies:
     chalk "^4.0.0"
 
+"@egjs/agent@^2.2.1":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@egjs/agent/-/agent-2.3.0.tgz#5a18150ce46a2ba1d237a847db44b0a234bd96f0"
+  integrity sha512-ENhwkOW6rnYW8IuXJwvECIAzj7nMxq+ctB8uCJ+mKnoKK8tGiv3YXtN6nuaOov2YmXdRdwafSz9rhgRNXswX/A==
+
+"@egjs/axes@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@egjs/axes/-/axes-2.8.0.tgz#b038378ad0a085b3b4a5218dd8e7db396898212c"
+  integrity sha512-WPMIM/ExZBS8guD3oeNr6YGDn2xSnj0YUZHWvY/NWvTQIs7A2O7WxJivYgzcg7r2q0RYtzrdpHn+982iaKCLSw==
+  dependencies:
+    "@egjs/agent" "^2.2.1"
+    "@egjs/component" "^2.2.2"
+    "@egjs/hammerjs" "^2.0.15"
+
+"@egjs/component@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@egjs/component/-/component-2.2.2.tgz#b8208ea4ca05f6562a51d58f1e6f9979aad8a9d9"
+  integrity sha512-2m6nu6/Mbs6VnoT4IHFGUBX6V82Zp01zDmlWpIJ3fMatHpe7BB1qUYFgMmSWGY0uOvOl4plvflwbCRUAGMfwWQ==
+
+"@egjs/component@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@egjs/component/-/component-3.0.1.tgz#4bf122b5f81fd01126646c63f4fd7aa200a5a057"
+  integrity sha512-Hus9GMXOVfHBzyumyeRL1TkN60LhGen+e9FpqXqbS9jA9hDYEE1AH3ulahbBGhRdMs4uXYl3hRnB5kGZRb9n7Q==
+
+"@egjs/flicking-plugins@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@egjs/flicking-plugins/-/flicking-plugins-4.2.1.tgz#46d664881f193915e2c98273e6f1eaa8580bcbd2"
+  integrity sha512-HLmU8QoPqT0if1AMOYtBND2p57PouQHrUM9IIj6H0ThlcDhKgFhwjlc65KMfP9MtAHSjulJ6RJ5a6XaNJvakYA==
+
+"@egjs/flicking@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.3.0.tgz#5ffc8c7d6f84340be12415fbde4cc763b7ead709"
+  integrity sha512-bChUWStJMndyyumgycHepFcfOE6p8Std7Ej9NJ+LOQY3IDuNRPzVZmpFLtBaqMnoNqa+3wJbMLlPIN0qSz/DDw==
+  dependencies:
+    "@egjs/axes" "^2.8.0"
+    "@egjs/component" "^3.0.1"
+    "@egjs/imready" "^1.1.3"
+    "@egjs/list-differ" "^1.0.0"
+
+"@egjs/hammerjs@^2.0.15":
+  version "2.0.17"
+  resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
+  integrity sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==
+  dependencies:
+    "@types/hammerjs" "^2.0.36"
+
+"@egjs/imready@^1.1.3":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@egjs/imready/-/imready-1.1.4.tgz#27292974989f2588da05d14b0411f52b4ec019f9"
+  integrity sha512-LyAyriK4syI3URtZtTHE68sfQRBJAcdhzJL1m2N+6QHGwo+M0YNC1HwcLx/ze15MDfv+gGXfQrlF6jPHzK+V4A==
+  dependencies:
+    "@egjs/component" "^2.2.2"
+
+"@egjs/list-differ@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@egjs/list-differ/-/list-differ-1.0.0.tgz#2277aff52e3e4bd9318d5c30ffc3ba3b6216f05e"
+  integrity sha512-HsbMKc0ZAQH+EUeCmI/2PvTYSybmkaWwakU8QGDYYgMVIg9BQ5sM0A0Nnombjxo2+JzXHxmH+jw//yGX+y6GYw==
+
+"@egjs/react-flicking@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.3.0.tgz#1870927baa91a138c6478bdd90f777e8766c38e2"
+  integrity sha512-T2RZZ32Ir15nU8zMqnYLdu8q/HFRTM+/Mu9Q8bIhYGl1tLgoJDTE7EMndF0jPptGyx1vXXicGrEdbVlGg9wWww==
+  dependencies:
+    "@egjs/flicking" "^4.3.0"
+    "@egjs/list-differ" "^1.0.0"
+    react-is "^17.0.2"
+
 "@emotion/babel-plugin@^11.3.0":
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.3.0.tgz#3a16850ba04d8d9651f07f3fb674b3436a4fb9d7"
@@ -409,6 +476,11 @@
   version "0.0.41"
   resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.41.tgz#c477ee4f0951c005869219fd10b456ae2bba437e"
   integrity sha512-tmHO66z/f91JZCDqinj/nNvQEszsz/hBT4+MvCSKT5sDzl5Ld/oXZ8WaecCBjRLw2uWKUInUHM9MhEXWkOiNjw==
+
+"@types/hammerjs@^2.0.36":
+  version "2.0.40"
+  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.40.tgz#ded0240b6ea1ad7afc1e60374c49087aaea5dbd8"
+  integrity sha512-VbjwR1fhsn2h2KXAY4oy1fm7dCxaKy0D+deTb8Ilc3Eo3rc5+5eA4rfYmZaHgNJKxVyI0f6WIXzO2zLkVmQPHA==
 
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
@@ -3306,7 +3378,7 @@ react-dom@17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-is@17.0.2:
+react-is@17.0.2, react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==

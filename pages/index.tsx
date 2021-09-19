@@ -1,17 +1,17 @@
 import { useRef } from 'react';
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from 'react-query';
 import isNil from 'lodash-es/isNil';
 import MainBanner from 'components/mainBanner/MainBanner';
+import Loading from 'library/components/loading/Loading';
 import Card from 'library/components/card/Card';
 import { Post } from 'library/models/main';
-import { getMainPage } from 'library/api';
 import { useIntersectionObserver } from 'library/hooks';
+import { getMainPage } from 'library/api';
+import { currentUser } from 'library/store/saveUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
-import { currentUser } from 'library/store/saveUser';
-import Loading from 'library/components/loading/Loading';
 
 export default function Home(): JSX.Element {
   const user = useSelector(currentUser);

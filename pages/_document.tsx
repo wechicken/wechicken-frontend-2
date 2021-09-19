@@ -22,6 +22,11 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Alata&family=Noto+Sans+KR:wght@300;400;500&display=swap"
             rel="stylesheet"
           />
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/@egjs/flicking/dist/flicking.css"
+            crossOrigin="anonymous"
+          />
         </Head>
         <body>
           <Main />

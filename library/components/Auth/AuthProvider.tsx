@@ -9,7 +9,6 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   useEffect(() => {
     const USER: LoginUser | CreatedUser = JSON.parse(sessionStorage.getItem('USER') ?? '{}');
-    console.log('USER', USER);
     !isEmpty(USER) &&
       dispatch(
         saveUser({
