@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
-import cloneDeep from 'lodash/cloneDeep';
 import { API_URL } from 'library/constants/config.const';
 import { handleHTTPError } from 'library/api/errorHandle';
+import cloneDeep from 'lodash-es/cloneDeep';
 
 export const apiClient = axios.create({
   baseURL: API_URL,

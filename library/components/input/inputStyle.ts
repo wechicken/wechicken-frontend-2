@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 export const InputBox = styled.div<{ width: string; size: string; search?: boolean }>`
+  position: relative;
   margin: 5px 0;
 
   ${({ search }) =>

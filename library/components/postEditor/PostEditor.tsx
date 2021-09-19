@@ -1,20 +1,36 @@
 import styled from '@emotion/styled';
 import { AddPostInputValue } from 'components/myGroup/myGroup.model';
+import { memo, useEffect } from 'react';
 import { InputBox } from 'library/components/input/inputStyle';
+import { Post } from 'library/models';
 import { isValidDate } from 'library/utils';
 import isEmpty from 'lodash-es/isEmpty';
 import { ChangeEvent, useState } from 'react';
 import { flexCenter } from 'styles/theme';
 
 type Props = {
-  name: string;
+  name?: string;
   handleSubmit: (_: AddPostInputValue) => void;
+  post?: Post;
 };
 
-function AddPost({ name, handleSubmit }: Props): JSX.Element {
+function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
   const [values, setValues] = useState<AddPostInputValue>({ title: '', link: '', date: '' });
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (post) {
+      const formValue = {
+        title: post.title,
+        link: post.link,
+        date: post.date,
+      };
+
+      setValues(formValue);
+      validate(formValue);
+    }
+  }, [post]);
 
   const onChangeInputValues = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = e.target;
@@ -49,12 +65,12 @@ function AddPost({ name, handleSubmit }: Props): JSX.Element {
         <img className="logoImage" alt="logo" src="/Images/logo.png" />
         <div className="titleTextWrap">
           <span className="logoText">{'>'}wechicken</span>
-          <span className="titleText">새로운 포스트를 추가해주세요</span>
+          {!post && <span className="titleText">새로운 포스트를 추가해주세요</span>}
         </div>
       </Title>
       <Contents>
         <Description>
-          <h1>{name}님을 응원합니다</h1>
+          <h1>{post ? post.user_name : name}님을 응원합니다</h1>
           <p>
             일부 사이트를 제외하고는 <br></br>
             직접 포스팅을 등록해 주셔야 합니다 <br></br>
@@ -84,6 +100,7 @@ function AddPost({ name, handleSubmit }: Props): JSX.Element {
                 type="text"
                 onChange={onChangeInputValues}
                 placeholder="예시)2차 프로젝트 회고록"
+                value={values.title}
                 name="title"
               />
             </div>
@@ -96,6 +113,7 @@ function AddPost({ name, handleSubmit }: Props): JSX.Element {
                 onChange={onChangeInputValues}
                 placeholder="링크를 복사, 붙여넣어주세요"
                 name="link"
+                value={values.link}
               />
             </div>
           </InputBox>
@@ -107,6 +125,7 @@ function AddPost({ name, handleSubmit }: Props): JSX.Element {
                 onChange={onChangeInputValues}
                 placeholder="예시)2020.09.20"
                 name="date"
+                value={values.date}
               />
             </div>
             {!isDateValid && <Validation>날짜 형식을 확인해주세요.</Validation>}
@@ -114,13 +133,13 @@ function AddPost({ name, handleSubmit }: Props): JSX.Element {
         </InputFormWrap>
       </Contents>
       <Submit onClick={onClickSubmit} isValid={isValid}>
-        <div className="SubmitBtn">추가</div>
+        <div className="SubmitBtn">{post ? '수정 완료' : '추가'}</div>
       </Submit>
     </>
   );
 }
 
-export default AddPost;
+export default memo(PostEditor);
 
 const Title = styled.div`
   display: flex;

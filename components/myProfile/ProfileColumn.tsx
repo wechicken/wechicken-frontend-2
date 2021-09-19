@@ -1,101 +1,93 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useQuery, useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-
-import useUpload from 'library/hooks/useUpload';
-import { getMyProfile, modifyProfileImage, modifyBlogUrl } from 'library/api/myprofile';
 import { currentUser, setUserProfileImg } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import EditForm from './EditForm';
 import { theme, flexCenter } from 'styles/theme';
-import { MyProfile } from 'library/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { deleteProfileImage, getMyProfile, modifyBlogUrl, modifyProfileImage } from 'library/api';
+import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import Loading from 'library/components/loading/Loading';
 
-type ProfileColumn = {
-  deleteProfileImg: (deleteTarget: string) => void;
-};
-
-function ProfileColumn({ deleteProfileImg }: ProfileColumn): JSX.Element {
+function ProfileColumn(): JSX.Element {
   const dispatch = useDispatch();
   const user = useSelector(currentUser);
 
-  const [myInfo, setMyInfo] = useState<MyProfile>();
   const [isEdit, setisEdit] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState<string>('');
-
-  const { handleInputImage, convertedImage, ProfileIcon, uploadedImage } = useUpload(user.profile);
-
-  const modifyMyProfileImg = useMutation(([formData, token]: [FormData, string]) =>
-    modifyProfileImage(formData, token),
+  const { data, refetch } = useQuery(
+    'getMyProfile',
+    async () => {
+      return (await getMyProfile()).mypage;
+    },
+    {
+      onSuccess: ({ blog_address }) => {
+        setContentValue(blog_address);
+        // TODO 현재 /로 끝나는 주소 입력시 500에러 내려옴. toast 추가후 에러시 토스트 얼럿 추가 필요
+      },
+    },
   );
 
-  const modifyMyBlogUrl = useMutation(({ blog_address, token }: { [key: string]: string }) =>
-    modifyBlogUrl({ blog_address, token }),
+  const { mutate: mutateDeleteProfileImage } = useMutation(
+    (deleteTarget: string) => deleteProfileImage(deleteTarget),
+    {
+      onSuccess: () => {
+        dispatch(setUserProfileImg(''));
+        window.location.reload();
+      },
+    },
   );
 
-  const { data } = useQuery('getMyProfile', async () => {
-    const { status, data } = await getMyProfile(user.token);
-    return status === 200 && data;
-  });
+  const { mutate: mutateModifyProfileImage } = useMutation(
+    (formData: FormData) => modifyProfileImage(formData),
+    {
+      onSuccess: ({ data }) => {
+        dispatch(setUserProfileImg(data.profile));
+        window.location.reload();
+      },
+    },
+  );
 
-  useEffect(() => {
-    data && setMyInfo(data.mypage);
-  }, [data]);
-
-  useEffect(() => {
-    if (convertedImage) {
-      modifyProfileImg();
-    }
-  }, [convertedImage]);
-
-  useEffect(() => {
-    setContentValue(myInfo?.blog_address as string);
-  }, [myInfo?.blog_address]);
+  const { mutate: mutateBlogUrl } = useMutation(
+    (blogAddress: string) => modifyBlogUrl(blogAddress),
+    { onSuccess: () => refetch() },
+  );
 
   // 수정 아이콘
-  const activeEditForm = () => {
+  const activeEditForm = (): void => {
     setisEdit(isEdit => !isEdit);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setisEdit(!isEdit);
-    myInfo?.blog_address !== contentValue && handleModifyBlogUrl();
+    data?.blog_address !== contentValue && mutateBlogUrl(contentValue);
     e.preventDefault();
   };
 
-  const handleContentValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    return setContentValue(e.target.value);
-  };
+  const handleProfileImageChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
+    const { files } = target;
 
-  const handleModifyBlogUrl = async () => {
-    await modifyMyBlogUrl.mutateAsync({
-      blog_address: contentValue,
-      token: user.token,
-    });
-  };
+    if (files) {
+      const formData = new FormData();
 
-  const modifyProfileImg = async () => {
-    const formData = new FormData();
-    formData.append('user_thumbnail', uploadedImage as Blob);
-    handleModifyProfileImg(formData);
-  };
-
-  const handleModifyProfileImg = async (formData: FormData): Promise<void> => {
-    const { data, status } = await modifyMyProfileImg.mutateAsync([formData, user.token]);
-    if (status === 200) {
-      dispatch(setUserProfileImg(data.profile));
+      formData.append('user_thumbnail', files[0] as Blob);
+      mutateModifyProfileImage(formData);
     }
   };
 
-  const handleDeleteProfileImg = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { id } = e.currentTarget;
+  const handleContentValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    return setContentValue(e.target.value);
+  };
+
+  const handleDeleteProfileImg = ({ currentTarget }: React.MouseEvent<HTMLDivElement>): void => {
     dispatch(
       setAlert({
         alertMessage: '프로필 이미지를 삭제하시겠습니까?',
         onSubmit: () => {
-          deleteProfileImg(id);
+          mutateDeleteProfileImage(currentTarget.id);
         },
         submitBtnText: '확인',
         closeBtnText: '취소',
@@ -103,23 +95,27 @@ function ProfileColumn({ deleteProfileImg }: ProfileColumn): JSX.Element {
     );
   };
 
+  if (!data) {
+    return <Loading />;
+  }
+
   return (
     <ProfileContainer>
       <ProfilePhoto>
-        <ProfileIcon size={131} img={convertedImage ? convertedImage : user.profile} />
+        <ProfileIcon size={131} img={user.profile} />
         <label>
-          <input type="file" onChange={handleInputImage} onSubmit={modifyProfileImg} />
+          <input type="file" accept="image/*" onChange={handleProfileImageChange} />
           <UploadPhotoBtn>이미지 업로드</UploadPhotoBtn>
         </label>
-        <DeletePhotoBtn id="user_thumbnail" onClick={e => handleDeleteProfileImg(e)}>
+        <DeletePhotoBtn id="user_thumbnail" onClick={handleDeleteProfileImg}>
           이미지 제거
         </DeletePhotoBtn>
       </ProfilePhoto>
       <ProfileContents>
-        <span className="userNth">{myInfo?.wecode_nth}기</span>
-        <h1 className="userName">{myInfo?.user_name}</h1>
+        <span className="userNth">{data.wecode_nth}기</span>
+        <h1 className="userName">{data.user_name}</h1>
         <div className="userInfo">
-          <span className="email">{myInfo?.gmail}</span>
+          <span className="email">{data.gmail}</span>
           {isEdit ? (
             <EditForm
               contentValue={contentValue}
@@ -143,7 +139,8 @@ function ProfileColumn({ deleteProfileImg }: ProfileColumn): JSX.Element {
 export default ProfileColumn;
 
 const ProfileContainer = styled.section`
-  width: 1020px;
+  max-width: 1440px;
+  width: 100%;
   height: 356px;
   margin: 0 auto;
   display: flex;
@@ -151,17 +148,19 @@ const ProfileContainer = styled.section`
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.04);
   border-radius: 47px;
   background: ${theme.white};
-  @media (max-width: 375px) {
+
+  ${({ theme }) => theme.sm`
     flex-direction: column;
-    width: 330px;
-    height: 500px;
-  }
+    width: 75%;
+    height: 450px;
+  `}
 `;
 
 const ProfilePhoto = styled.div`
   width: 320px;
   ${flexCenter};
   flex-direction: column;
+  margin-right: 10px;
   font-family: ${theme.fontContent};
   font-weight: 500;
   border-right: 3px solid ${theme.yellow};
@@ -175,6 +174,10 @@ const ProfilePhoto = styled.div`
   @media (max-width: 375px) {
     border: none;
   }
+
+  ${({ theme }) => theme.sm`
+    border: none;
+  `}
 `;
 
 const UploadPhotoBtn = styled.div`
@@ -205,16 +208,16 @@ const DeletePhotoBtn = styled(UploadPhotoBtn)`
 const ProfileContents = styled.div`
   width: 60%;
   height: 200px;
-  margin-left: 40px;
+  margin: 1rem auto;
   font-weight: 600;
-  font-size: 28px;
+  font-size: 1.6rem;
   color: ${theme.fontColor};
   position: relative;
   h1 {
     margin: 10px 0;
   }
   .userInfo {
-    margin-top: 75px;
+    margin-top: 3rem;
   }
   .userBlogAddress {
     display: flex;
@@ -224,13 +227,13 @@ const ProfileContents = styled.div`
     display: block;
     margin: 10px 0;
     width: 300px;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 400;
     color: ${theme.deepGrey};
   }
   .editBtn {
     margin-left: 10px;
-    font-size: 18px;
+    font-size: 1.1rem;
     color: ${theme.orange};
     background-color: transparent;
     cursor: pointer;
@@ -238,12 +241,13 @@ const ProfileContents = styled.div`
   .saveBtn {
     width: 80px;
     height: 10px;
-    font-size: 15px;
+    font-size: 1rem;
     font-weight: 600;
     background-color: ${theme.orange};
     color: ${theme.white};
   }
-  @media (max-width: 375px) {
-    width: 100%;
-  }
+
+  ${({ theme }) => theme.sm`
+    width: 100$
+  `}
 `;

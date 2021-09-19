@@ -30,8 +30,7 @@ export default function MyPostEditModal({
   const [isDateFormatCorrect, setDateFormatCorrect] = useState<boolean | undefined>(undefined);
 
   const modifyMyPost = useMutation(
-    ([postId, title, link, date, token]: [number, string, string, string, string]) =>
-      modifyPost(postId, title, link, date, token),
+    (params: { postId: number; title: string; link: string; date: string }) => modifyPost(params),
   );
 
   useEffect(() => {
