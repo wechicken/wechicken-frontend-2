@@ -75,7 +75,7 @@ export default function LoginForm({
           token,
           profile,
           myGroupStatus,
-          myNth: nth,
+          nth,
         }),
       );
 

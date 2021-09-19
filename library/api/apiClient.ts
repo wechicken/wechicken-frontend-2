@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import cloneDeep from 'lodash/cloneDeep';
 import { API_URL } from 'library/constants/config.const';
 import { handleHTTPError } from 'library/api/errorHandle';
 
@@ -19,3 +20,14 @@ apiClient.interceptors.response.use(
     return handleHTTPError(error as AxiosError);
   },
 );
+
+apiClient.interceptors.request.use(req => {
+  const request = cloneDeep(req);
+
+  request.headers = {
+    ...req.headers,
+    Authorization: JSON.parse(sessionStorage.getItem('USER') ?? '{}').token ?? '',
+  };
+
+  return request;
+});

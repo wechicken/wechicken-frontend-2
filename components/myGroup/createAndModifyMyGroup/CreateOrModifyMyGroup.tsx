@@ -49,22 +49,20 @@ function CreateOrModifyMyGroup({
       myGroupTitle,
       count.replace(/[^0-9]/g, ''),
       penalty.replace(/[^0-9]/g, ''),
-      user?.token,
     );
 
     setTimeout(closeModal, 2000);
     router.push('/mygroup');
     dispatch(saveUser({ ...user, myGroupStatus: true }));
 
-    // TODO 쿠키 저장 추가
-    // sessionStorage.setItem(
-    //   'USER',
-    //   JSON.stringify({
-    //     ...JSON.parse(sessionStorage.getItem('USER')),
-    //     myGroupStatus: true,
-    //     master: true,
-    //   }),
-    // );
+    sessionStorage.setItem(
+      'USER',
+      JSON.stringify({
+        ...JSON.parse(sessionStorage.getItem('USER') ?? '{}'),
+        myGroupStatus: true,
+        master: true,
+      }),
+    );
   };
 
   useEffect(() => {
