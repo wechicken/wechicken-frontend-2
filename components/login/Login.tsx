@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import GoogleLogin from 'components/login/GoogleLogin';
 import LoginForm from 'components/login/LoginForm';
 import CelebratingModal from 'components/login/CelebratingModal';
 import { ModalLayout } from 'library/components/modal';
 import Logo from 'library/components/modal/Logo';
-import { useDispatch } from 'react-redux';
 import { setLoginModalOn } from 'library/store/setLoginModal';
 
 function Login(): JSX.Element {
