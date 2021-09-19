@@ -25,9 +25,9 @@ jobs:
 
       - name: Build
         env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-          REACT_APP_STAGE: ${{ secrets.REACT_APP_STAGE }}
-          REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+          API_URL: ${{ secrets.REACT_APP_API_URL }}
+          STAGE: ${{ secrets.REACT_APP_STAGE }}
+          GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
         run: yarn build
 
       - name: Deploy to S3
