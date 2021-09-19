@@ -21,13 +21,10 @@ type Props = {
 function BtnLike({ id, status, type, setActiveAlert, handleRemoveCard }: Props): JSX.Element {
   const user = useSelector(currentUser);
   const [isLiked, setLiked] = useState(status ?? false);
-  const likeStatus = useMutation(([type, id, token]: [string, number, string]) =>
-    postLikeStatus(type, id, token),
-  );
+  const likeStatus = useMutation(([type, id]: [string, number]) => postLikeStatus(type, id));
 
-  // TODO 쿠키에 토큰 저장 전까지 임시로 토큰 전달
   const fetchLikeStatus = async (): Promise<void> => {
-    const { data, status } = await likeStatus.mutateAsync([type, id, user.token]);
+    const { data, status } = await likeStatus.mutateAsync([type, id]);
 
     if (status === 200) {
       const type = data.message === 'LIKED' ? '좋아요' : '북마크';

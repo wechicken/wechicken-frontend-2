@@ -20,7 +20,7 @@ export default function Home(): JSX.Element {
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
     ['getMainPage', user.token],
     async ({ pageParam = 0 }) => {
-      const { status, data } = await getMainPage(pageParam, user.token);
+      const { status, data } = await getMainPage(pageParam);
       return status === 200 && data;
     },
     {
@@ -62,12 +62,7 @@ export default function Home(): JSX.Element {
                 page =>
                   page &&
                   page.posts.map((post: Post) => (
-                    <Card
-                      key={post.id}
-                      post={post}
-                      width="18rem"
-                      space="1.25rem"
-                    />
+                    <Card key={post.id} post={post} width="18rem" space="1.25rem" />
                   )),
               )}
             <Observer ref={observerRef} />

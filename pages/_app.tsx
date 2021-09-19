@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import Layout from 'library/components/Layout/Layout';
 import { store } from 'library/store/index';
 import { mediaQuery } from 'styles/media';
+import AuthProvider from 'library/components/Auth/AuthProvider';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient({
@@ -29,13 +30,15 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       </Head>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={{ ...theme, ...mediaQuery }}>
-            <GlobalStyle />
-            <Layout>
-              <ReactQueryDevtools initialIsOpen={false} />
-              <Component {...pageProps} />
-            </Layout>
-          </ThemeProvider>
+          <AuthProvider>
+            <ThemeProvider theme={{ ...theme, ...mediaQuery }}>
+              <GlobalStyle />
+              <Layout>
+                <ReactQueryDevtools initialIsOpen={false} />
+                <Component {...pageProps} />
+              </Layout>
+            </ThemeProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </Provider>
     </>

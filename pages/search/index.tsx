@@ -22,7 +22,7 @@ function SearchPage(): JSX.Element {
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
     ['getSearch', keyword, user.token],
     async ({ pageParam = 0 }) => {
-      const { status, data } = await getSearch(keyword, pageParam, user.token);
+      const { status, data } = await getSearch(keyword, pageParam);
       return status === 200 && data;
     },
     {

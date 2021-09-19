@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import styled from '@emotion/styled';
 import { useMutation } from 'react-query';
+import styled from '@emotion/styled';
 import { postGoogleLogin } from 'library/api';
 import { GOOGLE_CLIENT_ID } from 'library/constants';
 import { LoginUser } from 'library/models';
@@ -65,17 +65,6 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
       if (data.message === 'FIRST') return setExistingUser(false);
 
       setLoginSuccess(true);
-      // TODO 쿠키 저장 변경
-      // sessionStorage.setItem(
-      //   'USER',
-      //   JSON.stringify({
-      //     token: data.token,
-      //     profile: data.profile,
-      //     myGroupStatus: data.myGroupStatus,
-      //     myNth: data.nth,
-      //     master: data.master,
-      //   }),
-      // );
 
       setTimeout(() => {
         setLoginSuccess(false);
@@ -83,6 +72,8 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
       }, 1000);
 
       dispatch(saveUser(data as LoginUser));
+
+      window.location.reload();
     }
   };
 
