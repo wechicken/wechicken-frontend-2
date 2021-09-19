@@ -25,7 +25,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <Head>
-        {' '}
         <title>{`>wechicken`}</title>
       </Head>
       <Provider store={store}>
