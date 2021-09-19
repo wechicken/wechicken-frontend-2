@@ -34,7 +34,7 @@ const EditFormContainer = styled.form`
     .editblogUrl {
       width: 200px;
       height: 35px;
-      font-size: 19px;
+      font-size: 1rem;
       outline: none;
       border: none;
       border-bottom: 1px solid ${theme.orange};

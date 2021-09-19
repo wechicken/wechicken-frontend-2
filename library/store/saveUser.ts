@@ -27,8 +27,17 @@ export const user = createSlice({
 
       return { ...state, ...payload };
     },
-    setUserProfileImg: (state, { payload }) => {
-      state.profile = payload;
+    setUserProfileImg: (state, { payload }: PayloadAction<string>) => {
+      const userFromSessionStorage = sessionStorage.getItem('USER');
+
+      if (userFromSessionStorage) {
+        sessionStorage.setItem(
+          'USER',
+          JSON.stringify({ ...JSON.parse(userFromSessionStorage), profile: payload }),
+        );
+      }
+
+      return { ...state, profile: payload };
     },
   },
 });

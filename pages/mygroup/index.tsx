@@ -17,7 +17,7 @@ import { HeaderBox } from 'styles/theme';
 import BtnTheme from 'library/components/button/ButtonTheme';
 import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
 import { createPost, getMyGroup, joinGroup } from 'library/api/mygroup';
-import AddPost from 'components/addPost/AddPost';
+import PostEditor from 'library/components/postEditor/PostEditor';
 import { ModalLayout } from 'library/components/modal';
 import { Obj } from 'library/models';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ export default function MyGroupPage(): JSX.Element {
   const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
   const { data, isLoading, refetch } = useQuery<MyGroup>(
     ['MyGroup', user.token],
-    () => getMyGroup(user.token),
+    () => getMyGroup(),
     {
       onSuccess: ({ by_days, userPostsCounting }) => {
         setByDays(by_days);
@@ -48,10 +48,10 @@ export default function MyGroupPage(): JSX.Element {
       },
     },
   );
-  const { mutate: mutateCreatePost } = useMutation((body: Obj) => createPost(body, user.token), {
+  const { mutate: mutateCreatePost } = useMutation((body: Obj) => createPost(body), {
     onSuccess: () => refetch(),
   });
-  const { mutate: mutateJoinGroup } = useMutation(() => joinGroup(user.token), {
+  const { mutate: mutateJoinGroup } = useMutation(() => joinGroup(), {
     onSuccess: () => refetch(),
   });
 
@@ -85,7 +85,7 @@ export default function MyGroupPage(): JSX.Element {
     <MyPageContainer>
       {isAddModalActive && (
         <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>
-          <AddPost name={data.myProfile.name} handleSubmit={handleAddPost} />
+          <PostEditor name={data.myProfile.name} handleSubmit={handleAddPost} />
         </ModalLayout>
       )}
       <NthTitle>{data.myGroup.title ?? ''}</NthTitle>

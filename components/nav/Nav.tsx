@@ -33,6 +33,8 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
     (selected: string): void => {
       setDropDownOpen(false);
       if (selected === '로그아웃') {
+        sessionStorage.clear();
+
         dispatch(
           setAlert({
             setSelectedMenu,
@@ -192,7 +194,6 @@ const UserWrap = styled.div`
   justify-content: center;
   align-items: center;
   height: 47px;
-  
 
   .masterCrown {
     width: 25px;

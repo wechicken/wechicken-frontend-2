@@ -3,6 +3,7 @@ import { apiClient } from 'library/api/apiClient';
 import { POSTS_LIMIT, SEARCH_RESULTS_LIMIT } from 'library/constants/constants';
 import { CreatedUser, LoginUser, Page } from 'library/models';
 export * from './mygroup';
+export * from './myprofile';
 
 export const getMainPage = (page: number): Promise<AxiosResponse<Page>> => {
   return apiClient.get(`/main?page=${page}&size=${POSTS_LIMIT}`);
