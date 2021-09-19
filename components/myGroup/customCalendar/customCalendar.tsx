@@ -25,7 +25,7 @@ function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
       const [_, selectedDate] = queryKey;
       const formattedDate = (selectedDate as dayjs.Dayjs).format('YYYYMMDD');
 
-      return getPostsByDate(formattedDate, user.token);
+      return getPostsByDate(formattedDate);
     },
     {
       onSuccess: (data): void => {
