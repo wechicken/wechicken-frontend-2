@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Image from 'next/image';
 
 export type ProfileIconProps = {
   size: number;
@@ -6,15 +7,23 @@ export type ProfileIconProps = {
 };
 
 export default function ProfileIcon({ size, img }: ProfileIconProps): JSX.Element {
-  return <ProfileIconBox size={size} img={img}></ProfileIconBox>;
+  return (
+    <ProfileIconBox size={size} img={img}>
+      <Image
+        src={img || '/images/default.png'}
+        alt="profile"
+        width={`${size}px`}
+        height={`${size}px`}
+      />
+    </ProfileIconBox>
+  );
 }
 
 const ProfileIconBox = styled.div<ProfileIconProps>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  background: url(${({ img }) => img || '/images/default.png'});
-  background-size: cover;
   border-radius: 50%;
-  cursor: pointer;
   border: 1px solid ${({ theme }) => theme.superLightGrey};
+  cursor: pointer;
+  overflow: hidden;
 `;
