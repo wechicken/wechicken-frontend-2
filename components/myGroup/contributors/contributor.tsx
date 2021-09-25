@@ -10,22 +10,28 @@ type Contributor = {
   person: MyGroupUser;
 };
 
-export default function Contributor({ calculatePenalty, postsCounting, person }: Contributor) {
+export default function Contributor({
+  calculatePenalty,
+  postsCounting,
+  person,
+}: Contributor): JSX.Element {
   return (
     <Container>
       <InfoContainer>
-        <ProfileIcon size={34} img={person.profile} />
-        <UserInfo>
-          <div className="name">{person.name}</div>
-          <span className="penalty" role="img" aria-labelledby="money">
-            <span>{calculatePenalty(postsCounting[person.gmail] || 0)}</span>
-          </span>
-        </UserInfo>
+        <div className="user-container">
+          <ProfileIcon size={34} img={person.profile} />
+          <UserInfo>
+            <div className="name">{person.name}</div>
+            <span className="penalty" role="img" aria-labelledby="money">
+              <span>{calculatePenalty(postsCounting[person.gmail] || 0)}</span>
+            </span>
+          </UserInfo>
+        </div>
+        <span role="img" aria-labelledby="check">
+          <Emoji symbol="✔️" />
+          {postsCounting[person.gmail] || 0}
+        </span>
       </InfoContainer>
-      <span role="img" aria-labelledby="check">
-        <Emoji symbol="✔️" />
-        {postsCounting[person.gmail] || 0}
-      </span>
     </Container>
   );
 }
@@ -39,11 +45,29 @@ const Container = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 80%;
   display: flex;
+  align-items: center;
+
+  .user-container {
+    display: flex;
+  }
+
+  ${({ theme }) => theme.sm`
+    flex-direction: column;
+    align-items: center;
+
+    .user-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+`}
 `;
 
 const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 60px;
   margin-left: 5px;
 
@@ -55,4 +79,14 @@ const UserInfo = styled.div`
     color: ${({ theme }) => theme.vermilion};
     font-size: 14px;
   }
+
+  ${({ theme }) => theme.sm`
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+
+    .name{
+      text-align: center;
+    }
+  `}
 `;

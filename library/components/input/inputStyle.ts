@@ -17,8 +17,7 @@ export const InputBox = styled.div<{ width: string; size: string; search?: boole
     padding-bottom: 2px;
 
     .type {
-      margin-left: 2px;
-      margin-bottom: 6px;
+      padding: 0 2px 6px 0;
       font-weight: 500;
       font-size: 15px;
       color: ${({ theme }) => theme.textGrey};
@@ -26,7 +25,6 @@ export const InputBox = styled.div<{ width: string; size: string; search?: boole
 
     input {
       width: ${({ width }) => width};
-      font-size: ${({ size }) => size};
       size: ${({ size }) => size};
       ${({ size, search }) => search && `size: calc(${size} + 1rem)`};
       border: none;

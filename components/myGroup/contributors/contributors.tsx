@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import { currentUser } from 'library/store/saveUser';
+import { useSelector } from 'react-redux';
 import { MyGroupSub, MyGroupUser, MyProfile, UserPostsCounting } from '../myGroup.model';
 import Contributor from './contributor';
 
@@ -18,6 +20,7 @@ export default function Contributors({
   myGroup,
 }: Contributors): JSX.Element {
   // const userProfileImg = useSelector(state => state.userProfileReducer);
+  const user = useSelector(currentUser);
 
   const calculatePenalty = (userCount: number): JSX.Element => {
     const { count, penalty } = myGroup;
@@ -35,17 +38,19 @@ export default function Contributors({
     <Container>
       <MyContribution>
         <InfoContainer>
-          <ProfileIcon size={40} img="" />
+          <ProfileIcon size={40} img={user.profile} />
           <UserInfo>
-            <div className="name">{myContribution.name}</div>
-            <span className="penalty" role="img" aria-labelledby="celebration">
-              {calculatePenalty(postsCounting[myContribution.gmail] || 0)}
+            <div className="user-container">
+              <div className="name">{myContribution.name}</div>
+              <span className="penalty" role="img" aria-labelledby="celebration">
+                {calculatePenalty(postsCounting[myContribution.gmail] || 0)}
+              </span>
+            </div>
+            <span role="img" aria-labelledby="check">
+              <Emoji symbol="✔️" /> {postsCounting[myContribution.gmail] || 0}
             </span>
           </UserInfo>
         </InfoContainer>
-        <span role="img" aria-labelledby="check">
-          <Emoji symbol="✔️" /> {postsCounting[myContribution.gmail] || 0}
-        </span>
       </MyContribution>
       <OtherContribution>
         {contributor.map((person, idx) => {
@@ -64,10 +69,10 @@ export default function Contributors({
 }
 
 const Container = styled.div`
+  display: flex;
   max-width: 2080px;
   height: 120px;
   margin: 24px 6vw 0;
-  display: flex;
   background: #ffffff;
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.08);
   border-radius: 28px;
@@ -96,11 +101,22 @@ const MyContribution = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
+
+  ${({ theme }) => theme.sm`
+    flex-direction: column;
+    align-items: center;
+  `}
 `;
 
 const UserInfo = styled.div`
-  width: 60px;
+  display: flex;
+  align-items: center;
+  width: 90px;
   margin-left: 5px;
+
+  .user-container {
+    padding-right: 0.5rem;
+  }
 
   .name {
     margin-bottom: 2px;
@@ -110,6 +126,15 @@ const UserInfo = styled.div`
     color: ${({ theme }) => theme.vermilion};
     font-size: 14px;
   }
+
+  ${({ theme }) => theme.sm`
+    flex-direction: column;
+    margin-top: 1rem;
+
+    .name{
+      text-align: center;
+    }
+  `}
 `;
 
 const OtherContribution = styled.div`
@@ -127,4 +152,8 @@ const OtherContribution = styled.div`
     background: ${({ theme }) => theme.yellow};
     border-radius: 28px;
   }
+
+  ${({ theme }) => theme.sm`
+    margin-left: 140px;  
+  `}
 `;

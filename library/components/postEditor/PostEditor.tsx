@@ -199,7 +199,8 @@ const Contents = styled.div`
   justify-content: space-between;
 
   ${({ theme }) => theme.sm`
-  margin-top: 60px;
+    margin: 2.5rem auto;
+    width: fit-content;
   `}
 `;
 
