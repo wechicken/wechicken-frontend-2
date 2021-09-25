@@ -98,11 +98,11 @@ const SubMenuBox = styled.ul`
     }
 
     ${({ theme }) => theme.md`
-      font-size: 16px;
+      font-size: 14px;
     `}
 
     ${({ theme }) => theme.sm`
-      font-size: 14px;
+      font-size: 12px;
     `}
   }
 

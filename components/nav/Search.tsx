@@ -70,15 +70,15 @@ const Input = styled.input<{ isSearchActive: boolean }>`
   background-color: transparent;
 
   ${({ theme }) => theme.sm`
-    min-width: 160px;
-    font-size: 14px;
+    min-width: 148px;
+    font-size: 12px;
   `}
 
   &::placeholder,
   ::-webkit-input-placeholder,
   ::-ms-input-placeholder {
     padding-left: 5px;
-    font-size: 14px;
+    font-size: 12px;
     color: ${({ theme }) => theme.orange};
     opacity: 0.7;
   }

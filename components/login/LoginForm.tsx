@@ -107,7 +107,7 @@ export default function LoginForm({
   return (
     <LoginFormBox>
       <Logo />
-      <ContentsBox>
+      <LoginFormContentsBox>
         <Greeting>
           <div className="name">{googleProfile.getName()}님</div>
           <div className="greeting">환영합니다!</div>
@@ -167,7 +167,7 @@ export default function LoginForm({
             isSubmitActivate={isSubmitActivate}
           />
         </SubmitButtonBox>
-      </ContentsBox>
+      </LoginFormContentsBox>
     </LoginFormBox>
   );
 }
@@ -178,16 +178,22 @@ const LoginFormBox = styled.div`
   height: 100%;
 `;
 
-const ContentsBox = styled.div`
+const LoginFormContentsBox = styled.div`
   width: 50%;
   padding: 1.25rem;
   overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 const Greeting = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
+  margin-top: 1.875rem;
 
   .name {
     font-weight: bold;
@@ -218,7 +224,7 @@ const Form = styled.form`
   height: 230px;
   margin-top: 20px;
 
-  ${({ theme }) => theme.sm`
+  ${({ theme }) => theme.md`
     flex-direction: column;
     height: auto;
   `}
@@ -228,7 +234,7 @@ const ImageBox = styled.div`
   display: flex;
   align-items: flex-start;
   margin: 15px 10px 0 10px;
-  ${({ theme }) => theme.sm`
+  ${({ theme }) => theme.md`
     display: flex;
     justify-contents: center;
   `}
@@ -268,5 +274,5 @@ const CameraIcon = styled.div`
 `;
 
 const SubmitButtonBox = styled.div`
-  padding-top: 20px;
+  padding-top: 1rem;
 `;

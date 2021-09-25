@@ -22,6 +22,7 @@ function Login(): JSX.Element {
     <ModalLayout
       width="675px"
       height="29.375rem"
+      style={{ minHeight: '29rem', minWidth: '260px' }}
       closeModal={() => dispatch(setLoginModalOn(false))}
     >
       {isLoginSuccess ? (
@@ -67,6 +68,10 @@ const LoginBoxRight = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+
+  ${({ theme }) => theme.sm`
+    margin-left: 10px;
+  `}
 `;
 
 const Greeting = styled.div`

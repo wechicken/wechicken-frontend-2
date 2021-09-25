@@ -76,9 +76,9 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
         {isModifyMyGroup && (
           <ModifyMyGroup getMyGroupTitle={''} setModifyMyGroup={setModifyMyGroup} />
         )}
-        <LogoWrap>
+        <LogoWrap isSearchActive={isSearchActive}>
           <Link href="/" passHref>
-            <Logo onClick={() => setSelectedMenu('')}>
+            <Logo onClick={() => setSelectedMenu('')} isSearchActive={isSearchActive}>
               <img className="logoImage" alt="logo" src="/images/logo.png" />
               <div className="logoText">&gt;wechicken</div>
             </Logo>
@@ -144,11 +144,15 @@ const NavBox = styled.div<{ isBlurred: boolean }>`
   }
 `;
 
-const LogoWrap = styled.div`
+const LogoWrap = styled.div<{ isSearchActive: boolean }>`
   width: 422px;
   height: 52px;
   display: flex;
   align-items: center;
+
+  ${({ isSearchActive, theme }) => theme.sm`
+    ${isSearchActive ? 'width: 122px' : 'width: 422px'}
+  `}
 
   .settingMyGroup {
     margin-left: 15px;
@@ -156,17 +160,29 @@ const LogoWrap = styled.div`
     cursor: pointer;
     opacity: 0.7;
   }
+
   .settingMyGroup:hover {
     opacity: 1;
   }
+
+  .logoText {
+    ${({ isSearchActive, theme }) => theme.sm`
+      ${isSearchActive ? 'display: none' : 'display: block'}
+    `}
+  }
 `;
 
-const Logo = styled.a`
+const Logo = styled.a<{ isSearchActive: boolean }>`
   display: flex;
   align-items: center;
   width: 11.875rem;
+
   text-decoration: none;
   color: ${({ theme }) => theme.fontColor};
+
+  ${({ isSearchActive, theme }) => theme.sm`
+    ${isSearchActive ? 'width: auto' : 'width: 11.875rem'}
+  `}
 
   .logoImage {
     width: 3.1875rem;
