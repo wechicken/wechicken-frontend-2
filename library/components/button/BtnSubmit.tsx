@@ -26,6 +26,10 @@ const Submit = styled.div<{ isSubmitActivate: boolean }>`
   margin-left: auto;
   margin-right: 20px;
 
+  ${({theme})=> theme.sm`
+    margin-bottom: 10px;
+  `}
+
   .SubmitBtn {
     display: flex;
     justify-content: center;

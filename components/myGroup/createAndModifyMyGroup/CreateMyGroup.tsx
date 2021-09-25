@@ -10,6 +10,7 @@ function CreateMyGroup({ setCreateMyGroupModalOn }: Props): JSX.Element {
     <ModalLayout
       width="42.1875rem"
       height="29.375rem"
+      style={{ minHeight: '430px', minWidth: '260px' }}
       closeModal={() => setCreateMyGroupModalOn(false)}
     >
       <CreateOrModifyMyGroup

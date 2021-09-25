@@ -71,74 +71,80 @@ function CreateOrModifyMyGroup({
 
   return (
     <>
-      <CreateOrModifyMyGroupBox>
-        <Title>
-          <img className="logoImage" alt="logo" src="/Images/logo.png" />
-          <div className="titleTextWrap">
-            <span className="logoText">{'>'}wechicken</span>
-            <span className="titleText">{title}</span>
-          </div>
-        </Title>
-        <FontAwesomeIcon onClick={closeModal} className="BtnClose" icon={faTimes} />
-        <Contents>
-          <Description>
-            <h1>{informationText}</h1>
-            <p>
-              wecode 그리고<br></br>
-              wechicken에 오신 것을 환영합니다!
-            </p>
+      {isCelebratingModalOn ? (
+        <CelebratingModal celebratingMessage={celebratingMessage} />
+      ) : (
+        <CreateOrModifyMyGroupBox>
+          <Title>
+            <img className="logoImage" alt="logo" src="/images/logo.png" />
+            <div className="titleTextWrap">
+              <span className="logoText">{'>'}wechicken</span>
+              <span className="titleText">{title}</span>
+            </div>
+          </Title>
+          <FontAwesomeIcon onClick={closeModal} className="BtnClose" icon={faTimes} />
+          <CreateOrModifyMyGroupContents>
+            <Description>
+              <h1>{informationText}</h1>
+              <p>
+                wecode 그리고<br></br>
+                wechicken에 오신 것을 환영합니다!
+              </p>
 
-            <p>
-              wechicken은 보다 성실한 여러분들로<br></br>
-              거듭날 수 있도록 도와줄 것입니다.
-            </p>
+              <p>
+                wechicken은 보다 성실한 여러분들로<br></br>
+                거듭날 수 있도록 도와줄 것입니다.
+              </p>
 
-            <p>
-              페이지 생성 후 계장 권한을 가진 분은<br></br>
-              블로그 업로드 횟수 및 기부금 수정이<br></br>
-              가능합니다.
-            </p>
+              <p>
+                페이지 생성 후 계장 권한을 가진 분은<br></br>
+                블로그 업로드 횟수 및 기부금 수정이<br></br>
+                가능합니다.
+              </p>
 
-            <p>
-              수정시에는 동기들과 충분한 상의 후에<br></br>
-              진행해주세요 (•ө•)♡ 화이팅!
-            </p>
-          </Description>
-          <InputFormWrap>
-            <span>{user?.nth}기</span>
-            <InputTheme
-              width="10.625rem"
-              type="기수 페이지명"
-              name="myGroupTitle"
-              handleEvent={handleChangeInput}
-              placeholder={myGroupTitleText}
-              size="14px"
-            />
-            <InputTheme
-              width="10.625rem"
-              type="주 블로그 업로드 횟수"
-              name="count"
-              handleEvent={handleChangeInput}
-              placeholder="예시) 주 3회"
-              size="14px"
-            />
-            <InputTheme
-              width="10.625rem"
-              type="회당 기부금"
-              name="penalty"
-              handleEvent={handleChangeInput}
-              placeholder="예시)3000원"
-              size="14px"
-            />
-          </InputFormWrap>
-        </Contents>
-        <BtnSubmit
-          btnText={btnText}
-          executeFunction={setMyGroupPage}
-          isSubmitActivate={isSubmitActivate}
-        ></BtnSubmit>
-      </CreateOrModifyMyGroupBox>
-      {isCelebratingModalOn && <CelebratingModal celebratingMessage={celebratingMessage} />}
+              <p>
+                수정시에는 동기들과 충분한 상의 후에<br></br>
+                진행해주세요 (•ө•)♡ 화이팅!
+              </p>
+            </Description>
+            <InputFormWrap>
+              <span className="nth">{user?.nth}기</span>
+              <InputTheme
+                width="10.625rem"
+                style={{ minWidth: '180px' }}
+                type="기수 페이지명"
+                name="myGroupTitle"
+                handleEvent={handleChangeInput}
+                placeholder={myGroupTitleText}
+                size="14px"
+              />
+              <InputTheme
+                width="10.625rem"
+                style={{ minWidth: '180px' }}
+                type="주 블로그 업로드 횟수"
+                name="count"
+                handleEvent={handleChangeInput}
+                placeholder="예시) 주 3회"
+                size="14px"
+              />
+              <InputTheme
+                width="10.625rem"
+                style={{ minWidth: '180px' }}
+                type="회당 기부금"
+                name="penalty"
+                handleEvent={handleChangeInput}
+                placeholder="예시)3000원"
+                size="14px"
+              />
+            </InputFormWrap>
+          </CreateOrModifyMyGroupContents>
+          <BtnSubmit
+            btnText={btnText}
+            executeFunction={setMyGroupPage}
+            isSubmitActivate={isSubmitActivate}
+          />
+        </CreateOrModifyMyGroupBox>
+      )}
     </>
   );
 }
@@ -147,6 +153,7 @@ export default CreateOrModifyMyGroup;
 
 const CreateOrModifyMyGroupBox = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;
@@ -158,7 +165,7 @@ const Title = styled.div`
   .logoImage {
     width: 60px;
     height: 60px;
-    margin: 30px;
+    margin: 1.875rem;
   }
 
   .titleTextWrap {
@@ -181,9 +188,13 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  width: 230px;
+  width: 14.375rem;
   font-family: ${({ theme }) => theme.fontContent};
   color: ${({ theme }) => theme.deepGrey};
+
+  ${({ theme }) => theme.md`
+    width:100%;
+  `}
 
   h1 {
     margin-bottom: 20px;
@@ -199,10 +210,22 @@ const Description = styled.div`
   }
 `;
 
-const Contents = styled.div`
-  margin: 10px 95px;
+const CreateOrModifyMyGroupContents = styled.div`
+  margin: 10px 5.9375rem;
   display: flex;
   justify-content: space-between;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+
+  ${({ theme }) => theme.md`
+    flex-direction: column;
+    margin: 15px;
+  `}
 `;
 
 const InputFormWrap = styled.form`
@@ -211,8 +234,13 @@ const InputFormWrap = styled.form`
   flex-direction: column;
   justify-content: space-around;
 
-  span {
+  span.nth {
+    font-size: 14px;
     margin-left: 12px;
     color: ${({ theme }) => theme.fontColor};
+
+    ${({ theme }) => theme.md`
+      margin-bottom: 12px;
+    `}
   }
 `;

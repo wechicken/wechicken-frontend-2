@@ -62,7 +62,7 @@ function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
   return (
     <>
       <Title>
-        <img className="logoImage" alt="logo" src="/Images/logo.png" />
+        <img className="logoImage" alt="logo" src="/images/logo.png" />
         <div className="titleTextWrap">
           <span className="logoText">{'>'}wechicken</span>
           {!post && <span className="titleText">새로운 포스트를 추가해주세요</span>}
