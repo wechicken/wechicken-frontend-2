@@ -27,6 +27,10 @@ class MyDocument extends Document {
             href="https://unpkg.com/@egjs/flicking/dist/flicking.css"
             crossOrigin="anonymous"
           />
+          <meta
+            name="google-site-verification"
+            content="qiTLslFqPbhYA7fihUMuCxH6cqm81PeMiMrfDeqmuOc"
+          />
         </Head>
         <body>
           <Main />
