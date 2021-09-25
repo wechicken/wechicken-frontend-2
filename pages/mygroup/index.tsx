@@ -134,6 +134,9 @@ const MyPageContainer = styled.div`
   padding-top: 5rem;
   margin-bottom: 70px;
   background-color: ${({ theme }) => theme.background};
+  ${({ theme }) => theme.sm`
+    width: 100%;
+  `}
 `;
 
 const NthTitle = styled.p`

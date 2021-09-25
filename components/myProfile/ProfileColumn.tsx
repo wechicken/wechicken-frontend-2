@@ -61,7 +61,7 @@ function ProfileColumn(): JSX.Element {
     setisEdit(isEdit => !isEdit);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     setisEdit(!isEdit);
     data?.blog_address !== contentValue && mutateBlogUrl(contentValue);
     e.preventDefault();
@@ -177,6 +177,7 @@ const ProfilePhoto = styled.div`
 
   ${({ theme }) => theme.sm`
     border: none;
+    width: 100%;
   `}
 `;
 
@@ -248,6 +249,10 @@ const ProfileContents = styled.div`
   }
 
   ${({ theme }) => theme.sm`
-    width: 100$
+    width: 100%;
+
+    span{
+      width: 100%;
+    }
   `}
 `;
