@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from 'react-query';
@@ -32,6 +32,10 @@ export default function Home(): JSX.Element {
       },
     },
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useIntersectionObserver({
     target: observerRef,
