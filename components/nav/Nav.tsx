@@ -78,25 +78,27 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
         )}
         {isModifyMyGroup && <ModifyMyGroup setModifyMyGroup={setModifyMyGroup} />}
-        <LogoWrap isSearchActive={isSearchActive} isMyGroupPage={true}>
+        <LogoWrap isSearchActive={isSearchActive} isMyGroupPage={isMyGroupPage}>
           <Link href="/" passHref>
             <Logo
               onClick={() => setSelectedMenu('')}
               isSearchActive={isSearchActive}
-              isMyGroupPage={true}
+              isMyGroupPage={isMyGroupPage}
             >
               <img className="logoImage" alt="logo" src="/images/logo.png" />
               <div className="logoText">&gt;wechicken</div>
             </Logo>
           </Link>
-          {isMyGroupPage && (user as LoginUser)?.master && (
+          {isMyGroupPage && (
             <>
               <NthTitle>{user.myGroupStatus ? (user as LoginUser).myGroupTitle : ''}</NthTitle>
-              <FontAwesomeIcon
-                onClick={() => setModifyMyGroup(true)}
-                className="settingMyGroup"
-                icon={faCog}
-              />
+              {(user as LoginUser)?.master && (
+                <FontAwesomeIcon
+                  onClick={() => setModifyMyGroup(true)}
+                  className="settingMyGroup"
+                  icon={faCog}
+                />
+              )}
             </>
           )}
         </LogoWrap>

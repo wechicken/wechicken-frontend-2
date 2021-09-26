@@ -101,8 +101,8 @@ function MyPosts(): JSX.Element {
 export default MyPosts;
 
 const Container = styled.div`
-  padding-top: 150px;
+  padding-top: 9.375rem;
   @media (max-width: 375px) {
-    padding-top: 60px;
+    padding-top: 3.75rem;
   }
 `;

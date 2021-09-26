@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useQuery, useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from '@emotion/styled';
+import EditForm from './EditForm';
+import Loading from 'library/components/loading/Loading';
+import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import { useToast } from 'library/hooks';
 import { currentUser, setUserProfileImg } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
-import EditForm from './EditForm';
+import { deleteProfileImage, getMyProfile, modifyBlogUrl, modifyProfileImage } from 'library/api';
 import { theme, flexCenter } from 'styles/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { deleteProfileImage, getMyProfile, modifyBlogUrl, modifyProfileImage } from 'library/api';
-import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import Loading from 'library/components/loading/Loading';
-import { useToast } from 'library/hooks';
 
 function ProfileColumn(): JSX.Element {
   const dispatch = useDispatch();
@@ -150,20 +150,22 @@ function ProfileColumn(): JSX.Element {
 export default ProfileColumn;
 
 const ProfileContainer = styled.section`
-  max-width: 1440px;
+  max-width: 1020px;
   width: 100%;
   height: 356px;
-  margin: 0 auto;
+  margin: 15px auto;
   display: flex;
   align-items: center;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.04);
   border-radius: 47px;
   background: ${theme.white};
+  font-size: 14px;
 
   ${({ theme }) => theme.sm`
     flex-direction: column;
-    width: 75%;
-    height: 450px;
+    width: 80%;
+    height: auto;
+    padding: 20px;
   `}
 `;
 
@@ -172,16 +174,20 @@ const ProfilePhoto = styled.div`
   ${flexCenter};
   flex-direction: column;
   margin-right: 10px;
+  padding: 10px;
   font-family: ${theme.fontContent};
   font-weight: 500;
   border-right: 3px solid ${theme.yellow};
+
   img {
     margin: 10px 0;
     border-radius: 100%;
   }
+
   input {
     display: none;
   }
+
   @media (max-width: 375px) {
     border: none;
   }
@@ -189,6 +195,7 @@ const ProfilePhoto = styled.div`
   ${({ theme }) => theme.sm`
     border: none;
     width: 100%;
+    margin-right: 0;
   `}
 `;
 
@@ -202,6 +209,11 @@ const UploadPhotoBtn = styled.div`
   background: ${theme.opacityOrange};
   border: none;
   cursor: pointer;
+
+  ${({ theme }) => theme.sm`
+    margin: 10px 0 0;
+  `}
+
   &:hover {
     transition: 0.3s ease-in-out;
     background: ${theme.orange};
@@ -219,30 +231,40 @@ const DeletePhotoBtn = styled(UploadPhotoBtn)`
 
 const ProfileContents = styled.div`
   width: 60%;
-  height: 200px;
+  height: 12.5rem;
   margin: 1rem auto;
   font-weight: 600;
   font-size: 1.6rem;
   color: ${theme.fontColor};
   position: relative;
+
   h1 {
-    margin: 10px 0;
+    margin: 0.625rem 0;
   }
+
   .userInfo {
     margin-top: 3rem;
+
+    ${({ theme }) => theme.sm`
+      margin-top: 1.5rem;
+      height: auto;
+    `}
   }
+
   .userBlogAddress {
     display: flex;
     align-items: center;
   }
+
   span {
     display: block;
-    margin: 10px 0;
+    margin: 0.625rem 0;
     width: 300px;
-    font-size: 1.1rem;
+    font-size: 16px;
     font-weight: 400;
     color: ${theme.deepGrey};
   }
+
   .editBtn {
     margin-left: 10px;
     font-size: 1.1rem;
@@ -250,6 +272,7 @@ const ProfileContents = styled.div`
     background-color: transparent;
     cursor: pointer;
   }
+
   .saveBtn {
     width: 80px;
     height: 10px;
@@ -258,6 +281,10 @@ const ProfileContents = styled.div`
     background-color: ${theme.orange};
     color: ${theme.white};
   }
+
+  ${({ theme }) => theme.md`
+    margin: 1rem;
+  `}
 
   ${({ theme }) => theme.sm`
     width: 100%;
