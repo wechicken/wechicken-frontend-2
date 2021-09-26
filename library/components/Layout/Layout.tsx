@@ -48,7 +48,9 @@ export default function Layout({ children }: Props): JSX.Element {
       <Nav isBlurred={isBlurred} setBlurred={setBlurred} />
       <main>{children}</main>
       <Observer ref={ref} />
-      <Toast />
+      <ToastWrapper>
+        <Toast />
+      </ToastWrapper>
     </LayoutBox>
   );
 }
@@ -63,4 +65,9 @@ const Observer = styled.div`
   top: calc(100vh + 13.3125rem);
   height: 10px;
   width: 3px;
+`;
+
+const ToastWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

@@ -34,23 +34,22 @@ function Toast(): JSX.Element | null {
   }
 
   return (
-    <ToastWrapper>
-      <ToastBox
-        duration={toastConfig.duration ?? 3000}
-        dangerouslySetInnerHTML={{ __html: toastConfig.message }}
-      ></ToastBox>
-    </ToastWrapper>
+    <ToastBox
+      duration={toastConfig.duration ?? 3000}
+      dangerouslySetInnerHTML={{ __html: toastConfig.message }}
+    ></ToastBox>
   );
 }
 
 export default Toast;
 
-const ToastWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  inset: 0;
-`;
+// const ToastWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   position: fixed;
+//   inset: 0;
+//   z-index: -1;
+// `;
 
 const ToastBox = styled.div<{ duration: number }>`
   position: fixed;
@@ -62,7 +61,7 @@ const ToastBox = styled.div<{ duration: number }>`
   color: ${({ theme }) => theme.darkGrey};
   border-radius: 8px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  z-index: 1000000;
+  z-index: 100000000;
 
   ${({ theme }) => theme.sm`
     max-width: 80%;
