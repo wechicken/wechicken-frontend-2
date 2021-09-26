@@ -47,20 +47,30 @@ const BannerContents = styled.div`
   }
 
   ${({ theme }) => theme.sm`
-  width: 100%;
-  flex-direction: column;
-
-  .contents {
     width: 100%;
-  }
+    flex-direction: column;
 
-  img {
-    width: 95%;
-  }
+    .contents {
+      width: 100%;
+    }
+
+    img {
+      width: 95%;
+    }
   `}
 
   ${({ theme }) => theme.md`
-  flex-direction: column;
+    img {
+      width: 95%;
+    }
+  `}
+
+  ${({ theme }) => theme.lg`
+    flex-direction: column;
+
+    img{
+      margin-bottom: 3rem;
+    }
   `}
 
   .contents {
@@ -75,11 +85,15 @@ const BannerContents = styled.div`
     .title {
       width: 100%;
       margin-bottom: 20px;
-      font-size: 50px;
+      font-size: 3rem;
       font-weight: 500;
       letter-spacing: 7px;
       color: ${({ theme }) => theme.vermilion};
       word-break: keep-all;
+
+      ${({ theme }) => theme.lg`
+        font-size: 2rem;
+      `}
 
       ${({ theme }) => theme.md`
       margin-top: 40px;
