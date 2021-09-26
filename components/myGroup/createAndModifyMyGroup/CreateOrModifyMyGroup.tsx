@@ -9,23 +9,24 @@ import { currentUser, saveUser } from 'library/store/saveUser';
 import { postCreateOrModifyGroup } from 'library/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { LoginUser } from 'library/models';
 
 type Props = {
   title: string;
   informationText: string;
-  myGroupTitleText: string;
   btnText: string;
   closeModal: () => void;
   celebratingMessage: string;
+  myGroupTitleText?: string;
 };
 
 function CreateOrModifyMyGroup({
   title,
   informationText,
-  myGroupTitleText,
   btnText,
   closeModal,
   celebratingMessage,
+  myGroupTitleText,
 }: Props): JSX.Element {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -115,7 +116,7 @@ function CreateOrModifyMyGroup({
                 type="기수 페이지명"
                 name="myGroupTitle"
                 handleEvent={handleChangeInput}
-                placeholder={myGroupTitleText}
+                placeholder={myGroupTitleText ?? (user as LoginUser).myGroupTitle}
                 size="14px"
               />
               <InputTheme
@@ -192,7 +193,7 @@ const Description = styled.div`
   font-family: ${({ theme }) => theme.fontContent};
   color: ${({ theme }) => theme.deepGrey};
 
-  ${({ theme }) => theme.md`
+  ${({ theme }) => theme.sm`
     width:100%;
   `}
 
@@ -222,7 +223,11 @@ const CreateOrModifyMyGroupContents = styled.div`
     display: none; /* Chrome, Safari, Opera*/
   }
 
-  ${({ theme }) => theme.md`
+  ${({theme})=> theme.md`
+    margin: 0 25px;
+  `}
+
+  ${({ theme }) => theme.sm`
     flex-direction: column;
     margin: 15px;
   `}

@@ -13,6 +13,8 @@ import { LoginUser } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   isBlurred: boolean;
@@ -63,6 +65,8 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
     setDropDownOpen(false);
   };
 
+  const isMyGroupPage = router.pathname === '/mygroup';
+
   return (
     <>
       <NavBox
@@ -73,16 +77,28 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
         {isCreateMyGroupModalOn && (
           <CreateMyGroup setCreateMyGroupModalOn={setCreateMyGroupModalOn} />
         )}
-        {isModifyMyGroup && (
-          <ModifyMyGroup getMyGroupTitle={''} setModifyMyGroup={setModifyMyGroup} />
-        )}
-        <LogoWrap isSearchActive={isSearchActive}>
+        {isModifyMyGroup && <ModifyMyGroup setModifyMyGroup={setModifyMyGroup} />}
+        <LogoWrap isSearchActive={isSearchActive} isMyGroupPage={true}>
           <Link href="/" passHref>
-            <Logo onClick={() => setSelectedMenu('')} isSearchActive={isSearchActive}>
+            <Logo
+              onClick={() => setSelectedMenu('')}
+              isSearchActive={isSearchActive}
+              isMyGroupPage={true}
+            >
               <img className="logoImage" alt="logo" src="/images/logo.png" />
               <div className="logoText">&gt;wechicken</div>
             </Logo>
           </Link>
+          {isMyGroupPage && (user as LoginUser)?.master && (
+            <>
+              <NthTitle>{user.myGroupStatus ? (user as LoginUser).myGroupTitle : ''}</NthTitle>
+              <FontAwesomeIcon
+                onClick={() => setModifyMyGroup(true)}
+                className="settingMyGroup"
+                icon={faCog}
+              />
+            </>
+          )}
         </LogoWrap>
         <UserWrap>
           {router.pathname !== '/search' && (
@@ -144,7 +160,7 @@ const NavBox = styled.div<{ isBlurred: boolean }>`
   }
 `;
 
-const LogoWrap = styled.div<{ isSearchActive: boolean }>`
+const LogoWrap = styled.div<{ isSearchActive: boolean; isMyGroupPage: boolean }>`
   width: 422px;
   height: 52px;
   display: flex;
@@ -165,14 +181,16 @@ const LogoWrap = styled.div<{ isSearchActive: boolean }>`
     opacity: 1;
   }
 
-  .logoText {
-    ${({ isSearchActive, theme }) => theme.sm`
-      ${isSearchActive ? 'display: none' : 'display: block'}
-    `}
+  @media only screen and (max-width: 380px) {
+    .logoText {
+      ${({ isSearchActive, theme, isMyGroupPage }) => theme.sm`
+        ${isSearchActive || isMyGroupPage ? 'display: none' : 'display: block'}
+      `}
+    }
   }
 `;
 
-const Logo = styled.a<{ isSearchActive: boolean }>`
+const Logo = styled.a<{ isSearchActive: boolean; isMyGroupPage: boolean }>`
   display: flex;
   align-items: center;
   width: 11.875rem;
@@ -180,8 +198,8 @@ const Logo = styled.a<{ isSearchActive: boolean }>`
   text-decoration: none;
   color: ${({ theme }) => theme.fontColor};
 
-  ${({ isSearchActive, theme }) => theme.sm`
-    ${isSearchActive ? 'width: auto' : 'width: 11.875rem'}
+  ${({ isSearchActive, theme, isMyGroupPage }) => theme.sm`
+    ${isSearchActive || isMyGroupPage ? 'width: auto' : 'width: 11.875rem'}
   `}
 
   .logoImage {
@@ -204,6 +222,15 @@ const Logo = styled.a<{ isSearchActive: boolean }>`
   }
 `;
 
+const NthTitle = styled.div`
+  font-family: ${({ theme }) => theme.fontTitle};
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  color: ${({ theme }) => theme.orange};
+`;
+
 const UserWrap = styled.div`
   position: relative;
   display: flex;
@@ -215,7 +242,11 @@ const UserWrap = styled.div`
     width: 25px;
     height: 25px;
     position: absolute;
-    top: -20px;
+    top: -1.25rem;
     right: 12px;
+
+    ${({ theme }) => theme.sm`
+      top: -10px;
+    `}
   }
 `;

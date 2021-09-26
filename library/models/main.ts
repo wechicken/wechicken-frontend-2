@@ -37,6 +37,7 @@ export type CreatedUser = {
 
 export type LoginUser = CreatedUser & {
   master: boolean;
+  myGroupTitle?: string;
 };
 
 export type Alert = {

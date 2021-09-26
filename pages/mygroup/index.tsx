@@ -20,8 +20,8 @@ import { createPost, getMyGroup, joinGroup } from 'library/api/mygroup';
 import PostEditor from 'library/components/postEditor/PostEditor';
 import { ModalLayout } from 'library/components/modal';
 import { Obj } from 'library/models';
-import { useSelector } from 'react-redux';
-import { currentUser } from 'library/store/saveUser';
+import { useDispatch, useSelector } from 'react-redux';
+import { currentUser, saveUser } from 'library/store/saveUser';
 
 const initialBydays = {
   MON: [],
@@ -34,6 +34,7 @@ const initialBydays = {
 };
 
 export default function MyGroupPage(): JSX.Element {
+  const dispatch = useDispatch();
   const user = useSelector(currentUser);
   const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
   const [byDays, setByDays] = useState<Bydays>(initialBydays);
@@ -54,6 +55,11 @@ export default function MyGroupPage(): JSX.Element {
   const { mutate: mutateJoinGroup } = useMutation(() => joinGroup(), {
     onSuccess: () => refetch(),
   });
+
+  useEffect(() => {
+    if (isLoading || isNil(data)) return;
+    dispatch(saveUser({ ...user, myGroupTitle: data.myGroup.title }));
+  }, [isLoading]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -78,7 +84,7 @@ export default function MyGroupPage(): JSX.Element {
   };
 
   if (isLoading || isNil(data)) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
   return (
@@ -89,7 +95,7 @@ export default function MyGroupPage(): JSX.Element {
         </ModalLayout>
       )}
       <NthTitle>{data.myGroup.title ?? ''}</NthTitle>
-      <MyGroupBanner ranking={data.Ranks}></MyGroupBanner>
+      <MyGroupBanner ranking={data.Ranks} />
       <ContentWrap>
         {data.is_group_joined && (
           <Contribution>
@@ -108,14 +114,14 @@ export default function MyGroupPage(): JSX.Element {
           <HeaderBox width={149}>
             <div className="title">이주의 포스팅</div>
             <div className="btnUpdate">
-              <CustomCalendar handleClickDate={handleClickDate} data={data}></CustomCalendar>
+              <CustomCalendar handleClickDate={handleClickDate} data={data} />
               {data.is_group_joined && (
                 <BtnTheme
                   value="포스트 +"
                   handleFunction={() => {
                     setAddModalActive(true);
                   }}
-                ></BtnTheme>
+                />
               )}
             </div>
           </HeaderBox>
@@ -123,7 +129,7 @@ export default function MyGroupPage(): JSX.Element {
             dayPosts={byDays}
             isGroupJoined={data.is_group_joined}
             executeFunction={handleGroupJoined}
-          ></PostsOfTheWeek>
+          />
         </ThisWeek>
       </ContentWrap>
     </MyPageContainer>
