@@ -111,7 +111,6 @@ const InfoContainer = styled.div`
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
-  width: 90px;
   margin-left: 5px;
 
   .user-container {

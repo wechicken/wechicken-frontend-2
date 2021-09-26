@@ -68,7 +68,7 @@ const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 60px;
+  width: 90px;
   margin-left: 5px;
 
   .name {
