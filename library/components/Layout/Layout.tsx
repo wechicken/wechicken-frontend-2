@@ -7,6 +7,7 @@ import { useIntersectionObserver } from 'library/hooks';
 import { useSelector } from 'react-redux';
 import { alertForm } from 'library/store/setAlert';
 import { loginModal } from 'library/store/setLoginModal';
+import Toast from 'components/toast/Toast';
 
 type Props = {
   children: React.ReactNode;
@@ -47,6 +48,7 @@ export default function Layout({ children }: Props): JSX.Element {
       <Nav isBlurred={isBlurred} setBlurred={setBlurred} />
       <main>{children}</main>
       <Observer ref={ref} />
+      <Toast />
     </LayoutBox>
   );
 }

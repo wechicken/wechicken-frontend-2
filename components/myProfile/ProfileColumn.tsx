@@ -11,6 +11,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { deleteProfileImage, getMyProfile, modifyBlogUrl, modifyProfileImage } from 'library/api';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import Loading from 'library/components/loading/Loading';
+import { useToast } from 'library/hooks';
 
 function ProfileColumn(): JSX.Element {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function ProfileColumn(): JSX.Element {
 
   const [isEdit, setisEdit] = useState<boolean>(false);
   const [contentValue, setContentValue] = useState<string>('');
+  const { showToast } = useToast();
   const { data, refetch } = useQuery(
     'getMyProfile',
     async () => {
@@ -53,7 +55,16 @@ function ProfileColumn(): JSX.Element {
 
   const { mutate: mutateBlogUrl } = useMutation(
     (blogAddress: string) => modifyBlogUrl(blogAddress),
-    { onSuccess: () => refetch() },
+    {
+      onSuccess: () => refetch(),
+      onError: () => {
+        setContentValue(data?.blog_address ?? '');
+        showToast({
+          message:
+            '블로그 주소를 변경하는 데 실패했습니다.<br />블로그 url의 형식이 올바른지 다시 한 번 확인해 주세요.',
+        });
+      },
+    },
   );
 
   // 수정 아이콘
