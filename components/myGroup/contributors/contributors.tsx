@@ -153,6 +153,6 @@ const OtherContribution = styled.div`
   }
 
   ${({ theme }) => theme.sm`
-    margin-left: 140px;  
+    margin-left: 100px;  
   `}
 `;
