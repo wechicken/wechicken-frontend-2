@@ -52,7 +52,7 @@ function SubMenu({
       <li onClick={handleMyGroup} className={handleFocus(page.mygroup)}>
         <div>{user.myGroupStatus ? page.mygroup : page.createMyGroup}</div>
       </li>
-      <Link href="/Liked" passHref>
+      <Link href="/liked" passHref>
         <li onClick={handleSelected} className={handleFocus(page.bookmark)}>
           {page.bookmark}
         </li>
