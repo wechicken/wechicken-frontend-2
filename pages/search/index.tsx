@@ -63,29 +63,27 @@ function SearchPage(): JSX.Element {
 
   return (
     <>
-      <>
-        <SearchWrap>
-          <InputTheme
-            width="40.625rem"
-            value={keyword}
-            handleEvent={moveToSearchURL}
-            size="2.8125rem"
-            search
-          />
-        </SearchWrap>
-        <PostWrap>
-          {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
-            ? data.pages.map(
-                page =>
-                  page &&
-                  page.posts.map((post: Post) => (
-                    <Card key={post.id} post={post} width="40.625rem" space="1.25rem" search />
-                  )),
-              )
-            : searchingStatus(keyword)}
-          <Observer ref={observerRef} />
-        </PostWrap>
-      </>
+      <SearchWrap>
+        <InputTheme
+          width="40.625rem"
+          value={keyword}
+          handleEvent={moveToSearchURL}
+          size="2.8125rem"
+          search
+        />
+      </SearchWrap>
+      <PostWrap>
+        {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
+          ? data.pages.map(
+              page =>
+                page &&
+                page.posts.map((post: Post) => (
+                  <Card key={post.id} post={post} width="40.625rem" space="1.25rem" search />
+                )),
+            )
+          : searchingStatus(keyword)}
+        <Observer ref={observerRef} />
+      </PostWrap>
     </>
   );
 }
