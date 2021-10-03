@@ -75,26 +75,23 @@ function MyPosts(): JSX.Element {
       <HeaderBox width={100}>
         <div className="title">내 포스트</div>
       </HeaderBox>
-      <Wrapper>
-        <PostWrapper>
-          {data.map((post: Post) => {
-            return (
-              <Card
-                key={post.id}
-                handlePostId={handlePostId}
-                getDeleteMyPostId={getDeleteMyPostId}
-                post={post}
-                space="20px"
-              />
-            );
-          })}
-          {isEditPostActive && (
-            <ModalLayout closeModal={closeEditPost} closeOnClickDimmer={true}>
-              <PostEditor handleSubmit={handleSubmit} post={toEditPost} />
-            </ModalLayout>
-          )}
-        </PostWrapper>
-      </Wrapper>
+      <PostWrapper>
+        {data.map((post: Post) => {
+          return (
+            <Card
+              key={post.id}
+              handlePostId={handlePostId}
+              getDeleteMyPostId={getDeleteMyPostId}
+              post={post}
+            />
+          );
+        })}
+        {isEditPostActive && (
+          <ModalLayout closeModal={closeEditPost} closeOnClickDimmer={true}>
+            <PostEditor handleSubmit={handleSubmit} post={toEditPost} />
+          </ModalLayout>
+        )}
+      </PostWrapper>
     </Container>
   );
 }
@@ -106,10 +103,4 @@ const Container = styled.div`
   @media (max-width: 375px) {
     padding-top: 3.75rem;
   }
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
 `;

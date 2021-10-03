@@ -12,6 +12,7 @@ import { getMainPage } from 'library/api';
 import { currentUser } from 'library/store/saveUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { PostWrapper } from 'styles/theme';
 
 export default function Home(): JSX.Element {
   const user = useSelector(currentUser);
@@ -60,17 +61,15 @@ export default function Home(): JSX.Element {
               <h1 className="contentTitle">트렌딩 포스트</h1>
             </div>
           </MainContentTitle>
-          <MainContentCards>
+          <PostWrapper>
             {data &&
               data.pages.map(
                 page =>
                   page &&
-                  page.posts.map((post: Post) => (
-                    <Card key={post.id} post={post} width="18rem" space="1.25rem" />
-                  )),
+                  page.posts.map((post: Post) => <Card key={post.id} post={post} width="18rem" />),
               )}
             <Observer ref={observerRef} />
-          </MainContentCards>
+          </PostWrapper>
         </MainContents>
       </HomeContainer>
     </>
@@ -94,14 +93,6 @@ const HomeContainer = styled.div`
   `}
 `;
 
-const MainContentCards = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2.5rem;
-  padding: 0px !important;
-`;
-
 const MainContents = styled.div`
   position: relative;
   width: 90%;
@@ -111,12 +102,19 @@ const MainContents = styled.div`
   border-radius: 3.125rem;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.05);
+
+  ${({ theme }) => theme.md`
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+  `}
 `;
 
 const MainContentTitle = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 3.125rem;
+  margin-bottom: 20px;
 
   .titleContainer {
     display: flex;

@@ -260,11 +260,11 @@ const UserWrap = styled.div`
 const ProfileIconBox = styled.div<{ isdropDownOpen: boolean }>`
   border-radius: 50%;
   padding: 2px;
-  border: 3px solid ${({ theme }) => theme.white}
-    ${({ isdropDownOpen, theme }) =>
-      isdropDownOpen &&
-      css`
-        padding: 2px;
-        border: 3px solid ${theme.yellow};
-      `}
+  border: 3px solid transparent;
+  ${({ isdropDownOpen, theme }) =>
+    isdropDownOpen &&
+    css`
+      padding: 2px;
+      border: 3px solid ${theme.yellow};
+    `}
 `;

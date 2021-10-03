@@ -72,6 +72,7 @@ const ToastBox = styled.div<{ duration: number }>`
   bottom: 50px;
   display: flex;
   max-width: 50rem;
+  font-size: 14px;
   text-align: center;
   padding: 0.8rem 2.3rem;
   background-color: #272727a9;

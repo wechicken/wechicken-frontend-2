@@ -9,9 +9,8 @@ import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
 
 type Props = {
-  post: Post;
   width?: string;
-  space: string;
+  post: Post;
   handleRemoveCard?: () => void;
   search?: boolean;
   handlePostId?: (id: number) => void;
@@ -19,9 +18,8 @@ type Props = {
 };
 
 function Card({
-  post,
   width,
-  space,
+  post,
   handleRemoveCard,
   search,
   handlePostId,
@@ -43,7 +41,7 @@ function Card({
   };
 
   return (
-    <CardContainer space={space} width={width as string} search={search}>
+    <CardContainer width={width as string} search={search}>
       <CardWrap type={post.type} onClick={() => window.open(`${post.link}`)}>
         <ImageBox img={post.thumbnail || '/images/blogDefaultImg.png'} />
         <img className="blogLogo" alt="blog_logo" src={`/images/${post.type}.png`} />
@@ -101,11 +99,9 @@ function Card({
 
 export default Card;
 
-const CardContainer = styled.div<{ space: string; width: string; search: boolean | undefined }>`
-  width: ${({ width }) => width};
-  /* min-width: 260px; */
+const CardContainer = styled.div<{ width: string; search: boolean | undefined }>`
+  width: 100%;
   height: 20.4375rem;
-  /* margin: ${({ space }) => space}; */
   position: relative;
   border-radius: 7px;
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.08);
@@ -114,24 +110,20 @@ const CardContainer = styled.div<{ space: string; width: string; search: boolean
   transition: box-shadow 0.5s ease-in-out;
 
   ${({ theme, search, width }) => theme.xl`
-    width: 100%;
     ${search && `width: ${width}`}
   `}
 
   ${({ theme, search, width }) => theme.lg`
-    width: 100%;
     height: 280px;
     ${search && `width: ${width}`}
   `}
 
   ${({ theme, search, width }) => theme.md`
-    width: 100%;
     height: 250px;
     ${search && `width: ${width}`}
   `}
 
   ${({ theme, search }) => theme.sm`
-    width: 100%;
     margin: 0 2.25rem 2.25rem 2.25rem;
     ${search && `margin: 10px`}
   `}

@@ -47,15 +47,7 @@ export default function LikedPage(): JSX.Element {
       <PostWrapper>
         {data &&
           data.posts.map((post: Post) => {
-            return (
-              <Card
-                post={post}
-                width="288px"
-                space="20px"
-                key={post.id}
-                handleRemoveCard={handleRemoveCard}
-              />
-            );
+            return <Card post={post} key={post.id} handleRemoveCard={handleRemoveCard} />;
           })}
       </PostWrapper>
     </Container>
@@ -68,7 +60,7 @@ const Container = styled.div`
 
 const ActiveTab = styled.div`
   position: sticky;
-  padding: 6.9375rem 0 0 5px;
+  padding: 6.9375rem 0 0 30px;
   top: 0px;
   bottom: 0;
   right: 0;
@@ -102,7 +94,7 @@ const ActiveTab = styled.div`
 
 const UnderBar = styled.div<{ selectedMenu: string }>`
   position: absolute;
-  width: 132px;
+  width: 143px;
   height: 2px;
   display: block;
   bottom: 3px;
