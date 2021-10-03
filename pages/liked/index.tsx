@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import styled from '@emotion/styled';
 import { Post } from 'library/models';
-import { theme, flexCenter } from 'styles/theme';
+import { theme, flexCenter, PostWrapper } from 'styles/theme';
 import { getLikedPost } from 'library/api/liked';
 import Card from 'library/components/card/Card';
 
@@ -44,7 +44,7 @@ export default function LikedPage(): JSX.Element {
           <UnderBar selectedMenu={selectedMenu}></UnderBar>
         </div>
       </ActiveTab>
-      <Contents>
+      <PostWrapper>
         {data &&
           data.posts.map((post: Post) => {
             return (
@@ -57,32 +57,35 @@ export default function LikedPage(): JSX.Element {
               />
             );
           })}
-      </Contents>
+      </PostWrapper>
     </Container>
   );
 }
 
 const Container = styled.div`
-  padding: 111px 10vw 0px;
   background-color: white;
 `;
 
 const ActiveTab = styled.div`
-  padding: 0 20px;
   position: sticky;
-
+  padding: 6.9375rem 0 0 5px;
+  top: 0px;
+  bottom: 0;
+  right: 0;
+  left: 0;
   z-index: 8;
-  width: 100%;
+  background-color: white;
 
   .tabWrap {
     position: relative;
     display: flex;
-    width: 288px;
+    margin: 0 auto;
+    background-color: white;
 
     li {
       ${flexCenter}
       color: ${theme.deepGrey};
-      width: 140px;
+      width: 143px;
       height: 48px;
       padding-bottom: 3px;
       font-size: 18px;
@@ -99,7 +102,7 @@ const ActiveTab = styled.div`
 
 const UnderBar = styled.div<{ selectedMenu: string }>`
   position: absolute;
-  width: 48%;
+  width: 132px;
   height: 2px;
   display: block;
   bottom: 3px;
@@ -107,13 +110,4 @@ const UnderBar = styled.div<{ selectedMenu: string }>`
   transform: ${({ selectedMenu }) =>
     selectedMenu === 'likes' ? 'translateX(140px)' : 'translateX(0)'};
   transition: all 0.5s ease-in-out;
-`;
-
-const Contents = styled.div`
-  padding-top: 111px 0 0 40px;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0px !important;
-  margin: 52px auto 0 auto;
-  overflow-y: scroll;
 `;

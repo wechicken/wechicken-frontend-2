@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { getMyPost, deleteMyPost, modifyPost } from 'library/api/myprofile';
 import { ModalLayout } from 'library/components/modal';
 import Card from 'library/components/card/Card';
-import { HeaderBox, MainContentCards } from 'styles/theme';
+import { HeaderBox, PostWrapper } from 'styles/theme';
 import { Post } from 'library/models/main';
 import { setAlert } from 'library/store/setAlert';
 import Loading from 'library/components/loading/Loading';
@@ -75,25 +75,26 @@ function MyPosts(): JSX.Element {
       <HeaderBox width={100}>
         <div className="title">내 포스트</div>
       </HeaderBox>
-      <MainContentCards>
-        {data.map((post: Post) => {
-          return (
-            <Card
-              key={post.id}
-              handlePostId={handlePostId}
-              getDeleteMyPostId={getDeleteMyPostId}
-              post={post}
-              width={'288px'}
-              space={'20px'}
-            />
-          );
-        })}
-        {isEditPostActive && (
-          <ModalLayout closeModal={closeEditPost} closeOnClickDimmer={true}>
-            <PostEditor handleSubmit={handleSubmit} post={toEditPost} />
-          </ModalLayout>
-        )}
-      </MainContentCards>
+      <Wrapper>
+        <PostWrapper>
+          {data.map((post: Post) => {
+            return (
+              <Card
+                key={post.id}
+                handlePostId={handlePostId}
+                getDeleteMyPostId={getDeleteMyPostId}
+                post={post}
+                space="20px"
+              />
+            );
+          })}
+          {isEditPostActive && (
+            <ModalLayout closeModal={closeEditPost} closeOnClickDimmer={true}>
+              <PostEditor handleSubmit={handleSubmit} post={toEditPost} />
+            </ModalLayout>
+          )}
+        </PostWrapper>
+      </Wrapper>
     </Container>
   );
 }
@@ -105,4 +106,10 @@ const Container = styled.div`
   @media (max-width: 375px) {
     padding-top: 3.75rem;
   }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
