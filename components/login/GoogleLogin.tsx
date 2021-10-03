@@ -39,7 +39,7 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
   }, []);
 
   const googleSDK = (): void => {
-    const loadGapi = (): void => {
+    window.googleSDKLoaded = () => {
       window.gapi.load('auth2', () => {
         auth2.current = window.gapi.auth2.init({
           client_id: GOOGLE_CLIENT_ID,
@@ -48,12 +48,13 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
       });
     };
 
-    window.googleSDKLoaded = () => {
-      loadGapi();
-    };
-
     if (isNil(auth2.current) && window.gapi) {
-      loadGapi();
+      window.gapi.load('auth2', () => {
+        auth2.current = window.gapi.auth2.init({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: 'profile email',
+        });
+      });
     }
 
     const makeJsElement = (d: Document, s: string, id: string): void => {
