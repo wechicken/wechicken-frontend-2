@@ -9,6 +9,7 @@ import { LoginUser } from 'library/models';
 import { saveUser } from 'library/store/saveUser';
 import { setLoginModalOn } from 'library/store/setLoginModal';
 import { useToast } from 'library/hooks';
+import isNil from 'lodash-es/isNil';
 declare global {
   interface Window {
     googleSDKLoaded: () => void;
@@ -31,13 +32,14 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
 
   useEffect(() => {
     googleSDK();
+
     return () => {
       axios.CancelToken.source().cancel();
     };
   }, []);
 
   const googleSDK = (): void => {
-    window.googleSDKLoaded = () => {
+    const loadGapi = (): void => {
       window.gapi.load('auth2', () => {
         auth2.current = window.gapi.auth2.init({
           client_id: GOOGLE_CLIENT_ID,
@@ -45,6 +47,14 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
         });
       });
     };
+
+    window.googleSDKLoaded = () => {
+      loadGapi();
+    };
+
+    if (isNil(auth2.current)) {
+      loadGapi();
+    }
 
     const makeJsElement = (d: Document, s: string, id: string): void => {
       const fjs: Element = d.getElementsByTagName(s)[0];
