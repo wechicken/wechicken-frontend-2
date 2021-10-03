@@ -52,7 +52,7 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
       loadGapi();
     };
 
-    if (isNil(auth2.current)) {
+    if (isNil(auth2.current) && window.gapi) {
       loadGapi();
     }
 
