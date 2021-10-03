@@ -30,7 +30,7 @@ class MyDocument extends Document {
           />
           <meta
             name="google-site-verification"
-            content={GOOGLE_VERIFICATION}
+            content="neE0AGAW1Gzo7vGU_J75zwkWyAaxHl9BN3mkqzMXtow"
           />
         </Head>
         <body>
