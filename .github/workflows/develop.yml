@@ -28,6 +28,7 @@ jobs:
           API_URL: ${{ secrets.REACT_APP_API_URL }}
           STAGE: ${{ secrets.REACT_APP_STAGE }}
           GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+          GOOGLE_VERIFICATION: ${{ secrets.GOOGLE_VERIFICATION }}
         run: yarn build
 
       - name: Deploy to S3

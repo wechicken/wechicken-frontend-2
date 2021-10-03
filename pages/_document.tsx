@@ -1,3 +1,4 @@
+import { GOOGLE_VERIFICATION } from 'library/constants';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
@@ -29,7 +30,7 @@ class MyDocument extends Document {
           />
           <meta
             name="google-site-verification"
-            content="qiTLslFqPbhYA7fihUMuCxH6cqm81PeMiMrfDeqmuOc"
+            content={GOOGLE_VERIFICATION}
           />
         </Head>
         <body>
