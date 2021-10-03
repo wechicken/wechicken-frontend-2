@@ -1,4 +1,3 @@
-import { GOOGLE_VERIFICATION } from 'library/constants';
 import Document, {
   DocumentContext,
   DocumentInitialProps,
