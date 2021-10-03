@@ -1,9 +1,15 @@
 import styled from '@emotion/styled';
+import { useToast } from 'library/hooks';
 
 function Error(statusCode: string): JSX.Element {
-  console.log(
-    statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client',
-  );
+  const { showToast } = useToast();
+
+  showToast({
+    message: statusCode
+      ? `An error ${statusCode} occurred on server`
+      : 'An error occurred on client',
+    type: 'error',
+  });
 
   return (
     <ErrorContainer>

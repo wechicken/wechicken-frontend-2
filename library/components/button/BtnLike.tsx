@@ -5,10 +5,14 @@ import styled from '@emotion/styled';
 import { currentUser } from 'library/store/saveUser';
 import { postLikeStatus } from 'library/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as blankHeart } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as filledHeart } from '@fortawesome/free-solid-svg-icons';
-import { faBookmark as blankBookmarks } from '@fortawesome/free-regular-svg-icons';
-import { faBookmark as filledBookmarks } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart as blankHeart,
+  faBookmark as blankBookmarks,
+} from '@fortawesome/free-regular-svg-icons';
+import {
+  faHeart as filledHeart,
+  faBookmark as filledBookmarks,
+} from '@fortawesome/free-solid-svg-icons';
 import { useToast } from 'library/hooks';
 
 type Props = {
@@ -32,7 +36,10 @@ function BtnLike({ id, status, type, setActiveAlert, handleRemoveCard }: Props):
       const type = data.message === 'LIKED' ? '좋아요' : '북마크';
       const action = isLiked === true ? '에서 삭제' : '에 추가';
 
-      showToast({ message: `${type} 목록${action}되었습니다.` });
+      showToast({
+        message: `${type} 목록${action}되었습니다.`,
+        type: data.message === 'LIKED' ? 'like' : 'bookmark',
+      });
     }
   };
 

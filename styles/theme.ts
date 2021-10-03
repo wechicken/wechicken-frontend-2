@@ -8,6 +8,7 @@ export const theme = {
   orange: '#FF9900',
   opacityOrange: 'rgba(242,153,74,0.5)',
   yellow: '#FFD66C',
+  blue: '#1c7ed7',
   textGrey: '#8a8383',
   grey: 'rgba(196,196,196,0.3)',
   superLightGrey: 'rgb(214, 214, 214, 0.5)',

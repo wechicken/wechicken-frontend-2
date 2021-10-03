@@ -5,6 +5,7 @@ import { AppState } from '.';
 const INITIAL_STATE: ToastConfig = {
   message: '',
   duration: 3000,
+  type: 'info',
 };
 
 export const toastSlice = createSlice({
@@ -12,9 +13,9 @@ export const toastSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     setToastConfig: (_, action: PayloadAction<ToastConfig>) => {
-      const { message, duration } = action.payload;
+      const { message, duration, type } = action.payload;
 
-      return { message, duration: duration ?? 3000 };
+      return { message, type: type ?? 'info', duration: duration ?? 3000 };
     },
   },
 });
