@@ -77,7 +77,7 @@ function SearchPage(): JSX.Element {
               page =>
                 page &&
                 page.posts.map((post: Post) => (
-                  <Card key={post.id} post={post} width="40.625rem" space="1.25rem" search />
+                  <Card key={post.id} post={post} width="40.625rem" search />
                 )),
             )
           : searchingStatus(keyword)}
