@@ -86,7 +86,7 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
 
       dispatch(saveUser(data as LoginUser));
 
-      window.location.reload();
+      window.location.replace('/');
     }
   };
 
