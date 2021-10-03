@@ -103,9 +103,9 @@ export default Card;
 
 const CardContainer = styled.div<{ space: string; width: string; search: boolean | undefined }>`
   width: ${({ width }) => width};
-  min-width: 260px;
+  /* min-width: 260px; */
   height: 20.4375rem;
-  margin: ${({ space }) => space};
+  /* margin: ${({ space }) => space}; */
   position: relative;
   border-radius: 7px;
   box-shadow: 7px 7px 30px rgba(0, 0, 0, 0.08);

@@ -71,8 +71,15 @@ export const PostWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 32%);
+  align-items: center;
+  grid-template-columns: repeat(4, 23%);
   grid-gap: 2rem;
+
+  ${({ theme }) => theme.xl`
+    width: 90%;
+    align-items: center;
+    grid-template-columns: repeat(3, 32%);
+  `}
 
   ${({ theme }) => theme.lg`
     width: 80%;
@@ -80,9 +87,14 @@ export const PostWrapper = styled.div`
   `}
 
   ${({ theme }) => theme.md`
+    width: 100%;
+    grid-template-columns: repeat(2, 45%);
+    grid-gap: 1rem;
+  `}
+
+    ${({ theme }) => theme.sm`
     margin-top: 40px;
     display:flex;
-    flex-wrap:wrap;
-    justify-content: center;
+    flex-wrap: wrap;
   `}
 `;
