@@ -68,17 +68,17 @@ export const MainContentCards = styled.div`
 `;
 
 export const PostWrapper = styled.div`
+  margin-top: 40px;
   width: 90%;
-  margin: 0 auto;
+  margin: 40px auto;
   display: grid;
-  align-items: center;
+  justify-content: center;
   grid-template-columns: repeat(4, 23%);
   grid-gap: 2rem;
 
   ${({ theme }) => theme.xl`
-    width: 90%;
-    align-items: center;
-    grid-template-columns: repeat(3, 32%);
+    justify-content: center;
+    grid-template-columns: repeat(3, 31%);
   `}
 
   ${({ theme }) => theme.lg`
