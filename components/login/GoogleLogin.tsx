@@ -41,19 +41,27 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
   const googleSDK = (): void => {
     window.googleSDKLoaded = () => {
       window.gapi.load('auth2', () => {
-        auth2.current = window.gapi.auth2.init({
-          client_id: GOOGLE_CLIENT_ID,
-          scope: 'profile email',
-        });
+        window.gapi.auth2
+          .init({
+            client_id: GOOGLE_CLIENT_ID,
+            scope: 'profile email',
+          })
+          .then(auth => {
+            auth2.current = auth;
+          });
       });
     };
 
     if (isNil(auth2.current) && window.gapi) {
       window.gapi.load('auth2', () => {
-        auth2.current = window.gapi.auth2.init({
-          client_id: GOOGLE_CLIENT_ID,
-          scope: 'profile email',
-        });
+        window.gapi.auth2
+          .init({
+            client_id: GOOGLE_CLIENT_ID,
+            scope: 'profile email',
+          })
+          .then(auth => {
+            auth2.current = auth;
+          });
       });
     }
 
