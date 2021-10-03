@@ -100,7 +100,8 @@ function Card({
 export default Card;
 
 const CardContainer = styled.div<{ width: string; search: boolean | undefined }>`
-  width: 100%;
+  width: ${({ width }) => (width ? width : '100%')};
+  margin-bottom: ${({ search }) => search && '20px'};
   height: 20.4375rem;
   position: relative;
   border-radius: 7px;
