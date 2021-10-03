@@ -15,6 +15,7 @@ import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { css } from '@emotion/react';
 
 type Props = {
   isBlurred: boolean;
@@ -115,9 +116,12 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
               {(user as LoginUser).master && (
                 <img className="masterCrown" alt="master" src="/images/crown.png" />
               )}
-              <div onMouseOver={() => setDropDownOpen(true)}>
+              <ProfileIconBox
+                isdropDownOpen={isdropDownOpen}
+                onMouseOver={() => setDropDownOpen(true)}
+              >
                 <ProfileIcon size={50} img={user.profile} />
-              </div>
+              </ProfileIconBox>
             </>
           ) : (
             <Button
@@ -251,4 +255,16 @@ const UserWrap = styled.div`
       top: -10px;
     `}
   }
+`;
+
+const ProfileIconBox = styled.div<{ isdropDownOpen: boolean }>`
+  border-radius: 50%;
+  padding: 2px;
+  border: 3px solid ${({ theme }) => theme.white}
+    ${({ isdropDownOpen, theme }) =>
+      isdropDownOpen &&
+      css`
+        padding: 2px;
+        border: 3px solid ${theme.yellow};
+      `}
 `;
