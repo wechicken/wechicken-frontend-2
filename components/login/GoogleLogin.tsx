@@ -8,6 +8,7 @@ import { GOOGLE_CLIENT_ID } from 'library/constants';
 import { LoginUser } from 'library/models';
 import { saveUser } from 'library/store/saveUser';
 import { setLoginModalOn } from 'library/store/setLoginModal';
+import { useToast } from 'library/hooks';
 declare global {
   interface Window {
     googleSDKLoaded: () => void;
@@ -26,6 +27,7 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
   const auth2 = useRef<gapi.auth2.GoogleAuth>();
   const js = useRef<HTMLElement>();
   const loginWithGoogle = useMutation((googleToken: string) => postGoogleLogin(googleToken));
+  const { showToast } = useToast();
 
   useEffect(() => {
     googleSDK();
@@ -94,7 +96,10 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
 
         return fetchGoogleUser(googleUser);
       } catch (e) {
-        console.log(e);
+        showToast({
+          message: `다시 로그인해주세요.`,
+          type: 'error',
+        });
       }
     }
   };

@@ -62,6 +62,7 @@ function ProfileColumn(): JSX.Element {
         showToast({
           message:
             '블로그 주소를 변경하는 데 실패했습니다.<br />블로그 url의 형식이 올바른지 다시 한 번 확인해 주세요.',
+          type: 'error',
         });
       },
     },
