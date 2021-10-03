@@ -90,7 +90,7 @@ function SearchPage(): JSX.Element {
 export default SearchPage;
 
 const SearchWrap = styled.div`
-  width: 100%;
+  width: 90%;
   padding: 6.25rem 0 5rem 0;
   display: flex;
   align-items: center;

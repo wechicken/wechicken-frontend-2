@@ -34,7 +34,8 @@ export const InputBox = styled.div<{ width: string; size: string; search?: boole
     size: ${({ size }) => size};
     ${({ size, search }) => search && `size: calc(${size} + 1rem)`};
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    line-height: 150%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
     outline: none;
     cursor: text;
     caret-color: ${({ theme }) => theme.vermilion};
@@ -46,7 +47,7 @@ export const InputBox = styled.div<{ width: string; size: string; search?: boole
         backdrop-filter: blur(5px);
       `}
     ${({ search, theme }) => theme.sm`
-        ${search && 'width: 100%'}
+        ${search && 'width: 100%'};
       `}
   }
 

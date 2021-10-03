@@ -26,7 +26,6 @@ function Card({
   getDeleteMyPostId,
 }: Props): JSX.Element {
   const dispatch = useDispatch();
-  const subtitleLimitLength = 125;
 
   const needToLogin = (): void => {
     dispatch(
@@ -54,13 +53,6 @@ function Card({
             </div>
           </Profile>
           <Title search={search}>{post.title}</Title>
-          {!!search && (
-            <Subtitle>
-              {post.subtitle?.length > subtitleLimitLength
-                ? `${post.subtitle.substr(0, subtitleLimitLength)}...`
-                : post.subtitle}
-            </Subtitle>
-          )}
         </ContentsBox>
       </CardWrap>
       <Tags>{post.date}</Tags>
@@ -100,8 +92,12 @@ function Card({
 export default Card;
 
 const CardContainer = styled.div<{ width: string; search: boolean | undefined }>`
-  width: ${({ width }) => (width ? width : '100%')};
-  margin-bottom: ${({ search }) => search && '20px'};
+  ${({ search, width }) =>
+    search &&
+    css`
+      width: ${width};
+      margin-bottom: 30px;
+    `}
   height: 20.4375rem;
   position: relative;
   border-radius: 7px;
@@ -127,6 +123,7 @@ const CardContainer = styled.div<{ width: string; search: boolean | undefined }>
   ${({ theme, search }) => theme.sm`
     margin: 0 2.25rem 2.25rem 2.25rem;
     ${search && `margin: 10px`}
+    ${search && `width: 90%`}
   `}
 
   &:hover {
@@ -211,14 +208,6 @@ const Title = styled.div<{ search: boolean | undefined }>`
     css`
       -webkit-line-clamp: 2;
     `}
-`;
-
-const Subtitle = styled.div`
-  height: 30%;
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 2px;
-  color: #2d2b2b;
 `;
 
 const Tags = styled.div`
