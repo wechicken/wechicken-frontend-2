@@ -66,3 +66,23 @@ export const MainContentCards = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `;
+
+export const PostWrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 32%);
+  grid-gap: 2rem;
+
+  ${({ theme }) => theme.lg`
+    width: 80%;
+    grid-template-columns: repeat(2, 45%);
+  `}
+
+  ${({ theme }) => theme.md`
+    margin-top: 40px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+  `}
+`;

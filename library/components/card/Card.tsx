@@ -10,7 +10,7 @@ import { setLoginModalOn } from 'library/store/setLoginModal';
 
 type Props = {
   post: Post;
-  width: string;
+  width?: string;
   space: string;
   handleRemoveCard?: () => void;
   search?: boolean;
@@ -43,7 +43,7 @@ function Card({
   };
 
   return (
-    <CardContainer space={space} width={width} search={search}>
+    <CardContainer space={space} width={width as string} search={search}>
       <CardWrap type={post.type} onClick={() => window.open(`${post.link}`)}>
         <ImageBox img={post.thumbnail || '/images/blogDefaultImg.png'} />
         <img className="blogLogo" alt="blog_logo" src={`/images/${post.type}.png`} />
@@ -114,18 +114,18 @@ const CardContainer = styled.div<{ space: string; width: string; search: boolean
   transition: box-shadow 0.5s ease-in-out;
 
   ${({ theme, search, width }) => theme.xl`
-    width: 20%;
+    width: 100%;
     ${search && `width: ${width}`}
   `}
 
   ${({ theme, search, width }) => theme.lg`
-    width: 29%;
+    width: 100%;
     height: 280px;
     ${search && `width: ${width}`}
   `}
 
   ${({ theme, search, width }) => theme.md`
-    width: 43%;
+    width: 100%;
     height: 250px;
     ${search && `width: ${width}`}
   `}
