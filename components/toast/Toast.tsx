@@ -54,8 +54,11 @@ function Toast(): JSX.Element | null {
 
   return (
     <ToastBox duration={toastConfig.duration ?? 3000}>
-      <IconBox type={toastConfig.type}>
-        <FontAwesomeIcon className="icon" icon={formatType(toastConfig.type) as IconProp} />
+      <IconBox type={toastConfig.type ?? 'info'}>
+        <FontAwesomeIcon
+          className="icon"
+          icon={formatType(toastConfig.type ?? 'info') as IconProp}
+        />
       </IconBox>
       <span dangerouslySetInnerHTML={{ __html: toastConfig.message }}></span>
     </ToastBox>

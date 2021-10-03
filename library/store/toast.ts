@@ -15,7 +15,7 @@ export const toastSlice = createSlice({
     setToastConfig: (_, action: PayloadAction<ToastConfig>) => {
       const { message, duration, type } = action.payload;
 
-      return { message, type: type ?? 'info', duration: duration ?? 3000 };
+      return { message, type, duration: duration ?? 3000 };
     },
   },
 });
