@@ -1,15 +1,15 @@
 export const bannerContents = [
   {
     id: 'siteIn',
-    img: '/images/main_banner1.png',
+    img: '/images/main_banner1.jpg',
     title: 'WOW!',
-    subtitle: 'Well done!',
-    content: '혹쉬...이번달 명예의 전당에 혹시 내 이름이!?지금 당장 확인하러 가보자!',
+    subtitle: 'New✨',
+    content: '곧 새로운 위치킨이 돌아옵니다... 기대해주세요/(^p^)/',
     link: '/mygroup',
   },
   {
     id: 'siteOut',
-    img: '/images/main_banner2.png',
+    img: '/images/main_banner2.jpg',
     title: 'Hi',
     subtitle: 'wechicken OPEN!',
     content:
@@ -18,19 +18,19 @@ export const bannerContents = [
   },
   {
     id: 'siteOut',
-    img: '/images/main_banner3.png',
+    img: '/images/main_banner3.jpg',
     title: 'Hi',
-    subtitle: 'Made by JWT',
+    subtitle: 'Made by 강경허딸라파 시무룩',
     content:
-      'wechicken 솔직히 너무 멋지다... 누가 만들었냐구요? 바로바로~ JWT(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)',
+      'wechicken 너무 멋지다... 누가 만들었냐구요? 바로바로~ 강경허딸라파 시무룩(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)',
     link: 'https://www.notion.so/wecode-468e2e6236734a82b7da2ccfcb02fdc4',
   },
   {
     id: 'siteOut',
-    img: '/images/main_banner4.png',
+    img: '/images/main_banner4.jpg',
     title: 'HOT!',
     subtitle: "I can't wait!",
-    content: '이달의 HOT 블로그는 뭘까요? 핫하다 핫해! 지금 바로 공부하러 가보자! ',
-    link: '',
+    content: '하고싶은 질문이 있다면 위코드 커뮤니티로 고고싱!',
+    link: 'https://community.wecode.co.kr/',
   },
 ];
