@@ -53,8 +53,7 @@ function SearchPage(): JSX.Element {
     );
   };
 
-  const moveToSearchURL = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { value: query } = event.target;
+  const moveToSearchURL = (query: string): void => {
     router.push(`/search?query=${query}`);
     setKeyword(query);
   };
@@ -67,7 +66,7 @@ function SearchPage(): JSX.Element {
         <InputTheme
           width="40.625rem"
           value={keyword}
-          handleEvent={moveToSearchURL}
+          handleType={moveToSearchURL}
           size="2.8125rem"
           search
         />

@@ -7,7 +7,7 @@ type Props = {
   width: string;
   type?: string;
   handleEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleType?: React.Dispatch<React.SetStateAction<string>>;
+  handleType?: (query: string) => void;
   size: string;
   value?: string;
   placeholder?: string;
