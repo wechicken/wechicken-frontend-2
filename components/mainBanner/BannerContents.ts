@@ -6,7 +6,7 @@ export const bannerContents = [
     subtitle: 'Made by 한남대교 ✨',
     content:
       'Made by 한남대교(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)! 곧 새로운 위치킨이 돌아옵니다... 기대해주세요/(^p^)/',
-    link: '',
+    link: 'https://github.com/wechicken/wechicken-frontend-2',
   },
   {
     id: 'siteOut',
