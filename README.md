@@ -68,7 +68,7 @@
 
 ## About The Project
 
-![화면-기록-2021-10-04-오전-1 05 41 (1) (2)](https://user-images.githubusercontent.com/60738400/135762892-eff628c5-a402-4313-affa-452226582316.gif)
+![Kapture 2021-10-04 at 16 07 51](https://user-images.githubusercontent.com/60738400/135808173-96f13af7-7fb9-4a05-bfc0-914e89f94ae2.gif)
 
 한남대교 밑에서 모여 위치킨에 대해 생각합니다. 골똘히...
 
