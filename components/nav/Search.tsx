@@ -22,6 +22,12 @@ function Search({ isBlurred, isSearchActive, setSearchActive }: Props): JSX.Elem
     }
   }, [isBlurred, searchValue]);
 
+  useEffect(() => {
+    if (isSearchActive) {
+      inputRef.current && inputRef.current.focus();
+    }
+  }, [isSearchActive]);
+
   const delaySetSearchValue = useRef(debounce(q => handleInput(q), 300)).current;
 
   const handleInput = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -46,9 +52,7 @@ function Search({ isBlurred, isSearchActive, setSearchActive }: Props): JSX.Elem
       />
       <SearchIcon
         isSearchActive={isSearchActive}
-        onClick={() => {
-          setSearchActive(isSearchActive => !isSearchActive);
-        }}
+        onMouseEnter={() => setSearchActive(isSearchActive => !isSearchActive)}
       >
         {SearchSvg}
       </SearchIcon>

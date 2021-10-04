@@ -30,7 +30,24 @@ function MainBanner(): JSX.Element {
         inputType={['touch', 'mouse']}
       >
         {bannerContents.map((content, idx) => (
-          <BannerWrap key={idx} className="flicking-panel">
+          <BannerWrap
+            key={idx}
+            className="flicking-panel"
+            onClick={() =>
+              content.id !== 'siteIn'
+                ? window.open(`${content.link}`)
+                : user.token
+                ? router.push(`${content.link}`)
+                : dispatch(
+                    setAlert({
+                      alertMessage: '로그인이 필요한 서비스입니다.',
+                      submitBtnText: '로그인',
+                      closeBtnText: '취소',
+                      onSubmit: () => dispatch(setLoginModalOn(true)),
+                    }),
+                  )
+            }
+          >
             <ImgBox>
               <img alt={`banner${idx}`} src={content.img} />
             </ImgBox>
@@ -41,24 +58,7 @@ function MainBanner(): JSX.Element {
               </BannerTop>
               <BannerBottom>
                 <Detail>{content.content}</Detail>
-                <MoreBtn
-                  onClick={() =>
-                    content.id !== 'siteIn'
-                      ? router.push(`${content.link}`)
-                      : user.token
-                      ? router.push(`${content.link}`)
-                      : dispatch(
-                          setAlert({
-                            alertMessage: '로그인이 필요한 서비스입니다.',
-                            submitBtnText: '로그인',
-                            closeBtnText: '취소',
-                            onSubmit: () => dispatch(setLoginModalOn(true)),
-                          }),
-                        )
-                  }
-                >
-                  더보기 ▸
-                </MoreBtn>
+                <MoreBtn>더보기 ▸</MoreBtn>
               </BannerBottom>
             </BannerContent>
           </BannerWrap>
@@ -115,6 +115,10 @@ const BannerContent = styled.div`
   ${({ theme }) => theme.md`
     padding: 10px;
   `}
+
+    ${({ theme }) => theme.sm`
+    padding-left: 20px;
+  `}
 `;
 
 const BannerTop = styled.div`
@@ -138,17 +142,31 @@ const GreetingText = styled.h1`
   ${({ theme }) => theme.md`
     margin-right: 10px;
   `}
+  ${({ theme }) => theme.sm`
+    font-size: 18px;
+`}
 `;
 
 const TitleText = styled.h2`
   font-size: 2.1875rem;
+
+  ${({ theme }) => theme.sm`
+    font-size: 18px;
+`}
 `;
 
 const Detail = styled.p`
+  width: 370px;
   line-height: 1.875rem;
-
+  word-break: keep-all;
   font-weight: 300;
   font-family: ${({ theme }) => theme.fontContent};
+
+  ${({ theme }) => theme.sm`
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+`}
 `;
 
 const MoreBtn = styled.button`
@@ -165,5 +183,9 @@ const MoreBtn = styled.button`
   ${({ theme }) => theme.md`
     padding: 0px;
     text-align: start;
+`}
+
+  ${({ theme }) => theme.sm`
+    text-align: right;
 `}
 `;
