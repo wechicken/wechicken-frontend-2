@@ -1,5 +1,5 @@
+import { useEffect, useState, useRef } from 'react';
 import styled from '@emotion/styled';
-import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 import { useInfiniteQuery } from 'react-query';
@@ -7,11 +7,11 @@ import isNil from 'lodash-es/isNil';
 import { getSearch } from 'library/api';
 import { useIntersectionObserver } from 'library/hooks';
 import Loading from 'library/components/loading/Loading';
+import SEO from 'library/components/Layout/SEO';
 import InputTheme from 'library/components/input/InputTheme';
 import Card from 'library/components/card/Card';
 import { Page, Post } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
-import SEO from 'library/components/Layout/SEO';
 
 function SearchPage(): JSX.Element {
   const router = useRouter();
@@ -20,6 +20,7 @@ function SearchPage(): JSX.Element {
   const [keyword, setKeyword] = useState(String(query ?? ''));
   const observerRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
+  const isFirstRenderRef = useRef(true);
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
     ['getSearch', keyword, user.token],
     async ({ pageParam = 0 }) => {
@@ -46,6 +47,13 @@ function SearchPage(): JSX.Element {
     isLoading,
   });
 
+  useEffect(() => {
+    if (query && isFirstRenderRef.current) {
+      setKeyword(query as string);
+      isFirstRenderRef.current = false;
+    }
+  }, [query]);
+
   const searchingStatus = (keyword: string): JSX.Element => {
     return !keyword ? (
       <NoResult>검색 키워드를 입력해주세요</NoResult>
@@ -59,8 +67,6 @@ function SearchPage(): JSX.Element {
     setKeyword(query);
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <>
       <SEO />
@@ -73,18 +79,22 @@ function SearchPage(): JSX.Element {
           search
         />
       </SearchWrap>
-      <PostWrap>
-        {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
-          ? data.pages.map(
-              page =>
-                page &&
-                page.posts.map((post: Post) => (
-                  <Card key={post.id} post={post} width="40.625rem" search />
-                )),
-            )
-          : searchingStatus(keyword)}
-        <Observer ref={observerRef} />
-      </PostWrap>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <PostWrap>
+          {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
+            ? data.pages.map(
+                page =>
+                  page &&
+                  page.posts.map((post: Post) => (
+                    <Card key={post.id} post={post} width="40.625rem" search />
+                  )),
+              )
+            : searchingStatus(keyword)}
+          <Observer ref={observerRef} />
+        </PostWrap>
+      )}
     </>
   );
 }
