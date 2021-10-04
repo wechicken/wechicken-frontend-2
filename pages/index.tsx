@@ -51,28 +51,26 @@ export default function Home(): JSX.Element {
   if (isLoading) return <Loading />;
 
   return (
-    <>
-      <HomeContainer>
-        <MainBanner />
-        <MainContents>
-          <MainContentTitle>
-            <div className="titleContainer">
-              <FontAwesomeIcon className="check" icon={faCheck} />
-              <h1 className="contentTitle">트렌딩 포스트</h1>
-            </div>
-          </MainContentTitle>
-          <PostWrapper>
-            {data &&
-              data.pages.map(
-                page =>
-                  page &&
-                  page.posts.map((post: Post) => <Card key={post.id} post={post} width="18rem" />),
-              )}
-            <Observer ref={observerRef} />
-          </PostWrapper>
-        </MainContents>
-      </HomeContainer>
-    </>
+    <HomeContainer>
+      <MainBanner />
+      <MainContents>
+        <MainContentTitle>
+          <div className="titleContainer">
+            <FontAwesomeIcon className="check" icon={faCheck} />
+            <h1 className="contentTitle">트렌딩 포스트</h1>
+          </div>
+        </MainContentTitle>
+        <PostWrapper>
+          {data &&
+            data.pages.map(
+              page =>
+                page &&
+                page.posts.map((post: Post) => <Card key={post.id} post={post} width="18rem" />),
+            )}
+          <Observer ref={observerRef} />
+        </PostWrapper>
+      </MainContents>
+    </HomeContainer>
   );
 }
 

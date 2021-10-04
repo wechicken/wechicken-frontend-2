@@ -1,11 +1,12 @@
 export const bannerContents = [
   {
-    id: 'siteIn',
+    id: 'siteOut',
     img: '/images/main_banner1.jpg',
-    title: 'WOW!',
-    subtitle: 'New✨',
-    content: '곧 새로운 위치킨이 돌아옵니다... 기대해주세요/(^p^)/',
-    link: '/mygroup',
+    title: 'New!',
+    subtitle: 'Made by 한남대교 ✨',
+    content:
+      'Made by 한남대교(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)! 곧 새로운 위치킨이 돌아옵니다... 기대해주세요/(^p^)/',
+    link: '',
   },
   {
     id: 'siteOut',
@@ -17,18 +18,17 @@ export const bannerContents = [
     link: 'https://www.notion.so/wecode-97c820e8ff7144c5985a4e54d6fc12a4',
   },
   {
-    id: 'siteOut',
+    id: 'siteIn',
     img: '/images/main_banner3.jpg',
     title: 'Hi',
-    subtitle: 'Made by 한남대교',
-    content:
-      'wechicken 너무 멋지다... 누가 만들었냐구요? 바로바로~ 한남대교(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)',
-    link: 'https://www.notion.so/wecode-468e2e6236734a82b7da2ccfcb02fdc4',
+    subtitle: 'The hall of fame~👑',
+    content: '우리 기수 명예의 전당은 누구일까? 지금 확인하러 가기!',
+    link: '/mygroup',
   },
   {
     id: 'siteOut',
     img: '/images/main_banner4.jpg',
-    title: 'HOT!',
+    title: 'HELP ME!',
     subtitle: "I can't wait!",
     content: '하고싶은 질문이 있다면 위코드 커뮤니티로 고고싱!',
     link: 'https://community.wecode.co.kr/',
