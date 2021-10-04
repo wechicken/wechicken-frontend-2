@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import ProfileColumn from 'components/myProfile/ProfileColumn';
 import MyPosts from 'components/myProfile/MyPosts';
+import SEO from 'library/components/Layout/SEO';
 
 export default function MyProfilePage(): JSX.Element {
   useEffect(() => {
@@ -9,10 +10,13 @@ export default function MyProfilePage(): JSX.Element {
   }, []);
 
   return (
-    <MyPageContainer>
-      <ProfileColumn />
-      <MyPosts />
-    </MyPageContainer>
+    <>
+      <SEO />
+      <MyPageContainer>
+        <ProfileColumn />
+        <MyPosts />
+      </MyPageContainer>
+    </>
   );
 }
 

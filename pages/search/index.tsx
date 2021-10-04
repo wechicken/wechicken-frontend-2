@@ -11,6 +11,7 @@ import InputTheme from 'library/components/input/InputTheme';
 import Card from 'library/components/card/Card';
 import { Page, Post } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
+import SEO from 'library/components/Layout/SEO';
 
 function SearchPage(): JSX.Element {
   const router = useRouter();
@@ -62,6 +63,7 @@ function SearchPage(): JSX.Element {
 
   return (
     <>
+      <SEO />
       <SearchWrap>
         <InputTheme
           width="40.625rem"
