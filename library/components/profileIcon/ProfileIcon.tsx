@@ -1,7 +1,20 @@
-import React from 'react';
+import styled from '@emotion/styled';
 
-function ProfileIcon() {
-  return <div></div>;
+export type ProfileIconProps = {
+  size: number;
+  img?: string;
+};
+
+export default function ProfileIcon({ size, img }: ProfileIconProps): JSX.Element {
+  return <ProfileIconBox size={size} img={img}></ProfileIconBox>;
 }
 
-export default ProfileIcon;
+const ProfileIconBox = styled.div<ProfileIconProps>`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+  background: url(${({ img }) => img || '/images/default.png'});
+  background-size: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.superLightGrey};
+`;

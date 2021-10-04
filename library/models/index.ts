@@ -1,3 +1,3 @@
-export interface Obj<T = any> {
-  [k: string]: T;
-}
+export * from './main';
+export * from './myprofile';
+export * from './toast';
