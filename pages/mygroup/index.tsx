@@ -22,6 +22,7 @@ import { ModalLayout } from 'library/components/modal';
 import { Obj } from 'library/models';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentUser, saveUser } from 'library/store/saveUser';
+import SEO from 'library/components/Layout/SEO';
 
 const initialBydays = {
   MON: [],
@@ -88,51 +89,54 @@ export default function MyGroupPage(): JSX.Element {
   }
 
   return (
-    <MyPageContainer>
-      {isAddModalActive && (
-        <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>
-          <PostEditor name={data.myProfile.name} handleSubmit={handleAddPost} />
-        </ModalLayout>
-      )}
-      <NthTitle>{data.myGroup.title ?? ''}</NthTitle>
-      <MyGroupBanner ranking={data.Ranks} />
-      <ContentWrap>
-        {data.is_group_joined && (
-          <Contribution>
-            <HeaderBox width={128}>
-              <div className="title">이주의 공헌</div>
-            </HeaderBox>
-            <Contributors
-              myGroup={data.myGroup}
-              postsCounting={userPostsCounting}
-              myContribution={data.myProfile}
-              contributor={data.users}
-            />
-          </Contribution>
+    <>
+      <SEO />
+      <MyPageContainer>
+        {isAddModalActive && (
+          <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>
+            <PostEditor name={data.myProfile.name} handleSubmit={handleAddPost} />
+          </ModalLayout>
         )}
-        <ThisWeek>
-          <HeaderBox width={149}>
-            <div className="title">이주의 포스팅</div>
-            <div className="btnUpdate">
-              <CustomCalendar handleClickDate={handleClickDate} data={data} />
-              {data.is_group_joined && (
-                <BtnTheme
-                  value="포스트 +"
-                  handleFunction={() => {
-                    setAddModalActive(true);
-                  }}
-                />
-              )}
-            </div>
-          </HeaderBox>
-          <PostsOfTheWeek
-            dayPosts={byDays}
-            isGroupJoined={data.is_group_joined}
-            executeFunction={handleGroupJoined}
-          />
-        </ThisWeek>
-      </ContentWrap>
-    </MyPageContainer>
+        <NthTitle>{data.myGroup.title ?? ''}</NthTitle>
+        <MyGroupBanner ranking={data.Ranks} />
+        <ContentWrap>
+          {data.is_group_joined && (
+            <Contribution>
+              <HeaderBox width={128}>
+                <div className="title">이주의 공헌</div>
+              </HeaderBox>
+              <Contributors
+                myGroup={data.myGroup}
+                postsCounting={userPostsCounting}
+                myContribution={data.myProfile}
+                contributor={data.users}
+              />
+            </Contribution>
+          )}
+          <ThisWeek>
+            <HeaderBox width={149}>
+              <div className="title">이주의 포스팅</div>
+              <div className="btnUpdate">
+                <CustomCalendar handleClickDate={handleClickDate} data={data} />
+                {data.is_group_joined && (
+                  <BtnTheme
+                    value="포스트 +"
+                    handleFunction={() => {
+                      setAddModalActive(true);
+                    }}
+                  />
+                )}
+              </div>
+            </HeaderBox>
+            <PostsOfTheWeek
+              dayPosts={byDays}
+              isGroupJoined={data.is_group_joined}
+              executeFunction={handleGroupJoined}
+            />
+          </ThisWeek>
+        </ContentWrap>
+      </MyPageContainer>
+    </>
   );
 }
 

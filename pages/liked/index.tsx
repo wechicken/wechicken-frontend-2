@@ -5,6 +5,7 @@ import { Post } from 'library/models';
 import { theme, flexCenter, PostWrapper } from 'styles/theme';
 import { getLikedPost } from 'library/api/liked';
 import Card from 'library/components/card/Card';
+import SEO from 'library/components/Layout/SEO';
 
 export default function LikedPage(): JSX.Element {
   const [selectedMenu, setSelectedMenu] = useState('bookmarks');
@@ -22,35 +23,38 @@ export default function LikedPage(): JSX.Element {
   };
 
   return (
-    <Container>
-      <ActiveTab>
-        <div className="tabWrap">
-          <li
-            onClick={() => {
-              setSelectedMenu('bookmarks');
-            }}
-            className={selectedMenu === 'bookmarks' ? 'focused' : ''}
-          >
-            북마크한 포스트
-          </li>
-          <li
-            onClick={() => {
-              setSelectedMenu('likes');
-            }}
-            className={selectedMenu === 'likes' ? 'focused' : ''}
-          >
-            좋아한 포스트
-          </li>
-          <UnderBar selectedMenu={selectedMenu}></UnderBar>
-        </div>
-      </ActiveTab>
-      <PostWrapper>
-        {data &&
-          data.posts.map((post: Post) => {
-            return <Card post={post} key={post.id} handleRemoveCard={handleRemoveCard} />;
-          })}
-      </PostWrapper>
-    </Container>
+    <>
+      <SEO />
+      <Container>
+        <ActiveTab>
+          <div className="tabWrap">
+            <li
+              onClick={() => {
+                setSelectedMenu('bookmarks');
+              }}
+              className={selectedMenu === 'bookmarks' ? 'focused' : ''}
+            >
+              북마크한 포스트
+            </li>
+            <li
+              onClick={() => {
+                setSelectedMenu('likes');
+              }}
+              className={selectedMenu === 'likes' ? 'focused' : ''}
+            >
+              좋아한 포스트
+            </li>
+            <UnderBar selectedMenu={selectedMenu}></UnderBar>
+          </div>
+        </ActiveTab>
+        <PostWrapper>
+          {data &&
+            data.posts.map((post: Post) => {
+              return <Card post={post} key={post.id} handleRemoveCard={handleRemoveCard} />;
+            })}
+        </PostWrapper>
+      </Container>
+    </>
   );
 }
 

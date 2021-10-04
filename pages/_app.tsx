@@ -10,7 +10,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import Layout from 'library/components/Layout/Layout';
 import { store } from 'library/store/index';
 import { mediaQuery } from 'styles/media';
-import AuthProvider from 'library/components/Auth/AuthProvider';
+import AuthProvider from 'library/components/Layout/AuthProvider';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient({
