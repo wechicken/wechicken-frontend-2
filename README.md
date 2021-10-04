@@ -82,10 +82,13 @@
 - [React Query](https://react-query.tanstack.com/)
 - [Redux-toolkit](https://redux-toolkit.js.org/)
 - [Emotion.js](https://github.com/emotion-js/emotion/)
+
+### Update Log
+
 - React.js CRA 기반의 프로젝트를 Next.js로 변경
 - JavaScript → TypeScript 이관
-- 데이터 fetching 방식에 React Query 도입
 - Emotion.js 기반으로 미디어쿼리 작성
+- 비동기 데이터 fetching에 React Query 사용하고, 동기 데이터 관리에는 Redux-toolkit 사용
 
 <p align="right">(<a href="#top">위로가기</a>)</p>
 
@@ -93,9 +96,14 @@
 
 ## Contact
 
+### 개발
+
 positiveko(고은정) - https://github.com/positiveko <br/>
 mengkki(김현지) - https://github.com/guswnl0610 <br/>
 yojuyoon(윤지영) - https://github.com/yojuyoon <br/>
+
+### 기획 및 디자인
+
 yozinia(조유진) - https://www.instagram.com/youzinia/
 
 <p align="right">(<a href="#top">위로가기</a>)</p>
