@@ -20,9 +20,9 @@ export const bannerContents = [
     id: 'siteOut',
     img: '/images/main_banner3.jpg',
     title: 'Hi',
-    subtitle: 'Made by 강경허딸라파 시무룩',
+    subtitle: 'Made by 한남대교',
     content:
-      'wechicken 너무 멋지다... 누가 만들었냐구요? 바로바로~ 강경허딸라파 시무룩(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)',
+      'wechicken 너무 멋지다... 누가 만들었냐구요? 바로바로~ 한남대교(이디, 현쥐, 쥰, 요쥬, 토큰, 유진, 웅조)',
     link: 'https://www.notion.so/wecode-468e2e6236734a82b7da2ccfcb02fdc4',
   },
   {

@@ -81,9 +81,11 @@
 - [TypeScript](https://www.typescriptlang.org/)
 - [React Query](https://react-query.tanstack.com/)
 - [Redux-toolkit](https://redux-toolkit.js.org/)
+- [Emotion.js](https://github.com/emotion-js/emotion/)
 - React.js CRA 기반의 프로젝트를 Next.js로 변경
-- JavaScript -> TypeScript 이관
+- JavaScript → TypeScript 이관
 - 데이터 fetching 방식에 React Query 도입
+- Emotion.js 기반으로 미디어쿼리 작성
 
 <p align="right">(<a href="#top">위로가기</a>)</p>
 
