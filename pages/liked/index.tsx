@@ -68,6 +68,10 @@ const ActiveTab = styled.div`
   z-index: 8;
   background-color: white;
 
+  ${({ theme }) => theme.sm`
+    padding: 0;
+  `}
+
   .tabWrap {
     position: relative;
     display: flex;

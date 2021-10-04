@@ -121,6 +121,7 @@ const CardContainer = styled.div<{ width: string; search: boolean | undefined }>
   `}
 
   ${({ theme, search }) => theme.sm`
+  width: 100%;
     margin: 0 2.25rem 2.25rem 2.25rem;
     ${search && `margin: 10px`}
     ${search && `width: 90%`}
