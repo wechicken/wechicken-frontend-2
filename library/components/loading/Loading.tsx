@@ -4,8 +4,8 @@ import { flexCenter } from 'styles/theme';
 function Loading(): JSX.Element {
   return (
     <LoadingContainer>
-      <LoadingText/>
-      <LoadingImg/>
+      <LoadingText />
+      <LoadingImg />
     </LoadingContainer>
   );
 }

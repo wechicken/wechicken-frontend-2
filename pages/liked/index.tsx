@@ -24,7 +24,7 @@ export default function LikedPage(): JSX.Element {
 
   return (
     <>
-      <SEO />
+      <SEO title='북마크'/>
       <Container>
         <ActiveTab>
           <div className="tabWrap">
