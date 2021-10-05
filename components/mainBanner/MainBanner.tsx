@@ -88,12 +88,12 @@ const BannerWrap = styled.div`
 const ImgBox = styled.div`
   padding: 1rem;
   max-width: 60%;
-
-  ${({ theme }) => theme.md`
+  cursor: pointer;
+  
+    ${({ theme }) => theme.md`
     max-width: 100%;
   `}
-
-  img {
+    img {
     object-fit: contain;
     width: 100%;
   }
@@ -103,21 +103,23 @@ const BannerContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 95%;
   padding: 0.625rem 0 0 4.6875rem;
   font-family: ${({ theme }) => theme.fontContent};
   font-weight: 600;
   word-break: keep-all;
+  cursor: pointer;
 
   ${({ theme }) => theme.lg`
     padding: 20px;
   `}
 
   ${({ theme }) => theme.md`
-    padding: 10px;
+    padding: 10px 10px 10px 20px;
   `}
 
-    ${({ theme }) => theme.sm`
-    padding-left: 20px;
+  ${({ theme }) => theme.sm`
+    padding: 10px;
   `}
 `;
 

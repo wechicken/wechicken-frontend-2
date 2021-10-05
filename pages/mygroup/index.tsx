@@ -90,7 +90,7 @@ export default function MyGroupPage(): JSX.Element {
 
   return (
     <>
-      <SEO />
+      <SEO title='내 기수 블로그'/>
       <MyPageContainer>
         {isAddModalActive && (
           <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>
