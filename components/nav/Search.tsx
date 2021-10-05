@@ -82,9 +82,13 @@ const Input = styled.input<{ isSearchActive: boolean }>`
   ::-webkit-input-placeholder,
   ::-ms-input-placeholder {
     padding-left: 5px;
-    font-size: 12px;
+    font-size: 14px;
     color: ${({ theme }) => theme.orange};
     opacity: 0.7;
+
+    ${({ theme }) => theme.sm`
+      font-size: 12px;
+  `}
   }
 `;
 

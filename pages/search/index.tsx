@@ -69,7 +69,7 @@ function SearchPage(): JSX.Element {
 
   return (
     <>
-      <SEO />
+      <SEO title={query ? `'${decodeURIComponent(query as string)}'의 검색 결과` : '위치킨'} />
       <SearchWrap>
         <InputTheme
           width="40.625rem"

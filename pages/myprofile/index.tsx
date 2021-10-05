@@ -11,7 +11,7 @@ export default function MyProfilePage(): JSX.Element {
 
   return (
     <>
-      <SEO />
+      <SEO title='마이페이지'/>
       <MyPageContainer>
         <ProfileColumn />
         <MyPosts />
