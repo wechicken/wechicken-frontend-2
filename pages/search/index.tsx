@@ -68,34 +68,38 @@ function SearchPage(): JSX.Element {
   };
 
   return (
-    <>
-      <SEO title={query ? `'${decodeURIComponent(query as string)}'의 검색 결과` : '위치킨'} />
-      <SearchWrap>
-        <InputTheme
-          width="40.625rem"
-          value={keyword}
-          handleType={moveToSearchURL}
-          size="2.8125rem"
-          search
-        />
-      </SearchWrap>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <PostWrap>
-          {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
-            ? data.pages.map(
-                page =>
-                  page &&
-                  page.posts.map((post: Post) => (
-                    <Card key={post.id} post={post} width="40.625rem" search />
-                  )),
-              )
-            : searchingStatus(keyword)}
-          <Observer ref={observerRef} />
-        </PostWrap>
-      )}
-    </>
+    <SEO
+      title={query ? `'${decodeURIComponent(query as string)}'의 검색 결과` : '위치킨'}
+      url={`/search?query=${query}`}
+    >
+      <>
+        <SearchWrap>
+          <InputTheme
+            width="40.625rem"
+            value={keyword}
+            handleType={moveToSearchURL}
+            size="2.8125rem"
+            search
+          />
+        </SearchWrap>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <PostWrap>
+            {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
+              ? data.pages.map(
+                  page =>
+                    page &&
+                    page.posts.map((post: Post) => (
+                      <Card key={post.id} post={post} width="40.625rem" search />
+                    )),
+                )
+              : searchingStatus(keyword)}
+            <Observer ref={observerRef} />
+          </PostWrap>
+        )}
+      </>
+    </SEO>
   );
 }
 

@@ -52,8 +52,7 @@ export default function Home(): JSX.Element {
   if (isLoading) return <Loading />;
 
   return (
-    <>
-      <SEO />
+    <SEO>
       <HomeContainer>
         <MainBanner />
         <MainContents>
@@ -74,7 +73,7 @@ export default function Home(): JSX.Element {
           </PostWrapper>
         </MainContents>
       </HomeContainer>
-    </>
+    </SEO>
   );
 }
 
