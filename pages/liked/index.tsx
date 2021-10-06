@@ -23,8 +23,7 @@ export default function LikedPage(): JSX.Element {
   };
 
   return (
-    <>
-      <SEO title='북마크'/>
+    <SEO title="북마크" url='/liked'>
       <Container>
         <ActiveTab>
           <div className="tabWrap">
@@ -54,7 +53,7 @@ export default function LikedPage(): JSX.Element {
             })}
         </PostWrapper>
       </Container>
-    </>
+    </SEO>
   );
 }
 
