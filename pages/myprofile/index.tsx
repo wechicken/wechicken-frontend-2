@@ -10,13 +10,12 @@ export default function MyProfilePage(): JSX.Element {
   }, []);
 
   return (
-    <>
-      <SEO title='마이페이지'/>
+    <SEO title="마이페이지" url='/myprofile'>
       <MyPageContainer>
         <ProfileColumn />
         <MyPosts />
       </MyPageContainer>
-    </>
+    </SEO>
   );
 }
 

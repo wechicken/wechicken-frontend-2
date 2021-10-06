@@ -89,8 +89,7 @@ export default function MyGroupPage(): JSX.Element {
   }
 
   return (
-    <>
-      <SEO title='내 기수 블로그'/>
+    <SEO title="내 기수 블로그" url='/mygroup'>
       <MyPageContainer>
         {isAddModalActive && (
           <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>
@@ -136,7 +135,7 @@ export default function MyGroupPage(): JSX.Element {
           </ThisWeek>
         </ContentWrap>
       </MyPageContainer>
-    </>
+    </SEO>
   );
 }
 
