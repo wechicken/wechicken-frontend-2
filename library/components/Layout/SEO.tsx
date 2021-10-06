@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 type SEO = {
+  children: JSX.Element;
   title?: string | undefined;
   description?: string;
   keywords?: string;
@@ -8,7 +9,7 @@ type SEO = {
   url?: string;
 };
 
-function SEO({ title, description, image, keywords, url }: SEO): JSX.Element {
+function SEO({ children, title, description, image, keywords, url }: SEO): JSX.Element {
   const basicConfig = {
     title: '위치킨',
     siteTitle: '>wechicken',
@@ -21,45 +22,51 @@ function SEO({ title, description, image, keywords, url }: SEO): JSX.Element {
   };
 
   return (
-    <Head>
-      {/* basic */}
-      <title>{`${basicConfig.siteTitle} | ${title ?? basicConfig.title}`}</title>
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
-      />
-      <meta charSet="utf-8" />
-      <meta name="description" content={basicConfig.description} />
-      <meta name="keywords" content={`${basicConfig.keywords}, ${keywords ? keywords : ''}`} />
+    <>
+      <Head>
+        {/* basic */}
+        <title>{`${basicConfig.siteTitle} | ${title ?? basicConfig.title}`}</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
+        />
+        <meta charSet="utf-8" />
+        <meta name="description" content={basicConfig.description} />
+        <meta name="keywords" content={`${basicConfig.keywords}, ${keywords ? keywords : ''}`} />
 
-      {/* open graph */}
-      <meta property="og:type" content="website" />
-      <meta
-        property="og:title"
-        content={`${basicConfig.siteTitle} | ${title ?? basicConfig.title}`}
-      />
-      <meta property="og:description" content={basicConfig.description} />
-      <meta property="og:site_name" content={basicConfig.siteTitle} />
-      <meta property="og:locale" content="ko_KR" />
-      <meta property="og:image" content={image ?? basicConfig.image} />
-      <meta property="og:url" content={url ?? basicConfig.url} />
+        {/* open graph */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content={`${basicConfig.siteTitle} | ${title ?? basicConfig.title}`}
+        />
+        <meta property="og:description" content={basicConfig.description} />
+        <meta property="og:site_name" content={basicConfig.siteTitle} />
+        <meta property="og:url" content={url ? `${basicConfig.url}${url}` : basicConfig.url} />
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:image" content={image ?? basicConfig.image} />
 
-      {/* twitter */}
-      <meta property="twitter:card" content="summary" />
-      <meta
-        property="twitter:title"
-        content={`${basicConfig.siteTitle} | ${title ?? basicConfig.title}`}
-      />
-      <meta property="twitter:description" content={description ?? basicConfig.description} />
-      <meta name="twitter:site" content={basicConfig.url} />
-      <meta property="twitter:url" content={url ?? basicConfig.url} />
-      <meta name="twitter:image" content={image ?? basicConfig.image} />
+        {/* twitter */}
+        <meta property="twitter:card" content="summary" />
+        <meta
+          property="twitter:title"
+          content={`${basicConfig.siteTitle} | ${title ?? basicConfig.title}`}
+        />
+        <meta
+          property="twitter:url"
+          content={url ? `${basicConfig.url}${url}` : basicConfig.url}
+        />
+        <meta property="twitter:description" content={description ?? basicConfig.description} />
+        <meta name="twitter:site" content={basicConfig.url} />
+        <meta name="twitter:image" content={image ?? basicConfig.image} />
 
-      <link rel="icon" href={`${basicConfig.url}/favicon.ico`} />
-      <link rel="apple-touch-icon" href={`${basicConfig.url}/favicon.ico`} />
-      <meta property="og:image" content={image ?? basicConfig.image} />
-      <link rel="canonical" href={basicConfig.url} />
-    </Head>
+        <link rel="icon" href={`${basicConfig.url}/favicon.ico`} />
+        <link rel="apple-touch-icon" href={`${basicConfig.url}/favicon.ico`} />
+        <meta property="og:image" content={image ?? basicConfig.image} />
+        <link rel="canonical" href={basicConfig.url} />
+      </Head>
+      {children}
+    </>
   );
 }
 
