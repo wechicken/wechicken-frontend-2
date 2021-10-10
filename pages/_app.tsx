@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@emotion/react';
@@ -11,6 +10,7 @@ import Layout from 'library/components/Layout/Layout';
 import { store } from 'library/store/index';
 import { mediaQuery } from 'styles/media';
 import AuthProvider from 'library/components/Layout/AuthProvider';
+import SEO from 'library/components/Layout/SEO';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient({
@@ -24,10 +24,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   });
 
   return (
-    <>
-      <Head>
-        <title>{`>wechicken`}</title>
-      </Head>
+    <SEO>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
@@ -41,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           </AuthProvider>
         </QueryClientProvider>
       </Provider>
-    </>
+    </SEO>
   );
 }
 export default MyApp;
