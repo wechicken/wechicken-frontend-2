@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
+    "@next/eslint-plugin-next": "^11.1.2",
     "@types/gapi": "^0.0.41",
     "@types/gapi.auth2": "^0.0.55",
     "@types/lodash-es": "^4.17.4",

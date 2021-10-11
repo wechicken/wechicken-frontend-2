@@ -3,11 +3,14 @@ import styled from '@emotion/styled';
 import Nav from 'components/nav/Nav';
 import Login from 'components/login/Login';
 import Alert from 'library/components/alert/Alert';
-import { useIntersectionObserver } from 'library/hooks';
+import { useIntersectionObserver, useToast } from 'library/hooks';
 import { useSelector } from 'react-redux';
 import { alertForm } from 'library/store/setAlert';
 import { loginModal } from 'library/store/setLoginModal';
 import Toast from 'components/toast/Toast';
+import { useQueryClient } from 'react-query';
+import { Stage } from 'library/enums';
+import { STAGE } from 'library/constants';
 
 type Props = {
   children: React.ReactNode;
@@ -18,6 +21,8 @@ export default function Layout({ children }: Props): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
   const alert = useSelector(alertForm);
   const isLoginModalOn = useSelector(loginModal);
+  const { showToast } = useToast();
+  const queryClient = useQueryClient();
 
   useIntersectionObserver({
     target: ref,
@@ -28,6 +33,21 @@ export default function Layout({ children }: Props): JSX.Element {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    queryClient.setDefaultOptions({
+      queries: {
+        retry: STAGE === Stage.Development ? false : 3,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        onError: err => {
+          showToast({ message: `${err}`, type: 'error' });
+        },
+      },
+      mutations: {
+        onError: err => {
+          showToast({ message: `${err}`, type: 'error' });
+        },
+      },
+    });
   }, []);
 
   return (
