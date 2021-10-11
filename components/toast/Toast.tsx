@@ -18,7 +18,7 @@ function Toast(): JSX.Element | null {
 
   const toastConfig = useSelector(toastSelector);
 
-  const showToast = (duration: number): void => {
+  const openToast = (duration: number): void => {
     if (isFirstRender || duration === 0) {
       return;
     }
@@ -35,7 +35,7 @@ function Toast(): JSX.Element | null {
   }, []);
 
   useEffect(() => {
-    showToast(toastConfig.duration ?? 3000);
+    openToast(toastConfig.duration ?? 3000);
   }, [toastConfig]);
 
   if (!isToastOpen) {
