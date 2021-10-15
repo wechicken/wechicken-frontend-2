@@ -17,4 +17,5 @@ module.exports = withTM({
       '/search': { page: '/search' },
     };
   },
+  trailingSlash: true,
 });
