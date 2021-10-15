@@ -8,4 +8,14 @@ module.exports = withTM({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_VERIFICATION: process.env.GOOGLE_VERIFICATION,
   },
+  exportPathMap: async function () {
+    return {
+      '/': { page: '/' },
+      '/liked': { page: '/liked' },
+      '/mygroup': { page: '/mygroup' },
+      '/myprofile': { page: '/myprofile' },
+      '/search': { page: '/search' },
+    };
+  },
+  trailingSlash: true,
 });
