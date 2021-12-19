@@ -1,8 +1,11 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
 import CreateMyGroup from 'components/myGroup/createAndModifyMyGroup/CreateMyGroup';
 import ModifyMyGroup from 'components/myGroup/createAndModifyMyGroup/ModifyMyGroup';
 import Search from 'components/nav/Search';
@@ -13,9 +16,6 @@ import { LoginUser } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { css } from '@emotion/react';
 
 type Props = {
   isBlurred: boolean;

@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import isNil from 'lodash-es/isNil';
-import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import Contributors from 'components/myGroup/contributors/contributors';
+import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
 import {
   AddPostInputValue,
   Bydays,
@@ -11,18 +13,16 @@ import {
   UserPostsCounting,
 } from 'components/myGroup/myGroup.model';
 import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
-import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
-import Loading from 'library/components/loading/Loading';
-import { HeaderBox } from 'styles/theme';
-import BtnTheme from 'library/components/button/ButtonTheme';
 import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
 import { createPost, getMyGroup, joinGroup } from 'library/api/mygroup';
-import PostEditor from 'library/components/postEditor/PostEditor';
-import { ModalLayout } from 'library/components/modal';
-import { Obj } from 'library/models';
-import { useDispatch, useSelector } from 'react-redux';
-import { currentUser, saveUser } from 'library/store/saveUser';
+import BtnTheme from 'library/components/button/ButtonTheme';
 import SEO from 'library/components/Layout/SEO';
+import Loading from 'library/components/loading/Loading';
+import { ModalLayout } from 'library/components/modal';
+import PostEditor from 'library/components/postEditor/PostEditor';
+import { Obj } from 'library/models';
+import { currentUser, saveUser } from 'library/store/saveUser';
+import { HeaderBox } from 'styles/theme';
 
 const initialBydays = {
   MON: [],
@@ -89,7 +89,7 @@ export default function MyGroupPage(): JSX.Element {
   }
 
   return (
-    <SEO title="내 기수 블로그" url='/mygroup'>
+    <SEO title="내 기수 블로그" url="/mygroup">
       <MyPageContainer>
         {isAddModalActive && (
           <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>

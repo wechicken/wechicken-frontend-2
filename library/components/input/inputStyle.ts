@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export const InputBox = styled.div<{ width: string; size: string; search?: boolean }>`
   position: relative;

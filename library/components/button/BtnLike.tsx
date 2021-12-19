@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
-import { currentUser } from 'library/store/saveUser';
-import { postLikeStatus } from 'library/api';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHeart as blankHeart,
   faBookmark as blankBookmarks,
@@ -13,7 +8,12 @@ import {
   faHeart as filledHeart,
   faBookmark as filledBookmarks,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { postLikeStatus } from 'library/api';
 import { useToast } from 'library/hooks';
+import { currentUser } from 'library/store/saveUser';
 
 type Props = {
   id: number;

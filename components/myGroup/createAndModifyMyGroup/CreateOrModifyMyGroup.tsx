@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/dist/client/router';
 import styled from '@emotion/styled';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch, useSelector } from 'react-redux';
 import CelebratingModal from 'components/login/CelebratingModal';
+import { postCreateOrModifyGroup } from 'library/api';
 import BtnSubmit from 'library/components/button/BtnSubmit';
 import InputTheme from 'library/components/input/InputTheme';
-import { currentUser, saveUser } from 'library/store/saveUser';
-import { postCreateOrModifyGroup } from 'library/api';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { LoginUser } from 'library/models';
+import { currentUser, saveUser } from 'library/store/saveUser';
 
 type Props = {
   title: string;
@@ -223,7 +223,7 @@ const CreateOrModifyMyGroupContents = styled.div`
     display: none; /* Chrome, Safari, Opera*/
   }
 
-  ${({theme})=> theme.md`
+  ${({ theme }) => theme.md`
     margin: 0 25px;
   `}
 

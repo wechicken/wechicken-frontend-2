@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import { useDispatch } from 'react-redux';
 import { ModalLayout } from 'library/components/modal';
 import { setAlert } from 'library/store/setAlert';
-import { useDispatch } from 'react-redux';
 
 type Props = {
   alertMessage: string;

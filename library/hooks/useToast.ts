@@ -1,6 +1,6 @@
+import { useDispatch } from 'react-redux';
 import { ToastConfig } from 'library/models';
 import { setToastConfig } from 'library/store/toast';
-import { useDispatch } from 'react-redux';
 
 type UseToast = {
   showToast: (config: ToastConfig) => void;

@@ -1,17 +1,17 @@
 import { useState } from 'react';
+import styled from '@emotion/styled';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery, useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from '@emotion/styled';
-import EditForm from './EditForm';
+import { deleteProfileImage, getMyProfile, modifyBlogUrl, modifyProfileImage } from 'library/api';
 import Loading from 'library/components/loading/Loading';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { useToast } from 'library/hooks';
 import { currentUser, setUserProfileImg } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
-import { deleteProfileImage, getMyProfile, modifyBlogUrl, modifyProfileImage } from 'library/api';
 import { theme, flexCenter } from 'styles/theme';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import EditForm from './EditForm';
 
 function ProfileColumn(): JSX.Element {
   const dispatch = useDispatch();

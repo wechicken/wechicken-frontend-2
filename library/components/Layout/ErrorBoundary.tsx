@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { Component, ErrorInfo, ReactNode } from 'react';
+import styled from '@emotion/styled';
 
 interface Props {
   children: ReactNode;

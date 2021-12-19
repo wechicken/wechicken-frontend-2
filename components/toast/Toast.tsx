@@ -1,16 +1,16 @@
-import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { toastSelector } from 'library/store/toast';
-import { useSelector } from 'react-redux';
-import { Obj } from 'library/models';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from '@emotion/styled';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faHeart as filledHeart,
   faBookmark as filledBookmarks,
   faInfoCircle as info,
   faExclamationTriangle as error,
 } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
+import { Obj } from 'library/models';
+import { toastSelector } from 'library/store/toast';
 
 function Toast(): JSX.Element | null {
   const [isToastOpen, setIsToastOpen] = useState<boolean>(false);

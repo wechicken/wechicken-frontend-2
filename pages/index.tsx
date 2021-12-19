@@ -1,19 +1,19 @@
 import { useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
-import { useInfiniteQuery } from 'react-query';
-import isNil from 'lodash-es/isNil';
-import MainBanner from 'components/mainBanner/MainBanner';
-import Loading from 'library/components/loading/Loading';
-import Card from 'library/components/card/Card';
-import { Post } from 'library/models/main';
-import { useIntersectionObserver } from 'library/hooks';
-import { getMainPage } from 'library/api';
-import { currentUser } from 'library/store/saveUser';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { PostWrapper } from 'styles/theme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import isNil from 'lodash-es/isNil';
+import { useInfiniteQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import MainBanner from 'components/mainBanner/MainBanner';
+import { getMainPage } from 'library/api';
+import Card from 'library/components/card/Card';
 import SEO from 'library/components/Layout/SEO';
+import Loading from 'library/components/loading/Loading';
+import { useIntersectionObserver } from 'library/hooks';
+import { Post } from 'library/models/main';
+import { currentUser } from 'library/store/saveUser';
+import { PostWrapper } from 'styles/theme';
 
 export default function Home(): JSX.Element {
   const user = useSelector(currentUser);

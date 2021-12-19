@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { currentUser } from 'library/store/saveUser';
-import { useSelector } from 'react-redux';
 import { MyGroupSub, MyGroupUser, MyProfile, UserPostsCounting } from '../myGroup.model';
 import Contributor from './contributor';
 
