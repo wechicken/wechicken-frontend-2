@@ -1,5 +1,5 @@
-import { ModalLayout } from 'library/components/modal';
 import CreateOrModifyMyGroup from 'components/myGroup/createAndModifyMyGroup/CreateOrModifyMyGroup';
+import { ModalLayout } from 'library/components/modal';
 
 type Props = {
   setModifyMyGroup: React.Dispatch<React.SetStateAction<boolean>>;

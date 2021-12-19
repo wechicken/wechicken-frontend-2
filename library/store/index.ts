@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import user from 'library/store/saveUser';
-import isLoginModalOn from 'library/store/setLoginModal';
 import alert from 'library/store/setAlert';
+import isLoginModalOn from 'library/store/setLoginModal';
 import toast from './toast';
 
 export const store = configureStore({

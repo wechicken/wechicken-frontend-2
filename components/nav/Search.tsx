@@ -1,7 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
 import styled from '@emotion/styled';
 import debounce from 'lodash-es/debounce';
-import { useRouter } from 'next/dist/client/router';
-import { useEffect, useRef, useState } from 'react';
 import { SearchSvg } from 'styles/Svg';
 
 type Props = {

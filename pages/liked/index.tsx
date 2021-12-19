@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from 'react-query';
 import styled from '@emotion/styled';
-import { Post } from 'library/models';
-import { theme, flexCenter, PostWrapper } from 'styles/theme';
+import { useQuery } from 'react-query';
 import { getLikedPost } from 'library/api/liked';
 import Card from 'library/components/card/Card';
 import SEO from 'library/components/Layout/SEO';
+import { Post } from 'library/models';
+import { theme, flexCenter, PostWrapper } from 'styles/theme';
 
 export default function LikedPage(): JSX.Element {
   const [selectedMenu, setSelectedMenu] = useState('bookmarks');
@@ -23,7 +23,7 @@ export default function LikedPage(): JSX.Element {
   };
 
   return (
-    <SEO title="북마크" url='/liked'>
+    <SEO title="북마크" url="/liked">
       <Container>
         <ActiveTab>
           <div className="tabWrap">

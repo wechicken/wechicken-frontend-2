@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import { AddPostInputValue } from 'components/myGroup/myGroup.model';
 import { memo, useEffect } from 'react';
+import { ChangeEvent, useState } from 'react';
+import styled from '@emotion/styled';
+import isEmpty from 'lodash-es/isEmpty';
+import { AddPostInputValue } from 'components/myGroup/myGroup.model';
 import { InputBox } from 'library/components/input/inputStyle';
 import { Post } from 'library/models';
 import { isValidDate } from 'library/utils';
-import isEmpty from 'lodash-es/isEmpty';
-import { ChangeEvent, useState } from 'react';
 import { flexCenter } from 'styles/theme';
 
 type Props = {

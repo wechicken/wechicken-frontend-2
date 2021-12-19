@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { useToast } from 'library/hooks';
 import { NextApiResponse } from 'next';
+import { useToast } from 'library/hooks';
 
 function Error(statusCode: string): JSX.Element {
   const { showToast } = useToast();

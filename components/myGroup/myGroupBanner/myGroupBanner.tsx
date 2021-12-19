@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { Obj } from 'library/models';
-import { Rank } from '../myGroup.model';
 import { flexCenter } from 'styles/theme';
+import { Rank } from '../myGroup.model';
 
 type MyGroupBanner = {
   ranking: Rank[];

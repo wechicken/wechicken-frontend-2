@@ -1,8 +1,8 @@
 import { useRouter } from 'next/dist/client/router';
-import { useDispatch, useSelector } from 'react-redux';
-import Flicking from '@egjs/react-flicking';
 import { AutoPlay, Fade } from '@egjs/flicking-plugins';
+import Flicking from '@egjs/react-flicking';
 import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
 import { bannerContents } from 'components/mainBanner/BannerContents';
 import { currentUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
@@ -89,11 +89,11 @@ const ImgBox = styled.div`
   padding: 1rem;
   max-width: 60%;
   cursor: pointer;
-  
-    ${({ theme }) => theme.md`
+
+  ${({ theme }) => theme.md`
     max-width: 100%;
   `}
-    img {
+  img {
     object-fit: contain;
     width: 100%;
   }

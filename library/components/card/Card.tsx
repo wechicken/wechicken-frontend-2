@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
-import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import BtnLike from 'library/components/button/BtnLike';
 import BtnEditOrDelete from 'library/components/button/BtnEditOrDelete';
+import BtnLike from 'library/components/button/BtnLike';
+import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { Post } from 'library/models/main';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';

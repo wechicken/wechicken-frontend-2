@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
-import ProfileColumn from 'components/myProfile/ProfileColumn';
 import MyPosts from 'components/myProfile/MyPosts';
+import ProfileColumn from 'components/myProfile/ProfileColumn';
 import SEO from 'library/components/Layout/SEO';
 
 export default function MyProfilePage(): JSX.Element {
@@ -10,7 +10,7 @@ export default function MyProfilePage(): JSX.Element {
   }, []);
 
   return (
-    <SEO title="마이페이지" url='/myprofile'>
+    <SEO title="마이페이지" url="/myprofile">
       <MyPageContainer>
         <ProfileColumn />
         <MyPosts />

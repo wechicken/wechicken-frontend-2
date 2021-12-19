@@ -48,7 +48,51 @@ module.exports = {
         'react-hooks/rules-of-hooks': 2,
         'react-hooks/exhaustive-deps': 1,
         'import/first': 2,
-        'import/order': 0,
+        'import/no-unresolved': 'off',
+        'import/order': [
+          'error',
+          {
+            groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+            pathGroups: [
+              {
+                pattern: 'react',
+                group: 'external',
+                position: 'before',
+              },
+              {
+                pattern: 'next/**',
+                group: 'external',
+                position: 'before',
+              },
+              {
+                pattern: 'pages/**',
+                group: 'external',
+                position: 'after',
+              },
+              {
+                pattern: 'components/**',
+                group: 'external',
+                position: 'after',
+              },
+              {
+                pattern: 'library/**',
+                group: 'external',
+                position: 'after',
+              },
+              {
+                pattern: 'styles/**',
+                group: 'external',
+                position: 'after',
+              },
+            ],
+            pathGroupsExcludedImportTypes: ['react'],
+            'newlines-between': 'never',
+            alphabetize: {
+              order: 'asc',
+              caseInsensitive: true,
+            },
+          },
+        ],
       },
     },
   ],

@@ -1,16 +1,16 @@
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from '@emotion/react';
-import GlobalStyle from 'styles/GlobalStyles';
-import { theme } from 'styles/theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import Layout from 'library/components/Layout/Layout';
-import { store } from 'library/store/index';
-import { mediaQuery } from 'styles/media';
+import { Provider } from 'react-redux';
 import AuthProvider from 'library/components/Layout/AuthProvider';
-import SEO from 'library/components/Layout/SEO';
 import ErrorBoundary from 'library/components/Layout/ErrorBoundary';
+import Layout from 'library/components/Layout/Layout';
+import SEO from 'library/components/Layout/SEO';
+import { store } from 'library/store/index';
+import GlobalStyle from 'styles/GlobalStyles';
+import { mediaQuery } from 'styles/media';
+import { theme } from 'styles/theme';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient();

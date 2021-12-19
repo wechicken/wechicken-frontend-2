@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
-import Logo from 'library/components/modal/Logo';
-import InputTheme from 'library/components/input/InputTheme';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { postAuthAddtional } from 'library/api';
 import BtnCheck from 'library/components/button/BtnCheck';
 import BtnSubmit from 'library/components/button/BtnSubmit';
+import InputTheme from 'library/components/input/InputTheme';
+import Logo from 'library/components/modal/Logo';
 import useUpload from 'library/hooks/useUpload';
-import { postAuthAddtional } from 'library/api';
 import { CreatedUser } from 'library/models';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { setLoginModalOn } from 'library/store/setLoginModal';
 
 type Props = {
