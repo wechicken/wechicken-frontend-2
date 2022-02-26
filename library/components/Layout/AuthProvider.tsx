@@ -9,7 +9,8 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
 
   useEffect(() => {
     const USER: LoginUser | CreatedUser = JSON.parse(sessionStorage.getItem('USER') ?? '{}');
-    !isEmpty(USER) &&
+
+    if (!isEmpty(USER)) {
       dispatch(
         saveUser({
           token: USER.token,
@@ -19,6 +20,7 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
           master: (USER as LoginUser).master ?? false,
         } as LoginUser),
       );
+    }
   }, [dispatch]);
 
   return <div>{children}</div>;

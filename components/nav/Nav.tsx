@@ -5,17 +5,22 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateMyGroup from 'components/myGroup/createAndModifyMyGroup/CreateMyGroup';
 import ModifyMyGroup from 'components/myGroup/createAndModifyMyGroup/ModifyMyGroup';
 import Search from 'components/nav/Search';
 import SubMenu from 'components/nav/SubMenu';
+import { getMockLogin } from 'library/api';
 import Button from 'library/components/button/Button';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import { STAGE } from 'library/constants';
+import { Stage } from 'library/enums';
 import { LoginUser } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
+import { setToken } from 'library/utils';
 
 type Props = {
   isBlurred: boolean;
@@ -31,6 +36,11 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
   const [isCreateMyGroupModalOn, setCreateMyGroupModalOn] = useState(false);
   const [isModifyMyGroup, setModifyMyGroup] = useState(false);
   const [isSearchActive, setSearchActive] = useState(false);
+  const { mutate: mutateMockLogin } = useMutation((gmail: string) => getMockLogin(gmail), {
+    onSuccess: ({ token }) => {
+      setToken(token);
+    },
+  });
 
   const handleSelectedFunctions = useCallback(
     (selected: string): void => {
@@ -66,7 +76,14 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
     setDropDownOpen(false);
   };
 
+  const mockLogin = (): void => {
+    const tmpGmail = 'guswnl0610@gmail.com';
+
+    mutateMockLogin(tmpGmail);
+  };
+
   const isMyGroupPage = router.pathname === '/mygroup';
+  const isDevelop = STAGE === Stage.Development;
 
   return (
     <>
@@ -130,6 +147,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
               isSearchActive={isSearchActive}
             />
           )}
+          {isDevelop && <Button value="목로그인" handleFunction={mockLogin}></Button>}
         </UserWrap>
         {isdropDownOpen && (
           <SubMenu
