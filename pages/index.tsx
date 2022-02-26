@@ -35,6 +35,8 @@ export default function Home(): JSX.Element {
     },
   );
 
+  console.log(data);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -67,7 +69,7 @@ export default function Home(): JSX.Element {
               data.pages.map(
                 page =>
                   page &&
-                  page.posts.map((post: Post) => <Card key={post.id} post={post} width="18rem" />),
+                  page.data?.map((post: Post) => <Card key={post.id} post={post} width="18rem" />),
               )}
             <Observer ref={observerRef} />
           </PostWrapper>

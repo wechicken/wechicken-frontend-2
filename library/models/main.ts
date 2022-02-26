@@ -8,8 +8,7 @@ export type MainPage = {
 };
 
 export type Page = {
-  message: string;
-  posts: Post[];
+  data: Post[];
 };
 
 export type Post = {

@@ -6,11 +6,11 @@ export * from './mygroup';
 export * from './myprofile';
 
 export const getMainPage = (page: number): Promise<AxiosResponse<Page>> => {
-  return apiClient.get(`/main?page=${page}&size=${POSTS_LIMIT}`);
+  return apiClient.get(`/blogs?offset=${page}&limit=${POSTS_LIMIT}`);
 };
 
 export const postGoogleLogin = (googleToken: string): Promise<AxiosResponse<LoginUser>> => {
-  return apiClient.post('/auth/login/google', { googleToken });
+  return apiClient.post('/users/login/google', { googleToken });
 };
 
 export const postAuthAddtional = (formData: FormData): Promise<AxiosResponse<CreatedUser>> => {

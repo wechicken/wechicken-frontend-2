@@ -48,7 +48,7 @@ export default function LikedPage(): JSX.Element {
         </ActiveTab>
         <PostWrapper>
           {data &&
-            data.posts.map((post: Post) => {
+            data.data.map((post: Post) => {
               return <Card post={post} key={post.id} handleRemoveCard={handleRemoveCard} />;
             })}
         </PostWrapper>

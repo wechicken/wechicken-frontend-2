@@ -86,11 +86,11 @@ function SearchPage(): JSX.Element {
           <Loading />
         ) : (
           <PostWrap>
-            {data && data.pages.length !== 0 && (data.pages[0] as Page).posts.length !== 0
+            {data && data.pages.length !== 0 && (data.pages[0] as Page).data.length !== 0
               ? data.pages.map(
                   page =>
                     page &&
-                    page.posts.map((post: Post) => (
+                    page.data.map((post: Post) => (
                       <Card key={post.id} post={post} width="40.625rem" search />
                     )),
                 )
