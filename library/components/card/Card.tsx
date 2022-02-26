@@ -39,36 +39,38 @@ function Card({
     );
   };
 
+  const { id, title, link, thumbnail, writtenDate, user, isLiked, isBookmarked } = post;
+
   return (
     <CardContainer width={width as string} search={search}>
-      <CardWrap type={post.type} onClick={() => window.open(`${post.link}`)}>
-        <ImageBox img={post.thumbnail || '/images/blogDefaultImg.png'} />
-        <img className="blogLogo" alt="blog_logo" src={`/images/${post.type}.png`} />
+      <CardWrap type={user.blogType.name} onClick={() => window.open(`${link}`)}>
+        <ImageBox img={thumbnail || '/images/blogDefaultImg.png'} />
+        <img className="blogLogo" alt="blog_logo" src={`/images/${user.blogType.name}.png`} />
         <ContentsBox>
           <Profile>
-            <ProfileIcon size={40} img={post.user_profile} />
+            <ProfileIcon size={40} img={undefined} />
             <div className="ProfileText">
-              <div className="nth">{post.nth}기</div>
-              <div className="name">{post.user_name}</div>
+              <div className="nth">{user.batch.nth}기</div>
+              <div className="name">{user.name}</div>
             </div>
           </Profile>
-          <Title search={search}>{post.title}</Title>
+          <Title search={search}>{title}</Title>
         </ContentsBox>
       </CardWrap>
-      <Tags>{post.date}</Tags>
+      <Tags>{writtenDate}</Tags>
       <ButtonWrap>
-        {typeof post.like === 'boolean' ? (
+        {typeof isLiked === 'boolean' ? (
           <>
             <BtnLike
               id={post.id}
-              status={post.like}
+              status={isLiked}
               handleRemoveCard={handleRemoveCard}
               type="likes"
               setActiveAlert={needToLogin}
             />
             <BtnLike
-              id={post.id}
-              status={post.bookmark}
+              id={id}
+              status={isBookmarked}
               handleRemoveCard={handleRemoveCard}
               type="bookmarks"
               setActiveAlert={needToLogin}
@@ -78,7 +80,7 @@ function Card({
           handlePostId &&
           getDeleteMyPostId && (
             <BtnEditOrDelete
-              postId={post.id}
+              postId={id}
               handlePostId={handlePostId}
               getDeleteMyPostId={getDeleteMyPostId}
             />
