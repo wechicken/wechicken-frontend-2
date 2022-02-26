@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
@@ -48,12 +47,7 @@ function Card({
         <ImageBox img={thumbnail || '/images/blogDefaultImg.png'} />
         {user.blogType.name && (
           <BlogLogoBox type={user.blogType.name}>
-            <Image
-              src={`/images/${user.blogType.name}.png`}
-              alt="blog_logo"
-              width={26}
-              height={26}
-            />
+            <img src={`/images/${user.blogType.name}.png`} alt="blog_logo" width={26} height={26} />
           </BlogLogoBox>
         )}
         <ContentsBox>
