@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
@@ -43,12 +44,21 @@ function Card({
 
   return (
     <CardContainer width={width as string} search={search}>
-      <CardWrap type={user.blogType.name} onClick={() => window.open(`${link}`)}>
+      <CardWrap onClick={() => window.open(`${link}`)}>
         <ImageBox img={thumbnail || '/images/blogDefaultImg.png'} />
-        <img className="blogLogo" alt="blog_logo" src={`/images/${user.blogType.name}.png`} />
+        {user.blogType.name && (
+          <BlogLogoBox type={user.blogType.name}>
+            <Image
+              src={`/images/${user.blogType.name}.png`}
+              alt="blog_logo"
+              width={26}
+              height={26}
+            />
+          </BlogLogoBox>
+        )}
         <ContentsBox>
           <Profile>
-            <ProfileIcon size={40} img={undefined} />
+            <ProfileIcon size={40} img={user.thumbnail} />
             <div className="ProfileText">
               <div className="nth">{user.batch.nth}기</div>
               <div className="name">{user.name}</div>
@@ -134,19 +144,9 @@ const CardContainer = styled.div<{ width: string; search: boolean | undefined }>
   }
 `;
 
-const CardWrap = styled.div<{ type: string; onClick: () => Window | null }>`
+const CardWrap = styled.div`
   width: 100%;
   height: 100%;
-
-  .blogLogo {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    display: ${({ type }) => (['velog', 'medium'].includes(type) ? 'block' : 'none')};
-  }
 `;
 
 const ImageBox = styled.div<{ img: string }>`
@@ -226,4 +226,16 @@ const ButtonWrap = styled.div`
   position: absolute;
   bottom: 12px;
   right: 16px;
+`;
+
+const BlogLogoBox = styled.div<{ type: string }>`
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: ${({ type }) =>
+    ['velog', 'medium', 'github', 'tistory'].includes(type) ? 'block' : 'none'};
+  overflow: hidden;
 `;

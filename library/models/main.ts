@@ -26,6 +26,7 @@ export type Post = {
   user: {
     id: number;
     name: string;
+    thumbnail: string | null;
     batch: {
       nth: number;
       batchType: {
