@@ -24,7 +24,7 @@ function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
       const formValue = {
         title: post.title,
         link: post.link,
-        date: post.date,
+        date: post.writtenDate,
       };
 
       setValues(formValue);
@@ -70,7 +70,7 @@ function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
       </Title>
       <Contents>
         <Description>
-          <h1>{post ? post.user_name : name}님을 응원합니다</h1>
+          <h1>{post ? post.user.name : name}님을 응원합니다</h1>
           <p>
             일부 사이트를 제외하고는 <br></br>
             직접 포스팅을 등록해 주셔야 합니다 <br></br>
