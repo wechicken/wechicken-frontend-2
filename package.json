@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "node ./server/server.js",
     "lint": "next lint",
-    "just-build": "next build",
     "run-eslint": "eslint --ext .tsx,.ts ./"
   },
   "dependencies": {
