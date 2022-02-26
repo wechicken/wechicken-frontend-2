@@ -28,7 +28,7 @@ export const postLikeStatus = (
 };
 
 export const getSearch = (query: string, page: number): Promise<AxiosResponse<Page>> => {
-  return apiClient.get(`/search?keyword=${query}&page=${page}&size=${SEARCH_RESULTS_LIMIT}`);
+  return apiClient.get(`/blogs?blogTitle=${query}&offset=${page}&limit=${SEARCH_RESULTS_LIMIT}`);
 };
 
 export const postCreateOrModifyGroup = (

@@ -35,8 +35,6 @@ export default function Home(): JSX.Element {
     },
   );
 
-  console.log(data);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
