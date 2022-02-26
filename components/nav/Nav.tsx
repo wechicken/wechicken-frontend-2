@@ -20,7 +20,7 @@ import { LoginUser } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
-import { setToken, setUser } from 'library/utils';
+import { setUser } from 'library/utils';
 
 type Props = {
   isBlurred: boolean;
