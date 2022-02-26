@@ -12,18 +12,33 @@ export type Page = {
 };
 
 export type Post = {
-  type: string;
-  thumbnail: string;
-  user_profile: string;
-  nth: string;
-  user_name: string;
-  title: string;
-  link: string;
-  subtitle: string;
-  date: string;
-  like: boolean;
   id: number;
-  bookmark: boolean;
+  title: string;
+  subtitle: string | null;
+  link: string;
+  thumbnail: string | null;
+
+  writtenDate: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null;
+  userId: number;
+  user: {
+    id: number;
+    name: string;
+    thumbnail: string | null;
+    batch: {
+      nth: number;
+      batchType: {
+        name: string;
+      };
+    };
+    blogType: {
+      name: string;
+    };
+  };
+  isLiked: false;
+  isBookmarked: false;
 };
 
 export type CreatedUser = {

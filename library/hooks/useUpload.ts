@@ -4,7 +4,7 @@ import ProfileIcon, { ProfileIconProps } from 'library/components/profileIcon/Pr
 type ReturnType = {
   handleInputImage: (e: ChangeEvent<HTMLInputElement>) => void;
   convertedImage: string;
-  ProfileIcon: ({ size, img }: ProfileIconProps) => JSX.Element;
+  ProfileIcon: ({ size, img }: ProfileIconProps) => JSX.Element | null;
   uploadedImage: File | undefined;
 };
 

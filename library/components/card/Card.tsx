@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
@@ -39,36 +40,47 @@ function Card({
     );
   };
 
+  const { id, title, link, thumbnail, writtenDate, user, isLiked, isBookmarked } = post;
+
   return (
     <CardContainer width={width as string} search={search}>
-      <CardWrap type={post.type} onClick={() => window.open(`${post.link}`)}>
-        <ImageBox img={post.thumbnail || '/images/blogDefaultImg.png'} />
-        <img className="blogLogo" alt="blog_logo" src={`/images/${post.type}.png`} />
+      <CardWrap onClick={() => window.open(`${link}`)}>
+        <ImageBox img={thumbnail || '/images/blogDefaultImg.png'} />
+        {user.blogType.name && (
+          <BlogLogoBox type={user.blogType.name}>
+            <Image
+              src={`/images/${user.blogType.name}.png`}
+              alt="blog_logo"
+              width={26}
+              height={26}
+            />
+          </BlogLogoBox>
+        )}
         <ContentsBox>
           <Profile>
-            <ProfileIcon size={40} img={post.user_profile} />
+            <ProfileIcon size={40} img={user.thumbnail} />
             <div className="ProfileText">
-              <div className="nth">{post.nth}기</div>
-              <div className="name">{post.user_name}</div>
+              <div className="nth">{user.batch.nth}기</div>
+              <div className="name">{user.name}</div>
             </div>
           </Profile>
-          <Title search={search}>{post.title}</Title>
+          <Title search={search}>{title}</Title>
         </ContentsBox>
       </CardWrap>
-      <Tags>{post.date}</Tags>
+      <Tags>{writtenDate}</Tags>
       <ButtonWrap>
-        {typeof post.like === 'boolean' ? (
+        {typeof isLiked === 'boolean' ? (
           <>
             <BtnLike
               id={post.id}
-              status={post.like}
+              status={isLiked}
               handleRemoveCard={handleRemoveCard}
               type="likes"
               setActiveAlert={needToLogin}
             />
             <BtnLike
-              id={post.id}
-              status={post.bookmark}
+              id={id}
+              status={isBookmarked}
               handleRemoveCard={handleRemoveCard}
               type="bookmarks"
               setActiveAlert={needToLogin}
@@ -78,7 +90,7 @@ function Card({
           handlePostId &&
           getDeleteMyPostId && (
             <BtnEditOrDelete
-              postId={post.id}
+              postId={id}
               handlePostId={handlePostId}
               getDeleteMyPostId={getDeleteMyPostId}
             />
@@ -132,19 +144,9 @@ const CardContainer = styled.div<{ width: string; search: boolean | undefined }>
   }
 `;
 
-const CardWrap = styled.div<{ type: string; onClick: () => Window | null }>`
+const CardWrap = styled.div`
   width: 100%;
   height: 100%;
-
-  .blogLogo {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    display: ${({ type }) => (['velog', 'medium'].includes(type) ? 'block' : 'none')};
-  }
 `;
 
 const ImageBox = styled.div<{ img: string }>`
@@ -224,4 +226,16 @@ const ButtonWrap = styled.div`
   position: absolute;
   bottom: 12px;
   right: 16px;
+`;
+
+const BlogLogoBox = styled.div<{ type: string }>`
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: ${({ type }) =>
+    ['velog', 'medium', 'github', 'tistory'].includes(type) ? 'block' : 'none'};
+  overflow: hidden;
 `;

@@ -2,10 +2,11 @@ import styled from '@emotion/styled';
 
 export type ProfileIconProps = {
   size: number;
-  img?: string;
+  img?: string | null;
 };
 
-export default function ProfileIcon({ size, img }: ProfileIconProps): JSX.Element {
+export default function ProfileIcon({ size, img }: ProfileIconProps): JSX.Element | null {
+  if (img === null) return null;
   return <ProfileIconBox size={size} img={img}></ProfileIconBox>;
 }
 
