@@ -147,7 +147,9 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
               isSearchActive={isSearchActive}
             />
           )}
-          {isDevelop && <Button value="목로그인" handleFunction={mockLogin}></Button>}
+          {isDevelop && !user.token && (
+            <Button value="목로그인" handleFunction={mockLogin}></Button>
+          )}
         </UserWrap>
         {isdropDownOpen && (
           <SubMenu

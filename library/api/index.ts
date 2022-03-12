@@ -24,7 +24,7 @@ export const postLikeStatus = (
   type: string,
   id: number,
 ): Promise<AxiosResponse<{ message: string }>> => {
-  return apiClient.post(`/posts/${type}/${id}`);
+  return apiClient.post(`/blogs/${id}/${type}`);
 };
 
 export const getSearch = (query: string, page: number): Promise<AxiosResponse<Page>> => {
@@ -35,6 +35,6 @@ export const postCreateOrModifyGroup = (
   title: string,
   count: string,
   penalty: string,
-): Promise<AxiosResponse<any>> => {
+): Promise<AxiosResponse<unknown>> => {
   return apiClient.post('/mygroup/createOrModifyMyGroup', { title, count, penalty });
 };

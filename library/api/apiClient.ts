@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(req => {
 
   request.headers = {
     ...req.headers,
-    Authorization: JSON.parse(sessionStorage.getItem('USER') ?? '{}').token ?? '',
+    Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('USER') ?? '{}').token ?? ''}`,
   };
 
   return request;
