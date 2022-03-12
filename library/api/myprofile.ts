@@ -1,14 +1,15 @@
 import { AxiosResponse } from 'axios';
 import { apiClient } from 'library/api/apiClient';
 import { Obj } from 'library/models';
-import { MyProfileData, MyPostData } from 'library/models/myprofile';
+import { UserInfo } from 'library/models/auth';
+import { Page } from 'library/models/main';
 
-export const getMyProfile = (): Promise<MyProfileData> => {
-  return apiClient.get('/mypage').then(res => res.data);
+export const getMyProfile = (): Promise<UserInfo> => {
+  return apiClient.get('/users').then(res => res.data.data);
 };
 
-export const getMyPost = (): Promise<MyPostData> => {
-  return apiClient.get('/mypage/posts').then(res => res.data);
+export const getMyPost = (): Promise<Page> => {
+  return apiClient.get('/users/blogs?offset=0&limit=20').then(res => res.data);
 };
 
 export const deleteProfileImage = (deleteTarget: string): Promise<AxiosResponse<Obj>> => {

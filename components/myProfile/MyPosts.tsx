@@ -19,7 +19,7 @@ function MyPosts(): JSX.Element {
   const [toEditPost, setToEditPost] = useState<Post>();
 
   const { data, refetch } = useQuery('getMyPosts', async () => {
-    return (await getMyPost()).myPosts;
+    return (await getMyPost()).data;
   });
 
   const { mutate: mutateModifyPost } = useMutation(

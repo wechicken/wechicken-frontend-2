@@ -23,11 +23,11 @@ function ProfileColumn(): JSX.Element {
   const { data, refetch } = useQuery(
     'getMyProfile',
     async () => {
-      return (await getMyProfile()).mypage;
+      return await getMyProfile();
     },
     {
-      onSuccess: ({ blog_address }) => {
-        setContentValue(blog_address);
+      onSuccess: data => {
+        setContentValue(data.blogAddress);
         // TODO 현재 /로 끝나는 주소 입력시 500에러 내려옴. toast 추가후 에러시 토스트 얼럿 추가 필요
       },
     },
@@ -58,7 +58,7 @@ function ProfileColumn(): JSX.Element {
     {
       onSuccess: () => refetch(),
       onError: () => {
-        setContentValue(data?.blog_address ?? '');
+        setContentValue(data?.blogAddress ?? '');
         showToast({
           message:
             '블로그 주소를 변경하는 데 실패했습니다.<br />블로그 url의 형식이 올바른지 다시 한 번 확인해 주세요.',
@@ -75,7 +75,7 @@ function ProfileColumn(): JSX.Element {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     setisEdit(!isEdit);
-    data?.blog_address !== contentValue && mutateBlogUrl(contentValue);
+    data?.blogAddress !== contentValue && mutateBlogUrl(contentValue);
     e.preventDefault();
   };
 
@@ -124,8 +124,8 @@ function ProfileColumn(): JSX.Element {
         </DeletePhotoBtn>
       </ProfilePhoto>
       <ProfileContents>
-        <span className="userNth">{data.wecode_nth}기</span>
-        <h1 className="userName">{data.user_name}</h1>
+        <span className="userNth">{data.batch.nth}기</span>
+        <h1 className="userName">{data.name}</h1>
         <div className="userInfo">
           <span className="email">{data.gmail}</span>
           {isEdit ? (
