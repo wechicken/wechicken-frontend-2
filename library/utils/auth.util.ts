@@ -1,10 +1,12 @@
 import { TOKEN_STORAGE_KEY } from 'library/constants';
-import { MockAuth } from 'library/models';
+import { UserInfo } from 'library/models';
 
-export const setUser = (user: MockAuth): void => {
-  sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(user.data));
+export const setUserInStorage = (user: UserInfo): void => {
+  sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(user));
 };
 
-export const getUser = (): string | null => {
-  return sessionStorage.getItem(TOKEN_STORAGE_KEY);
+export const getUserFromStorage = (): UserInfo | null => {
+  const item = sessionStorage.getItem(TOKEN_STORAGE_KEY);
+
+  return item ? JSON.parse(item) : null;
 };

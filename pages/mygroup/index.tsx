@@ -1,96 +1,111 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
-import isNil from 'lodash-es/isNil';
-import { useMutation, useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty } from 'lodash-es';
+// import { useMutation, useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 import Contributors from 'components/myGroup/contributors/contributors';
-import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
-import {
-  AddPostInputValue,
-  Bydays,
-  GroupByDate,
-  MyGroup,
-  UserPostsCounting,
-} from 'components/myGroup/myGroup.model';
+// import CustomCalendar from 'components/myGroup/customCalendar/customCalendar';
+// import {
+//   AddPostInputValue,
+//   Bydays,
+//   GroupByDate,
+//   MyGroup,
+//   UserPostsCounting,
+// } from 'components/myGroup/myGroup.model';
 import MyGroupBanner from 'components/myGroup/myGroupBanner/myGroupBanner';
-import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
-import { createPost, getMyGroup, joinGroup } from 'library/api/mygroup';
-import BtnTheme from 'library/components/button/ButtonTheme';
+// import PostsOfTheWeek from 'components/myGroup/postsOfTheWeek/PostsOfTheWeek';
+// import BtnTheme from 'library/components/button/ButtonTheme';
 import SEO from 'library/components/Layout/SEO';
 import Loading from 'library/components/loading/Loading';
-import { ModalLayout } from 'library/components/modal';
-import PostEditor from 'library/components/postEditor/PostEditor';
-import { Obj } from 'library/models';
-import { currentUser, saveUser } from 'library/store/saveUser';
+// import { ModalLayout } from 'library/components/modal';
+// import PostEditor from 'library/components/postEditor/PostEditor';
+// import { Obj } from 'library/models';
+import { currentUser } from 'library/store/saveUser';
 import { HeaderBox } from 'styles/theme';
+// import { getUserFromStorage } from 'library/utils';
 
-const initialBydays = {
-  MON: [],
-  TUE: [],
-  WED: [],
-  THU: [],
-  FRI: [],
-  SAT: [],
-  SUN: [],
-};
+// const initialBydays = {
+//   MON: [],
+//   TUE: [],
+//   WED: [],
+//   THU: [],
+//   FRI: [],
+//   SAT: [],
+//   SUN: [],
+// };
 
 export default function MyGroupPage(): JSX.Element {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector(currentUser);
-  const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
-  const [byDays, setByDays] = useState<Bydays>(initialBydays);
-  const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
-  const { data, isLoading, refetch } = useQuery<MyGroup>(
-    ['MyGroup', user.token],
-    () => getMyGroup(),
-    {
-      onSuccess: ({ by_days, userPostsCounting }) => {
-        setByDays(by_days);
-        setUserPostsCounting(userPostsCounting);
-      },
-    },
-  );
-  const { mutate: mutateCreatePost } = useMutation((body: Obj) => createPost(body), {
-    onSuccess: () => refetch(),
-  });
-  const { mutate: mutateJoinGroup } = useMutation(() => joinGroup(), {
-    onSuccess: () => refetch(),
-  });
+  // const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
+  // const [byDays, setByDays] = useState<Bydays>(initialBydays);
+  // const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
+  // const { data, isLoading, refetch } = useQuery<MyGroup>(
+  //   ['MyGroup', user.token],
+  //   () => getMyGroup(),
+  //   {
+  //     onSuccess: ({ by_days, userPostsCounting }) => {
+  //       setByDays(by_days);
+  //       setUserPostsCounting(userPostsCounting);
+  //     },
+  //   },
+  // );
 
-  useEffect(() => {
-    if (isLoading || isNil(data)) return;
-    dispatch(saveUser({ ...user, batch: { ...user.batch, title: data.myGroup.title } }));
-  }, [isLoading]);
+  // const { mutate: mutateCreatePost } = useMutation((body: Obj) => createPost(body), {
+  //   onSuccess: () => refetch(),
+  // });
+  // const { mutate: mutateJoinGroup } = useMutation(() => joinGroup(), {
+  //   onSuccess: () => refetch(),
+  // });
+
+  // useEffect(() => {
+  //   if (isLoading || isNil(data)) return;
+  //   dispatch(saveUser({ ...user, myGroupTitle: data.myGroup.title }));
+  // }, [isLoading]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const closeAddPost = (): void => {
-    setAddModalActive(false);
-  };
+  // const closeAddPost = (): void => {
+  //   setAddModalActive(false);
+  // };
 
-  const handleAddPost = (body: AddPostInputValue): void => {
-    mutateCreatePost(body);
-    setAddModalActive(false);
-  };
+  // const handleAddPost = (body: AddPostInputValue): void => {
+  //   mutateCreatePost(body);
+  //   setAddModalActive(false);
+  // };
 
-  const handleGroupJoined = (): void => {
-    mutateJoinGroup();
-  };
+  // const handleGroupJoined = (): void => {
+  //   mutateJoinGroup();
+  // };
 
-  const handleClickDate = ({ by_days, userPostsCounting }: GroupByDate): void => {
-    setByDays(by_days);
-    setUserPostsCounting(userPostsCounting);
-  };
+  // const handleClickDate = ({ by_days, userPostsCounting }: GroupByDate): void => {
+  //   setByDays(by_days);
+  //   setUserPostsCounting(userPostsCounting);
+  // };
 
-  if (isLoading || isNil(data)) {
+  if (isEmpty(user)) {
     return <Loading />;
   }
 
   return (
     <SEO title="내 기수 블로그" url="/mygroup">
       <MyPageContainer>
+        <NthTitle>TODO</NthTitle>
+        <MyGroupBanner></MyGroupBanner>
+        <ContentWrap>
+          {user.isGroupJoined && (
+            <Contribution>
+              <HeaderBox width={128}>
+                <div className="title">이주의 공헌</div>
+              </HeaderBox>
+              <Contributors />
+            </Contribution>
+          )}
+        </ContentWrap>
+      </MyPageContainer>
+      {/* <MyPageContainer>
         {isAddModalActive && (
           <ModalLayout closeModal={closeAddPost} closeOnClickDimmer={true}>
             <PostEditor name={data.myProfile.name} handleSubmit={handleAddPost} />
@@ -134,7 +149,7 @@ export default function MyGroupPage(): JSX.Element {
             />
           </ThisWeek>
         </ContentWrap>
-      </MyPageContainer>
+      </MyPageContainer> */}
     </SEO>
   );
 }

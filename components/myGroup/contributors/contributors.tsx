@@ -1,67 +1,61 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
+import dayjs from 'dayjs';
+import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
+import { getBatchContribution } from 'library/api';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
+import { BatchesContribution } from 'library/models/batch';
 import { currentUser } from 'library/store/saveUser';
-import { MyGroupSub, MyGroupUser, MyProfile, UserPostsCounting } from '../myGroup.model';
 import Contributor from './contributor';
 
-type Contributors = {
-  myContribution: MyProfile;
-  contributor: MyGroupUser[];
-  postsCounting: UserPostsCounting;
-  myGroup: MyGroupSub;
-};
+export default function Contributors(): JSX.Element {
+  const [myContribution, setMyContribution] = useState<BatchesContribution>();
+  const [otherContributions, setOtherContributions] = useState<BatchesContribution[]>([]);
 
-export default function Contributors({
-  myContribution,
-  contributor,
-  postsCounting,
-  myGroup,
-}: Contributors): JSX.Element {
-  // const userProfileImg = useSelector(state => state.userProfileReducer);
   const user = useSelector(currentUser);
 
-  const calculatePenalty = (userCount: number): JSX.Element => {
-    const { count, penalty } = myGroup;
-    const totalPenalty = count - userCount < 0 ? 0 : (count - userCount) * penalty;
+  useQuery(
+    'getBatchContribution',
+    () => getBatchContribution(user.batch.nth, dayjs().format('YYYY-MM-DD')),
+    {
+      onSuccess: contributions => {
+        const me = contributions.find(contribution => contribution.userName === user.name);
 
-    return (
-      <>
-        <Emoji symbol={totalPenalty ? '💸' : '🎉'} />
-        <span>{totalPenalty || 'no penalty'}</span>
-      </>
-    );
-  };
+        console.log(me, 'me', user);
+
+        setMyContribution(me);
+        setOtherContributions(
+          contributions.filter(contribution => contribution.userId !== me?.userId),
+        );
+      },
+    },
+  );
 
   return (
     <Container>
-      <MyContribution>
-        <InfoContainer>
-          <ProfileIcon size={40} img={user.thumbnail} />
-          <UserInfo>
-            <div className="user-container">
-              <div className="name">{myContribution.name}</div>
-              <span className="penalty" role="img" aria-labelledby="celebration">
-                {calculatePenalty(postsCounting[myContribution.gmail] || 0)}
+      {myContribution && (
+        <MyContribution>
+          <InfoContainer>
+            <ProfileIcon size={40} img={myContribution.userThumbnail} />
+            <UserInfo>
+              <div className="user-container">
+                <div className="name">{myContribution.userName}</div>
+                <span className="penalty" role="img" aria-labelledby="celebration">
+                  {myContribution.penalty}
+                </span>
+              </div>
+              <span role="img" aria-labelledby="check">
+                <Emoji symbol="✔️" /> {myContribution.blogsCount}
               </span>
-            </div>
-            <span role="img" aria-labelledby="check">
-              <Emoji symbol="✔️" /> {postsCounting[myContribution.gmail] || 0}
-            </span>
-          </UserInfo>
-        </InfoContainer>
-      </MyContribution>
+            </UserInfo>
+          </InfoContainer>
+        </MyContribution>
+      )}
       <OtherContribution>
-        {contributor.map((person, idx) => {
-          return (
-            <Contributor
-              calculatePenalty={calculatePenalty}
-              postsCounting={postsCounting}
-              key={idx}
-              person={person}
-            />
-          );
+        {otherContributions.map(contribution => {
+          return <Contributor key={contribution.userId} contribution={contribution} />;
         })}
       </OtherContribution>
     </Container>
