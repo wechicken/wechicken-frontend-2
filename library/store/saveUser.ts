@@ -13,24 +13,15 @@ export const user = createSlice({
       title: '',
     },
     message: '',
-    is_group_joined: false,
+    isGroupJoined: false,
   },
   reducers: {
     saveUser(state, { payload }: PayloadAction<LoginUser | CreatedUser>) {
-      const { token, thumbnail, myGroupStatus, batch, is_group_joined } = payload;
-      sessionStorage.setItem(
-        'USER',
-        JSON.stringify({
-          token,
-          thumbnail,
-          myGroupStatus,
-          batch,
-          is_manager: (payload as LoginUser).is_manager ?? false,
-          is_group_joined,
-        }),
-      );
+      const user = { ...payload, isManager: (payload as LoginUser).isManager ?? false };
 
-      return { ...state, ...payload };
+      sessionStorage.setItem('USER', JSON.stringify(user));
+
+      return user;
     },
     setUserProfileImg: (state, { payload }: PayloadAction<string>) => {
       const userFromSessionStorage = sessionStorage.getItem('USER');

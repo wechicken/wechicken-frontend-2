@@ -17,10 +17,9 @@ import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { STAGE } from 'library/constants';
 import { Stage } from 'library/enums';
 import { LoginUser } from 'library/models';
-import { currentUser } from 'library/store/saveUser';
+import { currentUser, saveUser } from 'library/store/saveUser';
 import { setAlert } from 'library/store/setAlert';
 import { setLoginModalOn } from 'library/store/setLoginModal';
-import { setUser } from 'library/utils';
 
 type Props = {
   isBlurred: boolean;
@@ -38,7 +37,9 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
   const [isSearchActive, setSearchActive] = useState(false);
   const { mutate: mutateMockLogin } = useMutation((gmail: string) => getMockLogin(gmail), {
     onSuccess: mockLogin => {
-      setUser(mockLogin);
+      dispatch(saveUser(mockLogin));
+
+      window.location.replace('/');
     },
   });
 
@@ -110,7 +111,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           {isMyGroupPage && (
             <>
               <NthTitle>{user.myGroupStatus ? (user as LoginUser).batch.title : ''}</NthTitle>
-              {(user as LoginUser)?.is_manager && (
+              {(user as LoginUser)?.isManager && (
                 <FontAwesomeIcon
                   onClick={() => setModifyMyGroup(true)}
                   className="settingMyGroup"
@@ -130,7 +131,7 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           )}
           {user.token ? (
             <>
-              {(user as LoginUser).is_manager && (
+              {(user as LoginUser).isManager && (
                 <img className="masterCrown" alt="master" src="/images/crown.png" />
               )}
               <ProfileIconBox
