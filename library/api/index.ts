@@ -10,8 +10,8 @@ export const getMainPage = (page: number): Promise<AxiosResponse<Page>> => {
   return apiClient.get(`/blogs?offset=${page}&limit=${POSTS_LIMIT}`);
 };
 
-export const postGoogleLogin = (googleToken: string): Promise<AxiosResponse<LoginUser>> => {
-  return apiClient.post('/users/login/google', { googleToken });
+export const postGoogleLogin = async (googleToken: string): Promise<AxiosResponse<LoginUser>> => {
+  return apiClient.post('/users/login/google', { googleToken }).then(res => res.data);
 };
 
 export const postAuthAddtional = (formData: FormData): Promise<AxiosResponse<CreatedUser>> => {

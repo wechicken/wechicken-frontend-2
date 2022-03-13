@@ -38,7 +38,7 @@ export default function Contributors({
     <Container>
       <MyContribution>
         <InfoContainer>
-          <ProfileIcon size={40} img={user.profile} />
+          <ProfileIcon size={40} img={user.thumbnail} />
           <UserInfo>
             <div className="user-container">
               <div className="name">{myContribution.name}</div>

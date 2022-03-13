@@ -44,14 +44,17 @@ export type Post = {
 export type CreatedUser = {
   message: string;
   myGroupStatus: boolean;
-  nth: number;
-  profile: string;
+  batch: {
+    nth: number;
+    title: string;
+  };
+  thumbnail: string;
   token: string;
+  is_group_joined: boolean;
 };
 
 export type LoginUser = CreatedUser & {
-  master: boolean;
-  myGroupTitle?: string;
+  is_manager: boolean;
 };
 
 export type Alert = {

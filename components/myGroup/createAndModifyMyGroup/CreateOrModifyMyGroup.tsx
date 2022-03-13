@@ -109,14 +109,14 @@ function CreateOrModifyMyGroup({
               </p>
             </Description>
             <InputFormWrap>
-              <span className="nth">{user?.nth}기</span>
+              <span className="nth">{user?.batch.nth}기</span>
               <InputTheme
                 width="10.625rem"
                 style={{ minWidth: '180px' }}
                 type="기수 페이지명"
                 name="myGroupTitle"
                 handleEvent={handleChangeInput}
-                placeholder={myGroupTitleText ?? (user as LoginUser).myGroupTitle}
+                placeholder={myGroupTitleText ?? (user as LoginUser).batch.title}
                 size="14px"
               />
               <InputTheme

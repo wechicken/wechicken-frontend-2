@@ -6,22 +6,27 @@ export const user = createSlice({
   name: 'user',
   initialState: {
     token: '',
-    profile: '',
+    thumbnail: '',
     myGroupStatus: false,
-    nth: 0,
+    batch: {
+      nth: 0,
+      title: '',
+    },
     message: '',
+    is_group_joined: false,
   },
   reducers: {
     saveUser(state, { payload }: PayloadAction<LoginUser | CreatedUser>) {
-      const { token, profile, myGroupStatus, nth } = payload;
+      const { token, thumbnail, myGroupStatus, batch, is_group_joined } = payload;
       sessionStorage.setItem(
         'USER',
         JSON.stringify({
           token,
-          profile,
+          thumbnail,
           myGroupStatus,
-          nth,
-          master: (payload as LoginUser).master ?? false,
+          batch,
+          is_manager: (payload as LoginUser).is_manager ?? false,
+          is_group_joined,
         }),
       );
 
@@ -33,11 +38,11 @@ export const user = createSlice({
       if (userFromSessionStorage) {
         sessionStorage.setItem(
           'USER',
-          JSON.stringify({ ...JSON.parse(userFromSessionStorage), profile: payload }),
+          JSON.stringify({ ...JSON.parse(userFromSessionStorage), thumbnail: payload }),
         );
       }
 
-      return { ...state, profile: payload };
+      return { ...state, thumbnail: payload };
     },
   },
 });
