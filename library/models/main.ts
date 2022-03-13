@@ -50,11 +50,11 @@ export type CreatedUser = {
   };
   thumbnail: string;
   token: string;
-  is_group_joined: boolean;
+  isGroupJoined: boolean;
 };
 
 export type LoginUser = CreatedUser & {
-  is_manager: boolean;
+  isManager: boolean;
 };
 
 export type Alert = {

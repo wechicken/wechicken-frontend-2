@@ -1,20 +1,6 @@
-type BatchType = {
-  nth: number;
-  title: string;
-};
-
-export type UserInfo = {
-  batch: BatchType;
-  isGroupJoined: boolean;
-  isManager: boolean;
-  token: string;
-  name: string;
-  gmail: string;
-  thumbnail: string;
-  blogAddress: string;
-};
+import { LoginUser } from './main';
 
 export type MockAuth = {
-  data: UserInfo;
+  data: LoginUser;
   message: string;
 };

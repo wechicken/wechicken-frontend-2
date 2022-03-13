@@ -27,7 +27,22 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
   const googleLoginBtn = useRef(null);
   const auth2 = useRef<gapi.auth2.GoogleAuth>();
   const js = useRef<HTMLElement>();
-  const loginWithGoogle = useMutation((googleToken: string) => postGoogleLogin(googleToken));
+  const loginWithGoogle = useMutation((googleToken: string) => postGoogleLogin(googleToken), {
+    onSuccess: ({ data }) => {
+      if (data.message === 'FIRST') return setExistingUser(false);
+
+      setLoginSuccess(true);
+
+      setTimeout(() => {
+        setLoginSuccess(false);
+        dispatch(setLoginModalOn(false));
+      }, 1000);
+
+      dispatch(saveUser(data as LoginUser));
+
+      window.location.replace('/');
+    },
+  });
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -79,21 +94,8 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
     makeJsElement(document, 'script', 'google-jssdk');
   };
 
-  const GoogleApiPOST = async (googleToken: string): Promise<void> => {
-    const { data } = await loginWithGoogle.mutateAsync(googleToken);
-
-    if (data.message === 'FIRST') return setExistingUser(false);
-
-    setLoginSuccess(true);
-
-    setTimeout(() => {
-      setLoginSuccess(false);
-      dispatch(setLoginModalOn(false));
-    }, 1000);
-
-    dispatch(saveUser(data as LoginUser));
-
-    window.location.replace('/');
+  const postGoogleLoginApi = (googleToken: string): void => {
+    loginWithGoogle.mutate(googleToken);
   };
 
   const googleLoginClickHandler = async (): Promise<void> => {
@@ -108,7 +110,7 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
         const fetchGoogleUser = (googleUser: gapi.auth2.GoogleUser): void => {
           const profile = googleUser.getBasicProfile();
           handleGoogleInput(profile);
-          GoogleApiPOST(googleUser.getAuthResponse().id_token);
+          postGoogleLoginApi(googleUser.getAuthResponse().id_token);
         };
 
         return fetchGoogleUser(googleUser);

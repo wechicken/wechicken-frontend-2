@@ -1,10 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { apiClient } from 'library/api/apiClient';
-import { Obj } from 'library/models';
-import { UserInfo } from 'library/models/auth';
-import { Page } from 'library/models/main';
+import { Obj, LoginUser, Page } from 'library/models';
 
-export const getMyProfile = (): Promise<UserInfo> => {
+export const getMyProfile = (): Promise<LoginUser> => {
   return apiClient.get('/users').then(res => res.data.data);
 };
 
