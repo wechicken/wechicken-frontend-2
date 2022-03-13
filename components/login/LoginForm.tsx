@@ -66,16 +66,16 @@ export default function LoginForm({
     const { data, status } = await loginWithForm.mutateAsync(formData);
 
     if (status === 201) {
-      const { token, profile, myGroupStatus, nth } = data;
+      const { token, thumbnail, myGroupStatus, batch } = data;
       setLoginSuccess(true);
       setExistingUser(true);
       sessionStorage.setItem(
         'USER',
         JSON.stringify({
           token,
-          profile,
+          thumbnail,
           myGroupStatus,
-          nth,
+          batch,
         }),
       );
 

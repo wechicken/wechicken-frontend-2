@@ -59,7 +59,7 @@ export default function MyGroupPage(): JSX.Element {
 
   useEffect(() => {
     if (isLoading || isNil(data)) return;
-    dispatch(saveUser({ ...user, myGroupTitle: data.myGroup.title }));
+    dispatch(saveUser({ ...user, batch: { ...user.batch, title: data.myGroup.title } }));
   }, [isLoading]);
 
   useEffect(() => {

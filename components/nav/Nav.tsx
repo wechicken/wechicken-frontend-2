@@ -109,8 +109,8 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           </Link>
           {isMyGroupPage && (
             <>
-              <NthTitle>{user.myGroupStatus ? (user as LoginUser).myGroupTitle : ''}</NthTitle>
-              {(user as LoginUser)?.master && (
+              <NthTitle>{user.myGroupStatus ? (user as LoginUser).batch.title : ''}</NthTitle>
+              {(user as LoginUser)?.is_manager && (
                 <FontAwesomeIcon
                   onClick={() => setModifyMyGroup(true)}
                   className="settingMyGroup"
@@ -130,14 +130,14 @@ function Nav({ isBlurred, setBlurred }: Props): JSX.Element {
           )}
           {user.token ? (
             <>
-              {(user as LoginUser).master && (
+              {(user as LoginUser).is_manager && (
                 <img className="masterCrown" alt="master" src="/images/crown.png" />
               )}
               <ProfileIconBox
                 isdropDownOpen={isdropDownOpen}
                 onMouseOver={() => setDropDownOpen(true)}
               >
-                <ProfileIcon size={50} img={user.profile} />
+                <ProfileIcon size={50} img={user.thumbnail} />
               </ProfileIconBox>
             </>
           ) : (

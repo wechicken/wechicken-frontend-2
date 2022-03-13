@@ -80,22 +80,20 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
   };
 
   const GoogleApiPOST = async (googleToken: string): Promise<void> => {
-    const { data, status } = await loginWithGoogle.mutateAsync(googleToken);
+    const { data } = await loginWithGoogle.mutateAsync(googleToken);
 
-    if (status === 201) {
-      if (data.message === 'FIRST') return setExistingUser(false);
+    if (data.message === 'FIRST') return setExistingUser(false);
 
-      setLoginSuccess(true);
+    setLoginSuccess(true);
 
-      setTimeout(() => {
-        setLoginSuccess(false);
-        dispatch(setLoginModalOn(false));
-      }, 1000);
+    setTimeout(() => {
+      setLoginSuccess(false);
+      dispatch(setLoginModalOn(false));
+    }, 1000);
 
-      dispatch(saveUser(data as LoginUser));
+    dispatch(saveUser(data as LoginUser));
 
-      window.location.replace('/');
-    }
+    window.location.replace('/');
   };
 
   const googleLoginClickHandler = async (): Promise<void> => {

@@ -14,10 +14,11 @@ function AuthProvider({ children }: { children: React.ReactNode }): JSX.Element 
       dispatch(
         saveUser({
           token: USER.token,
-          profile: USER.profile,
+          thumbnail: USER.thumbnail,
           myGroupStatus: USER.myGroupStatus,
-          nth: USER.nth,
-          master: (USER as LoginUser).master ?? false,
+          batch: USER.batch,
+          is_manager: (USER as LoginUser).is_manager ?? false,
+          is_group_joined: USER.is_group_joined,
         } as LoginUser),
       );
     }

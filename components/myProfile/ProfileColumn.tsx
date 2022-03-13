@@ -114,7 +114,7 @@ function ProfileColumn(): JSX.Element {
   return (
     <ProfileContainer>
       <ProfilePhoto>
-        <ProfileIcon size={131} img={user.profile} />
+        <ProfileIcon size={131} img={user.thumbnail} />
         <label>
           <input type="file" accept="image/*" onChange={handleProfileImageChange} />
           <UploadPhotoBtn>이미지 업로드</UploadPhotoBtn>
