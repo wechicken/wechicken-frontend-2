@@ -14,6 +14,9 @@ export const user = createSlice({
     },
     message: '',
     isGroupJoined: false,
+    gmail: '',
+    name: '',
+    blogAddress: '',
   },
   reducers: {
     saveUser(state, { payload }: PayloadAction<LoginUser | CreatedUser>) {

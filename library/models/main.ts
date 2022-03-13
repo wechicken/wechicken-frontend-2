@@ -51,6 +51,9 @@ export type CreatedUser = {
   thumbnail: string;
   token: string;
   isGroupJoined: boolean;
+  blogAddress: string;
+  name: string;
+  gmail: string;
 };
 
 export type LoginUser = CreatedUser & {
