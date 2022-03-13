@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
+import { isNil } from 'lodash-es';
+import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import { getBatchRank } from 'library/api';
 import Emoji from 'library/components/emoji/Emoji';
+import Loading from 'library/components/loading/Loading';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
 import { Obj } from 'library/models';
+import { currentUser } from 'library/store/saveUser';
 import { flexCenter } from 'styles/theme';
 import { Rank } from '../myGroup.model';
 
@@ -15,7 +21,15 @@ const medal: Obj = {
   3: '🥉',
 };
 
-export default function MyGroupBanner({ ranking }: MyGroupBanner): JSX.Element {
+export default function MyGroupBanner(): JSX.Element {
+  const user = useSelector(currentUser);
+
+  const { data, isLoading } = useQuery('getBatchesRank', () => getBatchRank(user.batch.nth));
+
+  if (isLoading || isNil(data)) {
+    return <Loading />;
+  }
+
   return (
     <BannerContents>
       <img src="/images/mygroup_banner.png" alt="banner"></img>
@@ -23,16 +37,14 @@ export default function MyGroupBanner({ ranking }: MyGroupBanner): JSX.Element {
         <span className="title">
           RANKING <Emoji symbol="🏆" />
         </span>
-        {ranking.map((rank, i) => {
-          return (
-            <div className="rankList" key={rank.user_name + rank.user_profile}>
-              <Emoji symbol={medal[i + 1]} />
-              <span className="rank">{i + 1}위 </span>
-              <ProfileIcon size={30} img={rank.user_profile} />
-              <span className="name">{rank.user_name}</span>
-            </div>
-          );
-        })}
+        {data.map((user, i) => (
+          <div className="rankList" key={user.userId}>
+            <Emoji symbol={medal[i + 1]} />
+            <span className="rank">{i + 1}위 </span>
+            <ProfileIcon size={30} img={user.userThumbnail} />
+            <span className="name">{user.userName}</span>
+          </div>
+        ))}
       </div>
     </BannerContents>
   );

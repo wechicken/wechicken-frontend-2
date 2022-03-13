@@ -1,35 +1,28 @@
 import styled from '@emotion/styled';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import { Obj } from 'library/models';
-import { MyGroupUser } from '../myGroup.model';
+import { BatchesContribution } from 'library/models/batch';
 
 type Contributor = {
-  calculatePenalty: (_: number) => JSX.Element;
-  postsCounting: Obj;
-  person: MyGroupUser;
+  contribution: BatchesContribution;
 };
 
-export default function Contributor({
-  calculatePenalty,
-  postsCounting,
-  person,
-}: Contributor): JSX.Element {
+export default function Contributor({ contribution }: Contributor): JSX.Element {
   return (
     <Container>
       <InfoContainer>
         <div className="user-container">
-          <ProfileIcon size={34} img={person.profile} />
+          <ProfileIcon size={34} img={contribution.userThumbnail} />
           <UserInfo>
-            <div className="name">{person.name}</div>
+            <div className="name">{contribution.userName}</div>
             <span className="penalty" role="img" aria-labelledby="money">
-              <span>{calculatePenalty(postsCounting[person.gmail] || 0)}</span>
+              <span>{contribution.penalty}</span>
             </span>
           </UserInfo>
         </div>
         <span role="img" aria-labelledby="check">
           <Emoji symbol="✔️" />
-          {postsCounting[person.gmail] || 0}
+          {contribution.blogsCount}
         </span>
       </InfoContainer>
     </Container>
