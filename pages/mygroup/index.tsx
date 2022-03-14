@@ -22,6 +22,8 @@ import Loading from 'library/components/loading/Loading';
 // import { Obj } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import { HeaderBox } from 'styles/theme';
+import { useQuery } from 'react-query';
+import { getBatchRank } from 'library/api';
 // import { getUserFromStorage } from 'library/utils';
 
 // const initialBydays = {
@@ -37,6 +39,8 @@ import { HeaderBox } from 'styles/theme';
 export default function MyGroupPage(): JSX.Element {
   // const dispatch = useDispatch();
   const user = useSelector(currentUser);
+  // const { isLoading } = useQuery('getBatchesRank', () => getBatchRank(user.batch.nth));
+
   // const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
   // const [byDays, setByDays] = useState<Bydays>(initialBydays);
   // const [userPostsCounting, setUserPostsCounting] = useState<UserPostsCounting>({});
@@ -85,7 +89,7 @@ export default function MyGroupPage(): JSX.Element {
   //   setUserPostsCounting(userPostsCounting);
   // };
 
-  if (isEmpty(user)) {
+  if (!user) {
     return <Loading />;
   }
 
