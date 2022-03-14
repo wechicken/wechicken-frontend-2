@@ -17,13 +17,11 @@ export default function Contributors(): JSX.Element {
   const user = useSelector(currentUser);
 
   useQuery(
-    'getBatchContribution',
+    ['getBatchContribution', user.batch.nth],
     () => getBatchContribution(user.batch.nth, dayjs().format('YYYY-MM-DD')),
     {
       onSuccess: contributions => {
         const me = contributions.find(contribution => contribution.userName === user.name);
-
-        console.log(me, 'me', user);
 
         setMyContribution(me);
         setOtherContributions(
