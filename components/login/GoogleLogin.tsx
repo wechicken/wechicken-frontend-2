@@ -124,12 +124,10 @@ function GoogleLogin({ setLoginSuccess, setExistingUser, handleGoogleInput }: Pr
   };
 
   return (
-    <>
-      <GoogleLoginBtn ref={googleLoginBtn} onClick={googleLoginClickHandler}>
-        <GoogleIcon />
-        <GoogleBtnText>구글로 로그인하기</GoogleBtnText>
-      </GoogleLoginBtn>
-    </>
+    <GoogleLoginBtn ref={googleLoginBtn} onClick={googleLoginClickHandler}>
+      <GoogleIcon />
+      <GoogleBtnText>구글로 로그인하기</GoogleBtnText>
+    </GoogleLoginBtn>
   );
 }
 
