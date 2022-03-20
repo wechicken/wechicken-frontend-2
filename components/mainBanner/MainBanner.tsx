@@ -1,5 +1,4 @@
 import { useRouter } from 'next/dist/client/router';
-import Image from 'next/image';
 import { AutoPlay, Fade } from '@egjs/flicking-plugins';
 import Flicking from '@egjs/react-flicking';
 import styled from '@emotion/styled';
@@ -50,13 +49,7 @@ function MainBanner(): JSX.Element {
             }
           >
             <ImgBox>
-              <Image
-                alt={`banner${idx}`}
-                src={content.img}
-                layout="responsive"
-                width={700}
-                height={475}
-              />
+              <img alt={`banner${idx}`} src={content.img} />
             </ImgBox>
             <BannerContent>
               <BannerTop>
@@ -100,6 +93,10 @@ const ImgBox = styled.div`
   ${({ theme }) => theme.md`
     max-width: 100%;
   `}
+  img {
+    object-fit: contain;
+    width: 100%;
+  }
 `;
 
 const BannerContent = styled.div`
