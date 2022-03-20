@@ -227,6 +227,6 @@ const BlogLogoBox = styled.div<{ type: string }>`
   height: 26px;
   border-radius: 50%;
   display: ${({ type }) =>
-    ['velog', 'medium', 'github', 'tistory'].includes(type) ? 'block' : 'none'};
+    ['velog', 'medium', 'github', 'tistory', 'notion'].includes(type) ? 'block' : 'none'};
   overflow: hidden;
 `;
