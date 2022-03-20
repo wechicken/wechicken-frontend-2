@@ -12,9 +12,9 @@ import GlobalStyle from 'styles/GlobalStyles';
 import { mediaQuery } from 'styles/media';
 import { theme } from 'styles/theme';
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <SEO>
       <Provider store={store}>

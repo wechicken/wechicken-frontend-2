@@ -6,8 +6,6 @@ import Login from 'components/login/Login';
 import Nav from 'components/nav/Nav';
 import Toast from 'components/toast/Toast';
 import Alert from 'library/components/alert/Alert';
-import { STAGE } from 'library/constants';
-import { Stage } from 'library/enums';
 import { useIntersectionObserver, useToast } from 'library/hooks';
 import { alertForm } from 'library/store/setAlert';
 import { loginModal } from 'library/store/setLoginModal';
@@ -35,7 +33,7 @@ export default function Layout({ children }: Props): JSX.Element {
     window.scrollTo(0, 0);
     queryClient.setDefaultOptions({
       queries: {
-        retry: STAGE === Stage.Development ? false : 3,
+        retry: 3,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         onError: err => {
