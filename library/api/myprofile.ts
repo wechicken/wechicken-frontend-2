@@ -10,16 +10,16 @@ export const getMyPost = (): Promise<Page> => {
   return apiClient.get('/users/blogs?offset=0&limit=20').then(res => res.data);
 };
 
-export const deleteProfileImage = (deleteTarget: string): Promise<AxiosResponse<Obj>> => {
-  return apiClient.delete(`/mypage?deleted=${deleteTarget}`);
+export const deleteProfileImage = (): Promise<AxiosResponse<Obj>> => {
+  return apiClient.delete('/users/thumbnail');
 };
 
 export const deleteMyPost = (deletePostId: number): Promise<AxiosResponse<void>> => {
-  return apiClient.delete(`/mypage/post/${deletePostId}`);
+  return apiClient.delete(`/blogs/${deletePostId}`);
 };
 
 export const modifyProfileImage = (formData: FormData): Promise<AxiosResponse<Obj>> => {
-  return apiClient.post('/mypage', formData, {
+  return apiClient.patch('/users/thumbnail', formData, {
     headers: {
       'content-type': 'multipart/form-data',
     },
@@ -27,7 +27,7 @@ export const modifyProfileImage = (formData: FormData): Promise<AxiosResponse<Ob
 };
 
 export const modifyBlogUrl = (blog_address: string): Promise<AxiosResponse<Obj>> => {
-  return apiClient.post('/mypage', { blog_address });
+  return apiClient.patch('/users/blog_address', { blog_address });
 };
 
 export const modifyPost = ({
@@ -41,5 +41,5 @@ export const modifyPost = ({
   link: string;
   date: string;
 }): Promise<AxiosResponse<Obj>> => {
-  return apiClient.put(`/mypage/post/${postId}`, { title, link, date });
+  return apiClient.put(`/blogs/${postId}`, { title, link, date });
 };
