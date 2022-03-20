@@ -33,15 +33,12 @@ function ProfileColumn(): JSX.Element {
     },
   );
 
-  const { mutate: mutateDeleteProfileImage } = useMutation(
-    (deleteTarget: string) => deleteProfileImage(deleteTarget),
-    {
-      onSuccess: () => {
-        dispatch(setUserProfileImg(''));
-        window.location.reload();
-      },
+  const { mutate: mutateDeleteProfileImage } = useMutation(() => deleteProfileImage(), {
+    onSuccess: () => {
+      dispatch(setUserProfileImg(''));
+      window.location.reload();
     },
-  );
+  });
 
   const { mutate: mutateModifyProfileImage } = useMutation(
     (formData: FormData) => modifyProfileImage(formData),
@@ -85,7 +82,7 @@ function ProfileColumn(): JSX.Element {
     if (files) {
       const formData = new FormData();
 
-      formData.append('user_thumbnail', files[0] as Blob);
+      formData.append('file', files[0] as Blob);
       mutateModifyProfileImage(formData);
     }
   };
@@ -94,12 +91,12 @@ function ProfileColumn(): JSX.Element {
     return setContentValue(e.target.value);
   };
 
-  const handleDeleteProfileImg = ({ currentTarget }: React.MouseEvent<HTMLDivElement>): void => {
+  const handleDeleteProfileImg = (): void => {
     dispatch(
       setAlert({
         alertMessage: '프로필 이미지를 삭제하시겠습니까?',
         onSubmit: () => {
-          mutateDeleteProfileImage(currentTarget.id);
+          mutateDeleteProfileImage();
         },
         submitBtnText: '확인',
         closeBtnText: '취소',

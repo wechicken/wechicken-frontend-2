@@ -63,7 +63,13 @@ function Card({
       </CardWrap>
       <Tags>{writtenDate}</Tags>
       <ButtonWrap>
-        {typeof isLiked === 'boolean' ? (
+        {handlePostId && getDeleteMyPostId ? (
+          <BtnEditOrDelete
+            postId={id}
+            handlePostId={handlePostId}
+            getDeleteMyPostId={getDeleteMyPostId}
+          />
+        ) : (
           <>
             <BtnLike
               id={post.id}
@@ -80,15 +86,6 @@ function Card({
               setActiveAlert={needToLogin}
             />
           </>
-        ) : (
-          handlePostId &&
-          getDeleteMyPostId && (
-            <BtnEditOrDelete
-              postId={id}
-              handlePostId={handlePostId}
-              getDeleteMyPostId={getDeleteMyPostId}
-            />
-          )
         )}
       </ButtonWrap>
     </CardContainer>
