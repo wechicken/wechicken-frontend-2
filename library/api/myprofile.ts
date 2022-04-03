@@ -34,12 +34,16 @@ export const modifyPost = ({
   postId,
   title,
   link,
-  date,
+  written_date,
 }: {
   postId: number;
   title: string;
   link: string;
-  date: string;
+  written_date: string;
 }): Promise<AxiosResponse<Obj>> => {
-  return apiClient.put(`/blogs/${postId}`, { title, link, date });
+  return apiClient.put(`/blogs/${postId}`, {
+    title,
+    link,
+    written_date,
+  });
 };

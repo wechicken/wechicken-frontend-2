@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { getBatchContribution } from 'library/api';
 import Emoji from 'library/components/emoji/Emoji';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import { BatchesContribution } from 'library/models/batch';
+import { BatchesContribution } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import Contributor from './contributor';
 
@@ -80,6 +80,8 @@ const Container = styled.div`
 
 const MyContribution = styled.div`
   height: 85px;
+  max-width: 140px;
+  width: 100%;
   position: absolute;
   display: flex;
   align-items: center;
