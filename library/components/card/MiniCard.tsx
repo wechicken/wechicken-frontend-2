@@ -1,27 +1,31 @@
+import Image from 'next/image';
 import styled from '@emotion/styled';
-import { Obj } from 'library/models';
+import { Obj, BatchPost } from 'library/models';
 import ProfileIcon from '../profileIcon/ProfileIcon';
 
 type Props = {
-  post: Obj;
+  post: BatchPost;
 };
 
 function MiniCard({ post }: Props): JSX.Element {
   return (
     <MiniPostCardContainer>
-      <PostContent onClick={() => window.open(`${post.link}`)}>
+      <PostContent onClick={() => window.open(`${post.blogLink}`)}>
         <div className="profileIcon">
-          <ProfileIcon size={38} img={post.user_profile} />
+          <ProfileIcon size={38} img={post.userThumbnail} />
         </div>
         <div className="contents">
-          <span>{post.user_name}</span>
-          <span className="postText">{post.title}</span>
+          <span>{post.userName}</span>
+          <span className="postText">{post.blogTitle}</span>
         </div>
       </PostContent>
-      <PostDateAndType type={post.type}>
-        <span>{post.date.slice(5, 12)}</span>
+      <PostDateAndType type={post.blogTypeName}>
+        <span>{post.blogWrittenDate}</span>
         <div className="blogLogo">
-          <img alt="blog_logo" src={`/images/${post.type}.png`} />
+          {/* <img alt="blog_logo" src={`/images/${post.blogTypeName}.png`} /> */}
+          {post.blogTypeName && (
+            <Image width={20} height={20} src={`/images/${post.blogTypeName}.png`}></Image>
+          )}
         </div>
       </PostDateAndType>
     </MiniPostCardContainer>
@@ -121,11 +125,11 @@ const PostDateAndType = styled.div<Obj>`
     font-size: 12px;
     color: ${({ theme }) => theme.deepGrey};
   }
-
-  img {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: ${({ type }) => (['velog', 'medium'].includes(type) ? 'block' : 'none')};
-  }
 `;
+
+// img {
+//   width: 20px;
+//   height: 20px;
+//   border-radius: 50%;
+//   display: ${({ type }) => (['velog', 'medium'].includes(type) ? 'block' : 'none')};
+// }

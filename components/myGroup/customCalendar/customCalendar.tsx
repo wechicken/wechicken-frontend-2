@@ -1,44 +1,22 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import Calendar from 'react-calendar';
-import { QueryFunctionContext, useQuery } from 'react-query';
-import { getPostsByDate } from 'library/api';
 import { flexCenter } from 'styles/theme';
-import { GroupByDate, MyGroup } from '../myGroup.model';
 import 'react-calendar/dist/Calendar.css';
 
 type Props = {
-  handleClickDate: (_: GroupByDate) => void;
-  data: MyGroup;
+  handleClickDate: (_: string) => void;
+  date: string;
 };
 
-function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
+function CustomCalendar({ handleClickDate, date }: Props): JSX.Element {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
-  const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
-  useQuery(
-    ['Get Posts By Date', date],
-    ({ queryKey }: QueryFunctionContext) => {
-      const [_, selectedDate] = queryKey;
-      const formattedDate = (selectedDate as dayjs.Dayjs).format('YYYYMMDD');
-
-      return getPostsByDate(formattedDate);
-    },
-    {
-      onSuccess: (data): void => {
-        handleClickDate(data);
-      },
-    },
-  );
-
-  useEffect(() => {
-    setDate(dayjs());
-  }, [data]);
 
   const selectDate = (selected: Date): void => {
     const selectedDate = dayjs(selected);
 
-    setDate(selectedDate);
+    handleClickDate(selectedDate.format('YYYY-MM-DD'));
     setIsCalendarVisible(false);
   };
 
@@ -51,8 +29,8 @@ function CustomCalendar({ handleClickDate, data }: Props): JSX.Element {
       <MonthOfTheWeek onClick={onClickMoreButton}>
         <span className="moreBtn">▾</span>
         <span>
-          {date.format('MMMM')}
-          <span className="week">{date.date()}일</span>
+          {dayjs(date).format('MMMM')}
+          <span className="week">{dayjs(date).date()}일</span>
         </span>
       </MonthOfTheWeek>
       <CalendarContainer>

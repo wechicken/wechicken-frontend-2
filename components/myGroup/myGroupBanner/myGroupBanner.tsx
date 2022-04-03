@@ -6,10 +6,9 @@ import { getBatchRank } from 'library/api';
 import Emoji from 'library/components/emoji/Emoji';
 import Loading from 'library/components/loading/Loading';
 import ProfileIcon from 'library/components/profileIcon/ProfileIcon';
-import { Obj } from 'library/models';
+import { Obj, Rank } from 'library/models';
 import { currentUser } from 'library/store/saveUser';
 import { flexCenter } from 'styles/theme';
-import { Rank } from '../myGroup.model';
 
 type MyGroupBanner = {
   ranking: Rank[];

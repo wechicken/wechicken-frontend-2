@@ -3,13 +3,12 @@ import styled from '@emotion/styled';
 import find from 'lodash-es/find';
 import { useQuery, useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { AddPostInputValue } from 'components/myGroup/myGroup.model';
 import { getMyPost, deleteMyPost, modifyPost } from 'library/api/myprofile';
 import Card from 'library/components/card/Card';
 import Loading from 'library/components/loading/Loading';
 import { ModalLayout } from 'library/components/modal';
 import PostEditor from 'library/components/postEditor/PostEditor';
-import { Post } from 'library/models/main';
+import { PostEditorInput, Post } from 'library/models';
 import { setAlert } from 'library/store/setAlert';
 import { HeaderBox, PostWrapper } from 'styles/theme';
 
@@ -23,7 +22,8 @@ function MyPosts(): JSX.Element {
   });
 
   const { mutate: mutateModifyPost } = useMutation(
-    (params: { postId: number; title: string; link: string; date: string }) => modifyPost(params),
+    (params: { postId: number; title: string; link: string; written_date: string }) =>
+      modifyPost(params),
     {
       onSuccess: () => {
         refetch();
@@ -55,7 +55,7 @@ function MyPosts(): JSX.Element {
     );
   };
 
-  const handleSubmit = (formValue: AddPostInputValue): void => {
+  const handleSubmit = (formValue: PostEditorInput): void => {
     if (toEditPost) {
       mutateModifyPost({ ...formValue, postId: toEditPost.id });
       closeEditPost();

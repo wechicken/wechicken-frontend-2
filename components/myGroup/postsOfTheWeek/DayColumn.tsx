@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import MiniCard from 'library/components/card/MiniCard';
-import { Obj } from 'library/models';
+import { BatchPost } from 'library/models';
 import { flexCenter } from 'styles/theme';
 
 type Props = {
   day: string;
-  dayPosts: Obj[];
+  dayPosts?: BatchPost[];
 };
 
 export default function DayColumn({ day, dayPosts }: Props): JSX.Element {
@@ -17,8 +17,8 @@ export default function DayColumn({ day, dayPosts }: Props): JSX.Element {
         </div>
       </DayOfTheWeek>
       <Wrap>
-        {dayPosts.map(post => (
-          <MiniCard post={post} key={post.id} />
+        {dayPosts?.map(post => (
+          <MiniCard post={post} key={post.blogId} />
         ))}
       </Wrap>
     </DayColumnContainer>

@@ -2,20 +2,24 @@ import { memo, useEffect } from 'react';
 import { ChangeEvent, useState } from 'react';
 import styled from '@emotion/styled';
 import isEmpty from 'lodash-es/isEmpty';
-import { AddPostInputValue } from 'components/myGroup/myGroup.model';
 import { InputBox } from 'library/components/input/inputStyle';
+import { PostEditorInput } from 'library/models';
 import { Post } from 'library/models';
 import { isValidDate } from 'library/utils';
 import { flexCenter } from 'styles/theme';
 
 type Props = {
   name?: string;
-  handleSubmit: (_: AddPostInputValue) => void;
+  handleSubmit: (_: PostEditorInput) => void;
   post?: Post;
 };
 
 function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
-  const [values, setValues] = useState<AddPostInputValue>({ title: '', link: '', date: '' });
+  const [values, setValues] = useState<PostEditorInput>({
+    title: '',
+    link: '',
+    written_date: '',
+  });
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isDateValid, setIsDateValid] = useState<boolean>(true);
 
@@ -24,7 +28,7 @@ function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
       const formValue = {
         title: post.title,
         link: post.link,
-        date: post.writtenDate,
+        written_date: post.writtenDate,
       };
 
       setValues(formValue);
@@ -48,15 +52,15 @@ function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
     handleSubmit(values);
   };
 
-  const validate = ({ date, title, link }: AddPostInputValue): void => {
-    if (isEmpty(date) || isEmpty(title) || isEmpty(link)) {
+  const validate = ({ written_date, title, link }: PostEditorInput): void => {
+    if (isEmpty(written_date) || isEmpty(title) || isEmpty(link)) {
       setIsValid(false);
 
       return;
     }
 
-    setIsValid(isValidDate(date));
-    setIsDateValid(isValidDate(date));
+    setIsValid(isValidDate(written_date));
+    setIsDateValid(isValidDate(written_date));
   };
 
   return (
@@ -123,9 +127,9 @@ function PostEditor({ name = '', handleSubmit, post }: Props): JSX.Element {
               <input
                 type="text"
                 onChange={onChangeInputValues}
-                placeholder="예시)2020.09.20"
-                name="date"
-                value={values.date}
+                placeholder="예시)2020-09-20"
+                name="written_date"
+                value={values.written_date}
               />
             </div>
             {!isDateValid && <Validation>날짜 형식을 확인해주세요.</Validation>}
