@@ -22,8 +22,10 @@ const medal: Obj = {
 
 export default function MyGroupBanner(): JSX.Element {
   const user = useSelector(currentUser);
-  const { data, isLoading } = useQuery(['getBatchesRank', user.batch.nth], () =>
-    getBatchRank(user.batch.nth),
+  const { data, isLoading } = useQuery(
+    ['getBatchesRank', user.batch.nth],
+    () => getBatchRank(user.batch.nth),
+    { enabled: !!user.batch.nth },
   );
 
   if (isLoading || isNil(data)) {

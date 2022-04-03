@@ -44,6 +44,7 @@ export default function PostsOfTheWeek(): JSX.Element {
 
         setPostsByWeek(BASE_POST_BY_WEEK);
       },
+      enabled: !!user.batch.nth,
     },
   );
   const [isAddModalActive, setAddModalActive] = useState<boolean>(false);
