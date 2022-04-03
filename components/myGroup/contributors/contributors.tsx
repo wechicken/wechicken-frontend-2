@@ -28,6 +28,7 @@ export default function Contributors(): JSX.Element {
           contributions.filter(contribution => contribution.userId !== me?.userId),
         );
       },
+      enabled: !!user.batch.nth,
     },
   );
 
