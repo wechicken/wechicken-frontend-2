@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import styled from '@emotion/styled';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,8 +30,10 @@ export default function LoginForm({
     inputName: '',
     nth: '',
     blogAddress: '',
-    isJoinGroup: true,
+    isJoinGroup: false,
   });
+  const [isAdmin, setIsAdmin] = useState(false); // 계장여부
+  const [duplicateAdmin, setDuplicateAdmin] = useState(false); // 계장 중복 등록여부
   const [isAgreed, setAgreed] = useState(true);
   const [isSubmitActivate, setSubmitActivate] = useState(false);
   const googleProfileImage = useRef(googleProfile.getImageUrl());
@@ -39,21 +42,27 @@ export default function LoginForm({
     googleProfileImage.current,
   );
 
-  const loginWithForm = useMutation((formData: FormData) => postAuthAddtional(formData));
+  const loginWithForm = useMutation((formData: FormData) => postAuthAddtional(formData), {
+    onError: () => {
+      // TODO 밸리데이션에러 내려오면 duplicateAdmin true
+      setDuplicateAdmin(true);
+    },
+  });
 
-  const { inputName, nth, blogAddress, isJoinGroup } = loginForm;
+  const { inputName, nth, blogAddress } = loginForm;
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = e.target;
     setLoginForm({ ...loginForm, [name]: value });
   };
 
-  const handleCheckBox = (type: string): void => {
-    type === '치킨계 가입(선택)'
-      ? setLoginForm(prev => {
-          return { ...prev, isJoinGroup: !prev.isJoinGroup };
-        })
-      : setAgreed(!isAgreed);
+  const handleCheckBox = (): void => {
+    setAgreed(!isAgreed);
+  };
+
+  const onChangeAdmin = (isAdmin: boolean): void => {
+    setIsAdmin(isAdmin);
+    setDuplicateAdmin(false);
   };
 
   useEffect(() => {
@@ -99,7 +108,10 @@ export default function LoginForm({
     formData.append('blog_address', blogAddress);
     formData.append('gmail_id', googleProfile.getId());
     formData.append('gmail', googleProfile.getEmail());
-    formData.append('is_group_joined', String(isJoinGroup));
+    formData.append('is_group_joined', String(false));
+
+    // 계장여부
+    formData.append('is_admin', String(isAdmin));
 
     fetchUserData(formData);
   };
@@ -148,11 +160,30 @@ export default function LoginForm({
               name="blogAddress"
               size="14px"
             />
-            <BtnCheck
-              text="치킨계 가입(선택)"
-              handleCheckBox={handleCheckBox}
-              isChecked={isJoinGroup}
-            />
+            <ManagerSelectBox>
+              <div className="question-wrap">
+                <span className="question">계장으로 가입하시겠어요?</span>
+                <div className="select-icon">
+                  <div
+                    className={`icon-wrap ${isAdmin ? 'selected' : ''}`}
+                    onClick={() => onChangeAdmin(true)}
+                  >
+                    <Image src={'/images/chicken.png'} width={30} height={30} alt="계장" />
+                    <span>예</span>
+                  </div>
+                  <div
+                    className={`icon-wrap ${isAdmin ? '' : 'selected'}`}
+                    onClick={() => onChangeAdmin(false)}
+                  >
+                    <Image src={'/images/chick.png'} width={30} height={30} alt="계장이 아님" />
+                    <span>아니오</span>
+                  </div>
+                </div>
+                {duplicateAdmin && (
+                  <p className="error-text">입력하신 기수에 계장이 이미 존재합니다.</p>
+                )}
+              </div>
+            </ManagerSelectBox>
             <BtnCheck
               text="블로그 정보 수집 동의(필수)"
               handleCheckBox={handleCheckBox}
@@ -221,7 +252,6 @@ const Greeting = styled.div`
 const Form = styled.form`
   display: flex;
   justify-content: space-between;
-  height: 230px;
   margin-top: 20px;
 
   ${({ theme }) => theme.md`
@@ -275,4 +305,53 @@ const CameraIcon = styled.div`
 
 const SubmitButtonBox = styled.div`
   padding-top: 1rem;
+`;
+
+const ManagerSelectBox = styled.div`
+  margin: 5px 0;
+
+  .question-wrap {
+    padding-left: 12px;
+    padding-bottom: 2px;
+  }
+
+  .select-icon {
+    display: flex;
+    max-width: 150px;
+    margin: 8px 0;
+  }
+
+  .icon-wrap {
+    display: flex;
+    flex-direction: column;
+    justift-content: center;
+    align-items: center;
+    width: 40px;
+    margin: 0 auto;
+    cursor: pointer;
+    filter: grayscale(100%);
+  }
+
+  .icon-wrap span {
+    margin-top: 3px;
+    font-size: 10px;
+    color: ${({ theme }) => theme.textGrey};
+  }
+
+  .selected {
+    filter: grayscale(0%);
+  }
+
+  .question {
+    padding: 0 2px 6px 0;
+    font-weight: 500;
+    font-size: 15px;
+    color: ${({ theme }) => theme.textGrey};
+  }
+
+  .error-text {
+    padding: 1px 0px 0px 2px;
+    font-size: 8px;
+    color: red;
+  }
 `;

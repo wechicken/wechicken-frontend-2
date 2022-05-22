@@ -21,7 +21,7 @@ function Login(): JSX.Element {
   return (
     <ModalLayout
       width="675px"
-      height="29.375rem"
+      height="34rem"
       style={{ minHeight: '29rem', minWidth: '260px' }}
       closeModal={() => dispatch(setLoginModalOn(false))}
     >
